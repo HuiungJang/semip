@@ -1,0 +1,11 @@
+web/WEB-INF/classes/
+resources/
+.DS_Store
+.settings/
+web/image/
+web/img/
+web/upload/
+.classpath
+.settings
+*.properties
+.project
