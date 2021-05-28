@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.yoriessence.shopping.vo.Product" %>
 <%
@@ -156,6 +157,6 @@
 	}
 </script>
 
-	
+
 
 <%@ include file="/view/common/footer.jsp"%>

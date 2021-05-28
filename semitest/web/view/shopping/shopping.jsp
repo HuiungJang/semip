@@ -5,8 +5,8 @@
 	List<ShoppingCart> sc=(List<ShoppingCart>)request.getAttribute("list");
 	for(ShoppingCart list : sc) {
 		i+=list.getProductprice()*list.getProductnumber()+list.getProductprice();
-	
 	}
+	
 %>
 <%@ include file="/view/common/header.jsp"%>
    <style>
@@ -77,14 +77,22 @@
 	                    <button type="button" onclick="deleteshopping(event);" class="fonttext" value="<%=list.getProductname()%>">삭제하기</button>
 	                </td>
 	             </tr>
-	             	<input type="hidden" name="memberid" value="<%=list.getMemberid() %>">
+	             	<%-- <input type="hidden" name="memberid" value="<%=list.getMemberid() %>">
 	             	<input type="hidden" name="proname" value="<%=list.getProductname() %>">
 	             	<input type="hidden" name="pronumber" value="<%=list.getProductnumber() %>">
 	             	<input type="hidden" name="proprice" value="<%=list.getProductprice() %>">
-	             	<input type="hidden" name="proshopify" value="<%=list.getProductshopify() %>">
+	             	<input type="hidden" name="proshopify" value="<%=list.getProductshopify() %>"> --%>
 	             <%} %>
 	             <%} %>
 	        </table>
+	        		<%for(int j=0;j<sc.size();j++){%>
+	        		<input type="hidden" name="memberid<%=j%>" value="<%=sc.get(j).getMemberid() %>">
+	             	<input type="hidden" name="proname<%=j%>" value="<%=sc.get(j).getProductname() %>">
+	             	<input type="hidden" name="pronumber<%=j%>" value="<%=sc.get(j).getProductnumber() %>">
+	             	<input type="hidden" name="proprice<%=j%>" value="<%=sc.get(j).getProductprice() %>">
+	             	<input type="hidden" name="prono<%=j%>" value="<%=sc.get(j).getProductno() %>">
+	        		<%} %> 
+	        		<input type="hidden" name="sc" value="<%=sc.size() %>">;
 	        		<div class="gogo">총 주문금액 : <%=i %></div><br>
 		        	<button type="button" onclick="test();" class="button">주문하기</button>
 		</form>	        	
@@ -153,11 +161,12 @@
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
-		        $("#order").submit(); 
+		        $("#order").submit();
 		        
 		    }
 		    alert(msg);
 		});
 	}
 	</script>
+
 <%@ include file="/view/common/footer.jsp"%>

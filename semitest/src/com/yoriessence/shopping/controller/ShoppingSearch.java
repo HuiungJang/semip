@@ -1,8 +1,8 @@
 package com.yoriessence.shopping.controller;
 
 import java.io.IOException;
-import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.shopping.service.ShoppingCartService;
-import com.yoriessence.shopping.vo.ShoppingCart;
+import com.yoriessence.shopping.vo.Product;
 
 /**
- * Servlet implementation class ShoppingCartServlet
+ * Servlet implementation class ShoppingSearch
  */
-@WebServlet("/shopping/cart")
-public class ShoppingCartServlet extends HttpServlet {
+@WebServlet("/shopping/search")
+public class ShoppingSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShoppingCartServlet() {
+    public ShoppingSearch() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,12 +32,20 @@ public class ShoppingCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String memberId="testId";// 임의의 유저아이디를 선언해서보냄 추후 변경
-		List<ShoppingCart> sc=new ShoppingCartService().ShoppingCartCheck(memberId);
-		System.out.println(sc);
+		String search = request.getParameter("search");
 		
-		request.setAttribute("list", sc);
-		request.getRequestDispatcher("/view/shopping/shopping.jsp").forward(request, response);
+		Product pds=new ShoppingCartService().Productsearch(search);
+		
+		if(pds!=null) {
+			request.setAttribute("pds", pds);
+			request.getRequestDispatcher("/view/shopping/shoppingsearch.jsp").forward(request, response);;
+			
+		}else {
+			request.setAttribute("msg", "존재하지 않는 상품입니다.");
+			request.setAttribute("loc", "/shopping/mall");
+			request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
+		}
+		
 	}
 
 	/**

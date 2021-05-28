@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.yoriessence.shopping.vo.OrderDetails;
 import com.yoriessence.shopping.vo.Product;
 import com.yoriessence.shopping.vo.ShoppingCart;
 
@@ -27,8 +26,6 @@ public class ShoppingCartDao {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public List<ShoppingCart> ShoppingCartCheck(Connection conn,String memberId) {
 		PreparedStatement pstmt=null;
@@ -213,6 +210,7 @@ public class ShoppingCartDao {
 			pstmt.setInt(3, sc.getProductprice());
 			pstmt.setInt(4, sc.getProductnumber());
 			pstmt.setInt(5, sc.getProductshopify());
+			pstmt.setInt(6, sc.getProductno());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -241,47 +239,23 @@ public class ShoppingCartDao {
 		}return result;
 	}
 	
-	public List<OrderDetails> OrderDetails(Connection conn, String memberid){
+	public int shoplist(Connection conn, String memberid, String proname,int pronumber, int productprice, int prono){
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<OrderDetails> list=new ArrayList();
+		int result=0;
 		String sql=prop.getProperty("OrderDetails");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, memberid);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
-				OrderDetails od=new OrderDetails();
-				od.setMEMBERID(rs.getString("MEMBERID"));
-				od.setORDERAMOUTNT(rs.getInt("ORDERAMOUNT"));
-				od.setORDERDATE(rs.getDate("ORDERDATE"));
-				od.setPAYMENTDATE(rs.getDate("PAYMENTDATE"));
-				list.add(od);
-			}
+			pstmt.setInt(1, prono);
+			pstmt.setString(2, memberid);
+			pstmt.setString(3, proname);
+			pstmt.setInt(4, productprice);
+			pstmt.setInt(5, pronumber);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
-			close(rs);
 			close(pstmt);
-		}return list;
+		}return result;
 	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

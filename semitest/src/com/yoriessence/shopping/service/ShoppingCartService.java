@@ -6,10 +6,11 @@ import static com.yoriessence.common.JDBCTemplate.getConnection;
 import static com.yoriessence.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yoriessence.shopping.dao.ShoppingCartDao;
-import com.yoriessence.shopping.vo.OrderDetails;
+import com.yoriessence.shopping.vo.Payment;
 import com.yoriessence.shopping.vo.Product;
 import com.yoriessence.shopping.vo.ShoppingCart;
 
@@ -88,11 +89,12 @@ public class ShoppingCartService {
 		return result;
 	}
 	
-	public List<OrderDetails> OrderDetails(String memberid){
+	public void shoplist(String memberid,String proname,int pronumber,int productprice,int prono){
 		Connection conn=getConnection();
-		List<OrderDetails> list=dao.OrderDetails(conn,memberid);
+		int result=dao.shoplist(conn, memberid, proname, pronumber, productprice, prono);
+		if(result>0) commit(conn);
+		else rollback(conn);
 		close(conn);
-		return list;
 	}
 
 }
