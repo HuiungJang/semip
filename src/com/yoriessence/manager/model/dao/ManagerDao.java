@@ -52,8 +52,8 @@ public class ManagerDao {
         List<ManagerPage> result = new ArrayList<>();
         try{
             psmt = conn.prepareStatement(pp.getProperty("getOrderList"));
-            psmt.setInt(1,cPage);
-            psmt.setInt(2,numPerPage);
+            psmt.setInt(1,(cPage-1)*numPerPage+1);
+            psmt.setInt(2,numPerPage*cPage);
 
             rs= psmt.executeQuery();
 
@@ -61,15 +61,11 @@ public class ManagerDao {
                 ManagerPage m = new ManagerPage();
                 m.setRowNum(rs.getInt("rnum"));
                 m.setOrderNumber(rs.getInt("order_number"));
-                m.setMemberId(rs.getString("memberid"));
-                m.setOrderAmount(rs.getInt("order_amount"));
-                m.setPayment(rs.getString("payment"));
-                m.setPaymentStatus(rs.getString("payment_status"));
-                m.setShippingStatus(rs.getString("shipping_status"));
-                m.setOrderDate(rs.getDate("order_date"));
-                m.setPaymentDate(rs.getDate("payment_date"));
                 m.setMemberName(rs.getString("member_name"));
                 m.setAmountPrice(rs.getInt("amountprice"));
+                m.setPaymentMethod(rs.getString("payment_method"));
+                m.setShippingStatus(rs.getString("shipping_status"));
+                m.setPaymentDate(rs.getDate("payment_date"));
                 m.setWaybill(rs.getString("waybill"));
 
                 result.add(m);

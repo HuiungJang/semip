@@ -254,10 +254,6 @@
     align-items: center;
     border-bottom: 1px #000000 solid;
 }
-#managerContainer .managerContent #sortNavi .selectAll{
-    margin-left:90px;
-    margin-top: 50px;
-}
 #managerContainer .managerContent #sortNavi .selectDelivery{
     margin-top: 50px;
     margin-left:180px;
@@ -275,9 +271,18 @@
     margin-top: 50px;
     margin-right: 10px;
 }
+#managerContainer .managerContent .rowTitle{
+    display: grid;
+    grid-template-columns: 120px 120px 180px 120px 140px 120px 120px 120px 148px;
+    height: 35px;
+    border-bottom: 1px #000000 solid;
+}
+#managerContainer .managerContent .rowTitle>div{
+    margin-top: 5px;
+}
 #managerContainer .managerContent .data{
     display: grid;
-    grid-template-columns: 90px 90px 150px 110px 110px 110px 110px 110px 110px 110px;
+    grid-template-columns: 120px 120px 180px 120px 140px 120px 120px 120px 148px;
     border-bottom: 1px #000000 solid;
 }
 

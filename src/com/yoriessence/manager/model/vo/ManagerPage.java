@@ -5,17 +5,18 @@ import java.util.Objects;
 
 public class ManagerPage {
     private int rowNum;
-    private int OrderNumber;
-    private String MemberId;
+    private int orderNumber;
+    private String memberId;
     private String memberName;
-    private int OrderAmount;
-    private String Payment;
-    private String PaymentStatus;
-    private String ShippingStatus;
-    private String Waybill;
-    private int AmountPrice;
-    private Date OrderDate;
-    private Date PaymentDate;
+    private int orderAmount;
+    private String payment;
+    private String paymentMethod;
+    private String paymentStatus;
+    private String shippingStatus;
+    private String waybill;
+    private int amountPrice;
+    private Date orderDate;
+    private Date paymentDate;
 
     public ManagerPage() {
     }
@@ -29,19 +30,19 @@ public class ManagerPage {
     }
 
     public int getOrderNumber() {
-        return OrderNumber;
+        return orderNumber;
     }
 
     public void setOrderNumber(int orderNumber) {
-        OrderNumber = orderNumber;
+        this.orderNumber = orderNumber;
     }
 
     public String getMemberId() {
-        return MemberId;
+        return memberId;
     }
 
     public void setMemberId(String memberId) {
-        MemberId = memberId;
+        this.memberId = memberId;
     }
 
     public String getMemberName() {
@@ -53,66 +54,74 @@ public class ManagerPage {
     }
 
     public int getOrderAmount() {
-        return OrderAmount;
+        return orderAmount;
     }
 
     public void setOrderAmount(int orderAmount) {
-        OrderAmount = orderAmount;
+        this.orderAmount = orderAmount;
     }
 
     public String getPayment() {
-        return Payment;
+        return payment;
     }
 
     public void setPayment(String payment) {
-        Payment = payment;
+        this.payment = payment;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getPaymentStatus() {
-        return PaymentStatus;
+        return paymentStatus;
     }
 
     public void setPaymentStatus(String paymentStatus) {
-        PaymentStatus = paymentStatus;
+        this.paymentStatus = paymentStatus;
     }
 
     public String getShippingStatus() {
-        return ShippingStatus;
+        return shippingStatus;
     }
 
     public void setShippingStatus(String shippingStatus) {
-        ShippingStatus = shippingStatus;
+        this.shippingStatus = shippingStatus;
     }
 
     public String getWaybill() {
-        return Waybill;
+        return waybill;
     }
 
     public void setWaybill(String waybill) {
-        Waybill = waybill;
+        this.waybill = waybill;
     }
 
     public int getAmountPrice() {
-        return AmountPrice;
+        return amountPrice;
     }
 
     public void setAmountPrice(int amountPrice) {
-        AmountPrice = amountPrice;
+        this.amountPrice = amountPrice;
     }
 
     public Date getOrderDate() {
-        return OrderDate;
+        return orderDate;
     }
 
     public void setOrderDate(Date orderDate) {
-        OrderDate = orderDate;
+        this.orderDate = orderDate;
     }
 
     public Date getPaymentDate() {
-        return PaymentDate;
+        return paymentDate;
     }
 
     public void setPaymentDate(Date paymentDate) {
-        PaymentDate = paymentDate;
+        this.paymentDate = paymentDate;
     }
 }

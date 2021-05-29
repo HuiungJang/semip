@@ -175,7 +175,7 @@
 <div id="totalContainer">
     <div class="header">
         <div class="logo">
-            <a href="<%=request.getContextPath()%>/index.jsp">
+            <a href="<%=request.getContextPath()%>/">
                 <img src="<%=request.getContextPath()%>/img/icon/mainlogo.png"
                      height="150px">
             </a>

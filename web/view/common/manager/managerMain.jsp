@@ -53,17 +53,17 @@
                 <a id="sortRef3">개별 조회</a>
             </div>
         </div>
-<%--        주문 현황별 조회--%>
+        <%--        주문 현황별 조회--%>
         <div class="sortRef">
             <div>
                 <div>결제수단</div>
             </div>
             <div class="paymentMethod">
-                <div><input type="radio" name="paymentMethod">전체</div>
-                <div><input type="radio" name="paymentMethod">카드</div>
-                <div><input type="radio" name="paymentMethod">무통장</div>
-                <div><input type="radio" name="paymentMethod">계좌이체</div>
-                <div><input type="radio" name="paymentMethod">휴대폰</div>
+                <div><input type="radio" name="paymentMethod" value="all">전체</div>
+                <div><input type="radio" name="paymentMethod" value="card">카드</div>
+                <div><input type="radio" name="paymentMethod" value="book">무통장</div>
+                <div><input type="radio" name="paymentMethod" value="account">계좌이체</div>
+                <div><input type="radio" name="paymentMethod" value="phone">휴대폰</div>
             </div>
             <div>
                 <div>주문현황</div>
@@ -96,7 +96,7 @@
             <div class="searchDate">
                 <div><input type="date" class="startDate"> ~</div>
                 <div> <input type="date" class="endDate"></div>
-                <div>
+                <div class="dateButton">
                     <input type="button" value="당일">
                     <input type="button" value="1주일">
                     <input type="button" value="당월">
@@ -112,9 +112,9 @@
                 <div><input type="radio" name="sortMethod">내림차순</div>
             </div>
         </div>
-<%--        주문 현황별조회 끝--%>
+        <%--        주문 현황별조회 끝--%>
 
-<%--        배송현황별 조회--%>
+        <%--        배송현황별 조회--%>
         <div class="sortRef2" style="display: none">
             <div>
                 <div>배송상태</div>
@@ -131,7 +131,7 @@
             <div class="searchDate">
                 <div><input type="date" class="startDate"> ~</div>
                 <div> <input type="date" class="endDate"></div>
-                <div>
+                <div class="dateButton">
                     <input type="button" value="당일">
                     <input type="button" value="1주일">
                     <input type="button" value="당월">
@@ -147,9 +147,9 @@
                 <div><input type="radio" name="sortMethod">내림차순</div>
             </div>
         </div>
-<%--        배송현황별 조회 끝--%>
+        <%--        배송현황별 조회 끝--%>
 
-<%--        개별 조회--%>
+        <%--        개별 조회--%>
         <div class="sortRef3" style="display: none">
             <div>
                 <div>조회일자</div>
@@ -157,7 +157,7 @@
             <div class="searchDate">
                 <div><input type="date" class="startDate"> ~</div>
                 <div> <input type="date" class="endDate"></div>
-                <div>
+                <div class="dateButton">
                     <input type="button" value="당일">
                     <input type="button" value="1주일">
                     <input type="button" value="당월">
@@ -178,11 +178,11 @@
                 <div>정렬</div>
             </div>
             <div class="sortMethod">
-                <div><input type="radio" name="sortMethod">오름차순</div>
-                <div><input type="radio" name="sortMethod">내림차순</div>
+                <div><input type="radio" name="sortMethod" value="asc">오름차순</div>
+                <div><input type="radio" name="sortMethod" value="desc">내림차순</div>
             </div>
         </div>
-<%--        개별 조회 끝--%>
+        <%--        개별 조회 끝--%>
         <div class="searchBtn">
             <div>
                 <input type="button" value="조회">
@@ -190,54 +190,8 @@
         </div>
     </div>
     <div class="managerContent">
-<%--        <div class="selectAll">--%>
-<%--            <input type="checkbox">전체선택--%>
-<%--        </div>--%>
-<%--        <div class="blank"> </div>--%>
-<%--        <div class="selectDelivery">--%>
-<%--            <select name="selectDelivery">--%>
-<%--                <option>주문현황</option>--%>
-<%--            </select>--%>
-<%--        </div>--%>
-<%--        <div class="selectN">--%>
-<%--            <select name="selectN">--%>
-<%--                <option>전체</option>--%>
-<%--                <option>배송준비</option>--%>
-<%--                <option>배송중</option>--%>
-<%--                <option>배송완료</option>--%>
-<%--            </select>--%>
-<%--        </div>--%>
-<%--        <div class="changeBtn">--%>
-<%--            <button>선택항목 변경</button>--%>
-<%--        </div>--%>
-<%--        <div>선택</div>--%>
-<%--        <div>번호</div>--%>
-<%--        <div>주문번호</div>--%>
-<%--        <div>구매자명</div>--%>
-<%--        <div>금액</div>--%>
-<%--        <div>결제수단</div>--%>
-<%--        <div>주문현황</div>--%>
-<%--        <div>배송현황</div>--%>
-<%--        <div>결제일</div>--%>
-<%--        <div>운송장</div>--%>
-<%--        <%if(getOrderList != null){%>--%>
-<%--            <%for(ManagerPage m:getOrderList){%>--%>
-<%--                <div><input type="checkbox" class="checkRow"></div>--%>
-<%--                <div><%=m.getRowNum()%></div>--%>
-<%--                <div><%=m.getOrderNumber()%></div>--%>
-<%--                <div><%=m.getMemberName()%></div>--%>
-<%--                <div><%=m.getAmountPrice()%></div>--%>
-<%--                <div><%=m.getPayment()%></div>--%>
-<%--                <div><%=m.getPaymentStatus()%></div>--%>
-<%--                <div><%=m.getShippingStatus()%></div>--%>
-<%--                <div><%=m.getPaymentDate()%></div>--%>
-<%--                <div><%=m.getWaybill()%><button class="inputWaybill">운송장입력하기</button></div>--%>
-<%--            <%}%>--%>
-<%--        <%}%>--%>
         <div id="sortNavi">
-            <div class="selectAll">
-                <input type="checkbox">전체선택
-            </div>
+            <div></div>
             <div></div>
             <div class="selectDelivery">
                 <select name="selectDelivery">
@@ -256,25 +210,37 @@
                 <button>항목 변경</button>
             </div>
         </div>
-
-    <%if(getOrderList != null){%>
-        <%for(ManagerPage m:getOrderList){%>
-            <div class="data">
-                <div><input type="checkbox" class="checkRow"></div>
-                <div><%=m.getRowNum()%></div>
-                <div><%=m.getOrderNumber()%></div>
-                <div><%=m.getMemberName()%></div>
-                <div><%=m.getAmountPrice()%></div>
-                <div><%=m.getPayment()%></div>
-                <div><%=m.getPaymentStatus()%></div>
-                <div><%=m.getShippingStatus()%></div>
-                <div><%=m.getPaymentDate()%></div>
-                <div><%=m.getWaybill()%>
-                    <button class="inputWaybill">운송장입력하기</button>
-                </div>
+        <div class="rowTitle">
+            <div class="selectAll">
+                <input type="checkbox">전체선택
             </div>
-         <%}%>
-    <%}%>
+            <div>번호</div>
+            <div>주문번호</div>
+            <div>주문자명</div>
+            <div>가격</div>
+            <div>결제방법</div>
+            <div>배송상태</div>
+            <div>결제일자</div>
+            <div>송장번호</div>
+        </div>
+        <%if(getOrderList != null){%>
+        <%for(ManagerPage m:getOrderList){%>
+        <div class="data">
+            <div><input type="checkbox" class="checkRow"></div>
+            <div><%=m.getRowNum()%></div>
+            <div><%=m.getOrderNumber()%></div>
+            <div><%=m.getMemberName()%></div>
+            <div><%=m.getAmountPrice()%></div>
+            <div><%=m.getPaymentMethod()%></div>
+            <div><%=m.getShippingStatus()%></div>
+            <div><%=m.getPaymentDate()%></div>
+            <div>
+                <span><%=m.getWaybill()%></span>
+                <button class="inputWaybill">운송장입력하기</button>
+            </div>
+        </div>
+        <%}%>
+        <%}%>
 
 
     </div>
@@ -285,19 +251,130 @@
     </div>
 </div>
 <script>
-    'use strict;'
+  'use strict;'
 
-    function checkbox(){
-      if($(".selectAll>input:selected")){
-        $(".checkRow").attr("checked",true);
-      }else{
-        $(".checkRow").attr("checked",false);
-      };
+  // 전체선택 체크박스
+  function checkbox(){
+    if($(".selectAll>input:selected")){
+      $(".checkRow").attr("checked",true);
+    }else{
+      $(".checkRow").attr("checked",false);
     };
+  };
 
-    $(".selectAll>input").click(e=>{
-      checkbox();
-    })
+  $(".selectAll>input").click(e=>{
+    checkbox();
+  })
+
+  // 현황별 조회 값 가져오기
+  $(".searchBtn>div>input").click((e)=>{
+    // 공통 기준
+    // 조회일자
+    // 시작일
+    const searchDate = $(".startDate").val();
+    // 끝나는 일
+    const endDate = $(".endDate").val();
+
+    // 정렬기준
+    const sortRef = $("[name=sortMethod]:checked").val();
+
+    // 주문현황별 조회
+    if($(".sortRef").css("display") ==='grid'){
+      // 결제수단
+      const paymentMethod = $("[name=paymentMehtod]").val();
+
+      // 주문현황
+      const orderState= $(".orderStateSelect").val();
+
+      // 요청사항
+      const request =$(".request>div>input:checked").val();
+
+
+
+    // 배송현황별 조회
+    }else if($(".sortRe2f").css("display") ==='grid'){
+      // 배송상태
+      const delivery = $(".deliveryState>div>input:checked").val();
+
+
+
+    // 개별 조회
+    }else if($(".sortRef3").css("display") ==='grid'){
+      const searchCondition = $("[name=searchCondition]:checked").val();
+
+    }
+
+  });
+
+// 조회일자 조절
+  $(".dateButton>input").click((e)=>{
+    function getDateStr(myDate){
+      let year = myDate.getFullYear();
+      let month = (myDate.getMonth() + 1);
+      let day = myDate.getDate();
+
+      month = (month < 10) ? "0" + String(month) : month;
+      day = (day < 10) ? "0" + String(day) : day;
+
+      return  (year + '-' + month + '-' + day);
+    }
+
+    function today() {
+      let d = new Date();
+      return getDateStr(d);
+    }
+
+    function aWeekAgo() {
+      let d = new Date();
+      let dayOfMonth = d.getDate();
+      d.setDate(dayOfMonth - 7);
+      return getDateStr(d);
+    }
+
+    function aMonthAgo() {
+      let d = new Date();
+      let monthOfYear = d.getMonth();
+      d.setMonth(monthOfYear - 1);
+      return getDateStr(d);
+    }
+
+    function twoMonthAgo() {
+      let d = new Date();
+      let monthOfYear = d.getMonth();
+      d.setMonth(monthOfYear - 2);
+      return getDateStr(d);
+    }
+
+    function fiveMonthAgo() {
+      let d = new Date();
+      let monthOfYear = d.getMonth();
+      d.setMonth(monthOfYear - 5);
+      return getDateStr(d);
+    }
+
+    let val =$(e.target).val();
+    let targetDateTo =today();
+    let targetDateFrom ='';
+
+    if( val === '당일'){
+      targetDateFrom = today();
+
+    }else if( val ==='1주일' ){
+      targetDateFrom = aWeekAgo();
+
+    }else if( val === '당월'){
+      targetDateFrom = aMonthAgo();
+
+    }else if( val === '2개월'){
+      targetDateFrom = twoMonthAgo();
+
+    }else if( val === '5개월'){
+      targetDateFrom = fiveMonthAgo();
+    }
+
+    $(".startDate").val(targetDateFrom);
+    $(".endDate").val(targetDateTo);
+  });
 
 
 </script>
