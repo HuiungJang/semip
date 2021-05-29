@@ -9,7 +9,10 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "SortRef3Servlet", value = "/manager/sort3")
 public class SortRef3Servlet extends HttpServlet {
@@ -62,17 +65,19 @@ public class SortRef3Servlet extends HttpServlet {
             pageBar+="<span><a href='"+request.getContextPath()+"/manager/sort3?cPage="+cPage+"'>다음</a></span>";
         }
 
-        List<ManagerPage> getSortRef3 = new ManagerService().getSortRef3(searchDate,endDate,searchCondition,searchVal,cPage,numPerPage);
-
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        PrintWriter out = response.getWriter();
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8;");
 
-        out.write(mapper.writeValueAsString(getSortRef3));
-        out.write(mapper.writeValueAsString(pageBar));
+        List<ManagerPage> getSortRef3 = new ManagerService().getSortRef3(searchDate,endDate,searchCondition,searchVal,cPage,numPerPage);
+
+        ObjectMapper mapper = new ObjectMapper();
+        PrintWriter out = response.getWriter();
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("getSortRef3",getSortRef3);
+        data.put("pageBar",pageBar);
+
+        out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data));
 
         out.flush();
         out.close();

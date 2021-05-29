@@ -9,7 +9,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "SortRef2Servlet", value = "/manager/sort2")
 public class SortRef2Servlet extends HttpServlet {
@@ -69,8 +71,11 @@ public class SortRef2Servlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8;");
 
-        out.write(mapper.writeValueAsString(getSortRef2));
-        out.write(mapper.writeValueAsString(pageBar));
+        Map<String,Object> data = new HashMap<>();
+        data.put("getSortRef3",getSortRef2);
+        data.put("pageBar",pageBar);
+
+        out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data));
 
         out.flush();
         out.close();

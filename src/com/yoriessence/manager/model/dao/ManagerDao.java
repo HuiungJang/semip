@@ -80,43 +80,6 @@ public class ManagerDao {
         return result;
     }
 
-    public List<ManagerPage> getSortRef1(Connection conn,String searchDate, String endDate, String paymentMethod,int cPage, int numPerPage){
-        PreparedStatement psmt = null;
-        ResultSet rs =null;
-        List<ManagerPage> result = new ArrayList<>();
-        try{
-            psmt = conn.prepareStatement(pp.getProperty("getSortRef1"));
-            psmt.setString(1,paymentMethod);
-            psmt.setString(2,searchDate);
-            psmt.setString(3,endDate);
-            psmt.setInt(4,(cPage-1)*numPerPage+1);
-            psmt.setInt(5,numPerPage*cPage);
-
-            rs= psmt.executeQuery();
-
-            while (rs.next()){
-                ManagerPage m = new ManagerPage();
-                m.setRowNum(rs.getInt("rnum"));
-                m.setOrderNumber(rs.getInt("order_number"));
-                m.setMemberName(rs.getString("member_name"));
-                m.setAmountPrice(rs.getInt("amountprice"));
-                m.setPaymentMethod(rs.getString("payment_method"));
-                m.setShippingStatus(rs.getString("shipping_status"));
-                m.setPaymentDate(rs.getDate("payment_date"));
-                m.setWaybill(rs.getString("waybill"));
-
-                result.add(m);
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            close(rs);
-            close(psmt);
-        }
-
-        return result;
-    }
-
     public List<ManagerPage> getSortRef2(Connection conn,String searchDate, String endDate, String delivery,int cPage, int numPerPage){
         PreparedStatement psmt = null;
         ResultSet rs =null;
@@ -174,7 +137,7 @@ public class ManagerDao {
         ResultSet rs =null;
         List<ManagerPage> result = new ArrayList<>();
         try{
-            psmt = conn.prepareStatement(pp.getProperty("getSortRef3"));
+//            psmt = conn.prepareStatement(pp.getProperty("getSortRef3"));
 
             if(searchCondition.equals("orderNum")){
                 psmt = conn.prepareStatement(pp.getProperty("getSortRef3OrderNum"));
@@ -184,9 +147,9 @@ public class ManagerDao {
 
             }else if(searchCondition.equals("memberName")){
                 psmt = conn.prepareStatement(pp.getProperty("getSortRef3MemberName"));
-                psmt.setString(1,searchVal);
-                psmt.setString(2,searchDate);
-                psmt.setString(3,endDate);
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,searchVal);
 
             }else if(searchCondition.equals("memberId")){
                 psmt = conn.prepareStatement(pp.getProperty("getSortRef3MemberId"));
@@ -223,6 +186,26 @@ public class ManagerDao {
             e.printStackTrace();
         }finally {
             close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
+    public int updateWaybill(Connection conn,String waybill,int orderNum){
+        PreparedStatement psmt = null;
+        int result = 0;
+
+        try{
+            psmt = conn.prepareStatement(pp.getProperty("updateWaybill"));
+
+            psmt.setString(1,waybill);
+            psmt.setInt(2,orderNum);
+
+            result = psmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally{
             close(psmt);
         }
 
