@@ -173,6 +173,7 @@
                 <div><input type="radio" name="searchCondition" value="memberName">구매자명</div>
                 <div><input type="radio" name="searchCondition" value="memberId">회원아이디</div>
                 <div><input type="radio" name="searchCondition" value="productName">상품명</div>
+                <div><input type="text"  class="searchVal" placeholder="검색값을 입력하세요"></div>
             </div>
             <div>
                 <div>정렬</div>
@@ -266,41 +267,103 @@
     checkbox();
   })
 
+function goSortRef1(start,end,pMethod){
+  $.ajax({
+    url:'<%=request.getContextPath()%>/manager/sort1',
+    data:{
+      "searchDate":start,
+      "endDate":end,
+      "paymentMethod":pMethod,
+      // 주문현황
+      // 요청사항
+    },
+    success:data=>{
+
+    },
+    error:(e,m,i)=>{
+      console.log("sortRef1 error");
+      console.log(e);
+      console.log(m);
+      console.log(i);
+    }
+  });
+};
+
+function goSortRef2(start,end,delivery){
+  $.ajax({
+    url:'<%=request.getContextPath()%>/manager/sort2',
+    data:{
+      "searchDate":start,
+      "endDate":end,
+      "delivery":delivery,
+    },
+    success:data=>{
+
+    },
+    error:(e,m,i)=>{
+      console.log("sortRef2 error");
+      console.log(e);
+      console.log(m);
+      console.log(i);
+    }
+  });
+};
+
+function goSortRef3(start,end,con,val){
+
+  $.ajax({
+    url:'<%=request.getContextPath()%>/manager/sort3',
+    data:{
+      "searchDate":start,
+      "endDate":end,
+      "searchCondition":con,
+      "searchVal":val,
+    },
+    success:data=>{
+
+    },
+    error:(e,m,i)=>{
+      console.log("sortRef3 error");
+      console.log(e);
+      console.log(m);
+      console.log(i);
+    }
+  });
+};
   // 현황별 조회 값 가져오기
   $(".searchBtn>div>input").click((e)=>{
-    // 공통 기준
-    // 조회일자
-    // 시작일
+    // // 정렬기준
+    // const sortRef = $("[name=sortMethod]:checked").val();
+    // 기준일
     const searchDate = $(".startDate").val();
     // 끝나는 일
     const endDate = $(".endDate").val();
 
-    // 정렬기준
-    const sortRef = $("[name=sortMethod]:checked").val();
-
     // 주문현황별 조회
     if($(".sortRef").css("display") ==='grid'){
+
       // 결제수단
       const paymentMethod = $("[name=paymentMehtod]").val();
-
-      // 주문현황
-      const orderState= $(".orderStateSelect").val();
-
-      // 요청사항
-      const request =$(".request>div>input:checked").val();
-
-
+      //
+      // // 주문현황
+      // const orderState= $(".orderStateSelect").val();
+      //
+      // // 요청사항
+      // const request =$(".request>div>input:checked").val();
+      goSortRef1(searchDate,endDate,paymentMethod);
 
     // 배송현황별 조회
     }else if($(".sortRe2f").css("display") ==='grid'){
-      // 배송상태
       const delivery = $(".deliveryState>div>input:checked").val();
 
-
+      goSortRef2(searchDate,endDate,delivery);
 
     // 개별 조회
     }else if($(".sortRef3").css("display") ==='grid'){
       const searchCondition = $("[name=searchCondition]:checked").val();
+      const searchVal = $(".searchVal").val();
+
+      goSortRef3(searchDate,endDate,searchCondition,searchVal);
 
     }
 

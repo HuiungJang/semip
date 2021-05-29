@@ -37,4 +37,26 @@ public class ManagerService {
         close(conn);
         return result;
     }
+
+    // 관리자 페이지 정렬
+    public List<ManagerPage> getSortRef1(String searchDate, String endDate, String paymentMethod,int cPage, int numPerPage){
+        Connection conn = getConnection();
+        List<ManagerPage> result = dao.getSortRef1(conn,searchDate,endDate,paymentMethod,cPage,numPerPage);
+        close(conn);
+        return result;
+    }
+
+    public List<ManagerPage> getSortRef2(String searchDate, String endDate, String delivery,int cPage, int numPerPage){
+        Connection conn = getConnection();
+        List<ManagerPage> result = dao.getSortRef2(conn,searchDate,endDate,delivery,cPage,numPerPage);
+        close(conn);
+        return result;
+    }
+
+    public List<ManagerPage> getSortRef3(String searchDate, String endDate, String searchCondition,String searchVal,int cPage, int numPerPage){
+        Connection conn = getConnection();
+        List<ManagerPage> result = dao.getSortRef3(conn,searchDate,endDate,searchCondition,searchVal,cPage,numPerPage);
+        close(conn);
+        return result;
+    }
 }
