@@ -16,6 +16,7 @@ import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipePicture;
+import com.yoriessence.recipe.model.vo.RecipeProcedure;
 
 public class RecipeDao {
 	
@@ -249,20 +250,26 @@ public class RecipeDao {
 		return list;
 	}
 	
-
-	public List<RecipePicture> selectProcedurePicture(Connection conn, int recipeEnrollNo) {
-		List<RecipePicture> list=new ArrayList();
+//	public List<RecipePicture> selectProcedurePicture(Connection conn, int recipeEnrollNo) {
+	public List<RecipeProcedure> selectProcedure(Connection conn, int recipeEnrollNo) {
+		List<RecipeProcedure> list=new ArrayList();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			pstmt=conn.prepareStatement(prop.getProperty("selectProcedurePicture"));
+//			pstmt=conn.prepareStatement(prop.getProperty("selectProcedurePicture"));
+			pstmt=conn.prepareStatement(prop.getProperty("selectProcedure"));
 			pstmt.setInt(1, recipeEnrollNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				RecipePicture rp=new RecipePicture();
-				rp.setRecipeImageNo(rs.getInt("recipe_image_no"));
-				rp.setRecipeEnrollNo(rs.getInt("recipe_enroll_no"));
-				rp.setRecipeEnrollPicture(rs.getString("recipe_enroll_picture"));
+				RecipeProcedure rp=new RecipeProcedure();
+				rp.setRecipeEnrollNo(recipeEnrollNo);
+				rp.setProcedureNo(rs.getInt("procedure_no"));
+				rp.setProcedureContent(rs.getString("Procedure_content"));
+				rp.setProcedurePicture(rs.getString("procedure_picture"));
+//				RecipePicture rp=new RecipePicture();
+//				rp.setRecipeImageNo(rs.getInt("recipe_image_no"));
+//				rp.setRecipeEnrollNo(rs.getInt("recipe_enroll_no"));
+//				rp.setRecipeEnrollPicture(rs.getString("recipe_enroll_picture"));
 				list.add(rp);
 			}
 		}catch(SQLException e) {
@@ -322,15 +329,22 @@ public class RecipeDao {
 		return result;
 	}
 	
-	public int insertProcedurePicture(Connection conn, int recipeEnrollNo, int fileNo, String fileName) {
+//	public int insertProcedurePicture(Connection conn, int recipeEnrollNo, int fileNo, String fileName) {
+	public int insertProcedure(Connection conn, RecipeProcedure rp) {
 		int result=0;
 		PreparedStatement pstmt=null;
 		try {
-			pstmt=conn.prepareStatement(prop.getProperty("insertProcedurePicture"));
-			pstmt.setInt(1, fileNo);
-			pstmt.setInt(2, recipeEnrollNo);
-			pstmt.setString(3, fileName);
-			System.out.println(fileNo+recipeEnrollNo+fileName);
+			pstmt=conn.prepareStatement(prop.getProperty("insertProcedure"));
+			System.out.println(rp);
+			pstmt.setInt(1, rp.getRecipeEnrollNo());
+			pstmt.setInt(2, rp.getProcedureNo());
+			pstmt.setString(3, rp.getProcedureContent());
+			pstmt.setString(4, rp.getProcedurePicture());
+//			pstmt=conn.prepareStatement(prop.getProperty("insertProcedurePicture"));
+//			pstmt.setInt(1, fileNo);
+//			pstmt.setInt(2, recipeEnrollNo);
+//			pstmt.setString(3, fileName);
+//			System.out.println(fileNo+recipeEnrollNo+fileName);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -400,22 +414,22 @@ public class RecipeDao {
 		return result;
 	}
 	
-	public int updateProcedurePicture(Connection conn, int recipeEnrollNo, int fileNo, String fileName) {
-		int result=0;
-		PreparedStatement pstmt=null;
-		try {
-			pstmt=conn.prepareStatement(prop.getProperty("updateProcedurePicture"));
-			pstmt.setString(1, fileName);
-			pstmt.setInt(2, fileNo);
-			pstmt.setInt(3, recipeEnrollNo);
-			result=pstmt.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		return result;
-	}
+//	public int updateProcedurePicture(Connection conn, int recipeEnrollNo, int fileNo, String fileName) {
+//		int result=0;
+//		PreparedStatement pstmt=null;
+//		try {
+//			pstmt=conn.prepareStatement(prop.getProperty("updateProcedurePicture"));
+//			pstmt.setString(1, fileName);
+//			pstmt.setInt(2, fileNo);
+//			pstmt.setInt(3, recipeEnrollNo);
+//			result=pstmt.executeUpdate();
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(pstmt);
+//		}
+//		return result;
+//	}
 	
 	
 	
@@ -440,6 +454,21 @@ public class RecipeDao {
 		try {
 			pstmt=conn.prepareStatement(prop.getProperty("deleteIngredient"));
 			pstmt.setInt(1, recipeNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteProcedure(Connection conn, int recipeEnrollNo) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("deleteProcedure"));
+			pstmt.setInt(1, recipeEnrollNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

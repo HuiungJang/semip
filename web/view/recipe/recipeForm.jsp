@@ -225,11 +225,11 @@
 				<div class="input_container procedure_container">
 					<p class="input_title">요리순서</p>
 					<div class="step_container">
-						<input type="hidden" id="recipe_procedure" name="recipe_procedure"/>
-						<input type="hidden" id="procedure_picture_count" name="procedure_picture_count" value="1"/>
+						<!-- <input type="hidden" id="recipe_procedure" name="recipe_procedure"/> -->
+						<input type="hidden" id="procedure_count" name="procedure_count" value="1"/>
 						<div class="step">
 							<h3>Step 1</h3>
-							<textarea name="step"></textarea>
+							<textarea name="procedure_content1"></textarea>
 							<input type="file" style="display:none" class="procedure_picture" name="procedure_picture1"/>
 							<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px"/>
 						</div>
@@ -310,18 +310,21 @@
 	}
 
 	const fn_procedure_update=()=>{
-		$("#procedure_picture_count").val($("div.step").length);
-		//div위에 몇 단계인지 표기
+		//div위에 몇 단계인지 표기하고 file 태그의 이름 변경
 		$("div.step").each((i,v)=>{
 			$(v).find("input.procedure_picture").attr("name", "procedure_picture"+(i+1));
+			$(v).find("textarea").attr("name", "procedure_content"+(i+1));
 			$(v).find("h3").text("Step"+(i+1));
 		});
+/* 		//과정을 parsing처리할 수 있도록 하나의 string으로 만들기
 		let value="";
 		$("textarea[name=step]").each((i,v)=>{
 			if(i!=0) value+="Step.";
 			value+=$(v).val();
 		});
-		$("input#recipe_procedure").val(value);
+		$("input#recipe_procedure").val(value); */
+		//단계 수 세기
+		$("#procedure_count").val($("div.step").length);
 	}
 
 	

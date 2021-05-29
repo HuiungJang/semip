@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
+import com.yoriessence.recipe.model.vo.RecipeProcedure;
 
 /**
  * Servlet implementation class RecipeFormEndServlet
@@ -53,10 +54,14 @@ public class RecipeFormEndServlet extends HttpServlet {
 		r.setRecipeInfoHowmany(Integer.parseInt(mr.getParameter("recipe_info_howmany")));
 		r.setRecipeInfoTime(Integer.parseInt(mr.getParameter("recipe_info_time")));
 		r.setRecipeDifficult(mr.getParameter("recipe_difficult"));
-		r.setRecipeProcedure(mr.getParameter("recipe_procedure"));
+//		r.setRecipeProcedure(mr.getParameter("recipe_procedure"));
+		r.setRecipeProcedure("테스트");
 		r.setRecipeTip(mr.getParameter("recipe_tip"));
 		r.setRecipeTag(mr.getParameter("recipe_tag"));
 		r.setMainIngredient(mr.getParameter("main_ingredient"));
+		
+		int result=new RecipeService().insertRecipe(r);
+		int recipeEnrollNo=new RecipeService().selectRecipeEnrollNo(r);
 		
 		//재료 parsing
 		Map<String, List<RecipeIngredient>> ingMap=new HashMap<String, List<RecipeIngredient>>();
@@ -65,7 +70,7 @@ public class RecipeFormEndServlet extends HttpServlet {
 		for(String b:bundle) {
 			if(b!=null) {
 				//category명 통해 가져온 각 재료 배열
-				System.out.println("ingredient : "+mr.getParameter(b));
+//				System.out.println("ingredient : "+mr.getParameter(b));
 				String[] ing=mr.getParameter(b).split(",");
 				List<RecipeIngredient> ingList=new ArrayList();
 				//재료 순회해 list에 넣기
@@ -77,7 +82,7 @@ public class RecipeFormEndServlet extends HttpServlet {
 						ri.setIngredientCategory(i);
 						ri.setIngredientName(ingredient[0]);
 						ri.setIngredientAmount(ingredient[1]);
-						System.out.println(i+"/"+ingredient[0]+"/"+ingredient[1]);
+//						System.out.println(i+"/"+ingredient[0]+"/"+ingredient[1]);
 						ingList.add(ri);
 					}
 				}
@@ -86,25 +91,38 @@ public class RecipeFormEndServlet extends HttpServlet {
 			}
 		}
 		
-		//과정 사진 parsing
-		List<String> procedurePictures=new ArrayList();
-		int procedureLength=Integer.parseInt(mr.getParameter("procedure_picture_count"));
+		result=new RecipeService().insertIngredientMap(ingMap, recipeEnrollNo);
+		
+		//과정 저장
+//		List<String> procedurePictures=new ArrayList();
+		List<RecipeProcedure> procedure=new ArrayList();
+		int procedureLength=Integer.parseInt(mr.getParameter("procedure_count"));
 		for(int i=0;i<procedureLength;i++) {
-			String param="procedure_picture"+(i+1);
-			procedurePictures.add(mr.getFilesystemName(param));
-			System.out.println(param);
+			RecipeProcedure rp=new RecipeProcedure();
+			rp.setRecipeEnrollNo(recipeEnrollNo);
+			rp.setProcedureNo(i+1);
+			rp.setProcedureContent(mr.getParameter("procedure_content"+(i+1)));
+			rp.setProcedurePicture(mr.getFilesystemName("procedure_picture"+(i+1)));
+//			System.out.println(mr.getFilesystemName("procedure_picture"+(i+1)));
+//			System.out.println(mr.getParameter("procedure_content"+(i+1)));
+			procedure.add(rp);
 		}
 		
-		int result=new RecipeService().insertRecipe(r);
-		int recipeEnrollNo=new RecipeService().selectRecipeEnrollNo(r);
-		int result2=new RecipeService().insertIngredientMap(ingMap, recipeEnrollNo);				
-		int result3=0;
-		for(int i=0;i<procedureLength;i++) {
-			if(procedurePictures.get(i)!=null) {
-				result3=new RecipeService().insertProcedurePicture(new RecipeService().selectRecipeEnrollNo(r), i+1, procedurePictures.get(i));
-				if(result3<0) break;
+		for(int i=0;i<procedure.size();i++) {
+			if(procedure.get(i)!=null) {
+				result=new RecipeService().insertProcedure(procedure.get(i));
+				if(result<0) break;
 			}
 		}
+		
+//		int result2=new RecipeService().insertIngredientMap(ingMap, recipeEnrollNo);				
+//		int result3=0;
+//		for(int i=0;i<procedureLength;i++) {
+//			if(procedurePictures.get(i)!=null) {
+//				result3=new RecipeService().insertProcedurePicture(new RecipeService().selectRecipeEnrollNo(r), i+1, procedurePictures.get(i));
+//				if(result3<0) break;
+//			}
+//		}
 		
 		//결과 출력
 		String msg="";

@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
+import com.yoriessence.recipe.model.vo.RecipeProcedure;
 
 /**
  * Servlet implementation class RecipeUpdateEndServlet
@@ -56,7 +57,7 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		r.setRecipeInfoHowmany(Integer.parseInt(mr.getParameter("recipe_info_howmany")));
 		r.setRecipeInfoTime(Integer.parseInt(mr.getParameter("recipe_info_time")));
 		r.setRecipeDifficult(mr.getParameter("recipe_difficult"));
-		r.setRecipeProcedure(mr.getParameter("recipe_procedure"));
+		r.setRecipeProcedure("테스트");
 		r.setRecipeTip(mr.getParameter("recipe_tip"));
 		r.setRecipeTag(mr.getParameter("recipe_tag"));
 		r.setMainIngredient(mr.getParameter("main_ingredient"));
@@ -88,18 +89,23 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 			}
 		}
 		
-		//과정 사진 parsing
-		List<String> procedurePictures=new ArrayList();
-		int length=Integer.parseInt(mr.getParameter("procedure_count"));
-		for(int i=0;i<length;i++) {
-			String param="procedure_picture"+(i+1);
-			procedurePictures.add(mr.getFilesystemName(param));
-		}
-		for(String s:procedurePictures) {
-			System.out.println(s);
+		//과정 저장
+//		List<String> procedurePictures=new ArrayList();
+		List<RecipeProcedure> procedure=new ArrayList();
+		int procedureLength=Integer.parseInt(mr.getParameter("procedure_count"));
+		for(int i=0;i<procedureLength;i++) {
+			RecipeProcedure rp=new RecipeProcedure();
+			rp.setRecipeEnrollNo(recipeEnrollNo);
+			rp.setProcedureNo(i+1);
+			rp.setProcedureContent(mr.getParameter("procedure_content"+(i+1)));
+			rp.setProcedurePicture(mr.getFilesystemName("procedure_picture"+(i+1)));
+//			System.out.println(mr.getFilesystemName("procedure_picture"+(i+1)));
+//			System.out.println(mr.getParameter("procedure_content"+(i+1)));
+			procedure.add(rp);
 		}
 	
-		int result=new RecipeService().updateRecipe(r, ingMap, procedurePictures);
+//		int result=new RecipeService().updateRecipe(r, ingMap, procedurePictures);
+		int result=new RecipeService().updateRecipe(r, ingMap, procedure);
 		
 		//결과 출력
 		String msg="";

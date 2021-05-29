@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp" %>
-<%@ page import="java.util.List, java.util.Map, com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.recipe.model.vo.RecipeIngredient, com.yoriessence.recipe.model.vo.RecipeComment, com.yoriessence.recipe.model.vo.RecipePicture,
-	java.util.*" %>
+<%@ page import="com.yoriessence.recipe.model.vo.*, java.util.*" %>
 
 <%
 	Recipe recipe=(Recipe)request.getAttribute("recipe");
 	/* List<String> ingCategory=(List<String>)request.getAttribute("category"); */
 	Map<String, List<RecipeIngredient>> ingredient=(Map<String, List<RecipeIngredient>>)request.getAttribute("ingredient");
-	List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
+	//List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
+	List<RecipeProcedure> procedure=(List<RecipeProcedure>)request.getAttribute("procedure");
 %>
 
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -250,18 +250,15 @@
 				<div class="input_container procedure_container">
 					<p class="input_title">요리순서</p>
 					<div class="step_container">
-						<input type="text" id="recipe_procedure" name="recipe_procedure"/>
-						<input type="text" id="procedure_count" name="procedure_count" value="1"/>
-                    	<% 
-                    	String[] procedure=recipe.getRecipeProcedure().split("Step.");
-                    	for(int i=0;i<procedure.length;i++) {%>
+						<!-- <input type="hidden" id="recipe_procedure" name="recipe_procedure"/> -->
+						<input type="hidden" id="procedure_count" name="procedure_count" value="1"/>
+                    	<%for(RecipeProcedure rp:procedure) {%>
                         <div class="step">
 							<h3>Step 1</h3>
-                        	<textarea name="step"><%=procedure[i]%></textarea>
+                        	<textarea name="procedure_content1"><%=rp.getProcedureContent()%></textarea>
                         	<input type="file" value="" style="display:none" class="procedure_picture" name="procedure_picture1"/>
-                        	<%if(pictures.size()!=0 && i<=pictures.size() && pictures.get(i)!=null 
- 	                        		&& pictures.get(i).getRecipeEnrollPicture()!=null) { %>
-	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=pictures.get(i).getRecipeEnrollPicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
+                        	<%if(rp.getProcedurePicture()!=null) { %>
+	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%}else {%>
 	                        	<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%} %>
@@ -347,15 +344,16 @@
 		//div위에 몇 단계인지 표기하고 file 태그의 이름 변경
 		$("div.step").each((i,v)=>{
 			$(v).find("input.procedure_picture").attr("name", "procedure_picture"+(i+1));
+			$(v).find("textarea").attr("name", "procedure_content"+(i+1));
 			$(v).find("h3").text("Step"+(i+1));
 		});
-		//과정을 parsing처리할 수 있도록 하나의 string으로 만들기
+/* 		//과정을 parsing처리할 수 있도록 하나의 string으로 만들기
 		let value="";
 		$("textarea[name=step]").each((i,v)=>{
 			if(i!=0) value+="Step.";
 			value+=$(v).val();
 		});
-		$("input#recipe_procedure").val(value);
+		$("input#recipe_procedure").val(value); */
 		//단계 수 세기
 		$("#procedure_count").val($("div.step").length);
 	}
@@ -472,12 +470,10 @@
 			//복사된 태그들의 값 비워주기
 			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png");
 			div.find("textarea").val("");
-			div.find("input[type=file]").attr("name", )
 			//첨부파일 태그 추가하면서 이름을 1씩 증가시키고, hidden태그로 숫자 셈
 			$("div.step_container").append(div);
 			fn_procedure_update();
 		});
-		
 
  		$("#thumbnail_preview").click(e=>{
 			$(e.target).prev().click();

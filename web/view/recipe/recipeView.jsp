@@ -1,13 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp"%>
-<%@ page import="java.util.*, com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.recipe.model.vo.RecipeIngredient, com.yoriessence.recipe.model.vo.RecipeComment, com.yoriessence.recipe.model.vo.RecipePicture" %>
+<%@ page import="java.util.*, com.yoriessence.recipe.model.vo.*" %>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%
 	Recipe recipe=(Recipe)request.getAttribute("recipeView");
 	/* List<String> ingCategory=(List<String>)request.getAttribute("category"); */
 	Map<String, List<RecipeIngredient>> ingredient=(Map<String, List<RecipeIngredient>>)request.getAttribute("ingredient");
 	List<RecipeComment> comments=(List<RecipeComment>)request.getAttribute("comments");
-	List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
+	/* List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures"); */
+	List<RecipeProcedure> procedure=(List<RecipeProcedure>)request.getAttribute("procedure");
 %>
 <style>
                 
@@ -293,14 +294,12 @@
                     <p class="info_title">만드는 방법</p>
                     <div>
 	                    <ul>
- 	                    	<% String[] procedure=recipe.getRecipeProcedure().split("Step.");
-	                    	for(int i=0;i<procedure.length;i++) {%>
+	                    	<%for(RecipeProcedure rp:procedure) {%>
 	                        <li class="step">
-	                        	<p class="step_title">
-	                        	<p class="step_content"><%=procedure[i]%></p>
- 	                        	<%if(pictures.size()!=0 && i<=pictures.size() && pictures.get(i)!=null 
- 	                        		&& pictures.get(i).getRecipeEnrollPicture()!=null) { %>
-	                        		<img src="<%=request.getContextPath() %>/upload/recipe/<%=pictures.get(i).getRecipeEnrollPicture()%>" class="step_img"></li>
+	                        	<p class="step_title">Step <%=rp.getProcedureNo() %></p>
+	                        	<p class="step_content"><%=rp.getProcedureContent()%></p>
+ 	                        	<%if(rp.getProcedurePicture()!=null){%>
+	                        		<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" class="step_img"></li>
 	                        	<%}%>
 	                       	<% } %> 
 	                    </ul>

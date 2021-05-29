@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
-import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipePicture;
+import com.yoriessence.recipe.model.vo.RecipeProcedure;
 
 /**
  * Servlet implementation class RecipeUpdateServlet
@@ -51,24 +51,21 @@ public class RecipeUpdateServlet extends HttpServlet {
 		}
 		
 		//레시피의 과정 사진 가져오기
-		List<RecipePicture> pictures=service.selectProcedurePicture(recipeEnrollNo);
-		for(RecipePicture rp:pictures) {
-			System.out.println(rp.getRecipeEnrollPicture());
-		}
+//		List<RecipePicture> pictures=service.selectProcedurePicture(recipeEnrollNo);
+		List<RecipeProcedure> procedure=service.selectProcedure(recipeEnrollNo);
+//		for(RecipeProcedure rp:procedure) {
+//			System.out.println(rp);
+//		}
 		
 		if(r!=null) {
 			request.setAttribute("recipeView", r);
 			request.setAttribute("category", ingCategory);
 			request.setAttribute("ingredient", ing);
-			request.setAttribute("pictures", pictures);
+			request.setAttribute("procedure", procedure);
 
 			request.setAttribute("recipe", r);
 			request.getRequestDispatcher("/view/recipe/recipeUpdate.jsp").forward(request, response);
 			
-		}else {
-			request.setAttribute("msg", "이미 삭제되었거나 존재하지 않는 레시피입니다.");
-			request.setAttribute("loc", "/view/recipe/recipeList");
-			request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
 		}
 		
 	}
