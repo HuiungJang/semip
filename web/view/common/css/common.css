@@ -270,9 +270,12 @@
 .main-content #topChef .chefData .chefName{
 	font-weight: bolder;
 	font-size: 25px;
+	padding-left:65px;
 }
 .main-content #topChef .chefData .chefNick{
 	font-size: 20px;
+	padding-left:80px;
+
 }
 .main-content #topChef .chefData div{
 	margin-top: 20px;
@@ -302,9 +305,11 @@
 .main-content #recipe .recipeTitle{
 	font-size: 25px;
 	font-weight: bolder;
+	padding-left: 90px;
 }
 .main-content #recipe .recipeInfo{
 	font-size: 20px;
+	padding-left: 90px;
 }
 
 .main-content #recipe .recipeData div{
@@ -324,4 +329,7 @@
 	display: grid;
 	grid-template-columns: 200px 1100px 200px;
 	justify-items: center;
+}
+.footer div{
+	margin-left: 335px;
 }

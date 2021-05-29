@@ -63,7 +63,6 @@ public class RecipeFormEndServlet extends HttpServlet {
 		//bundle 이름 담은 배열 생성
 		String[] bundle=mr.getParameter("hidden_name").split(",");
 		for(String b:bundle) {
-			System.out.println("bundle "+b);
 			if(b!=null) {
 				//category명 통해 가져온 각 재료 배열
 				System.out.println("ingredient : "+mr.getParameter(b));
@@ -75,8 +74,10 @@ public class RecipeFormEndServlet extends HttpServlet {
 						//각 bundle을 : 기준으로 나눠 얻은 재료의 이름, 양 배열
 						String[] ingredient=i.split(":");
 						RecipeIngredient ri=new RecipeIngredient();
+						ri.setIngredientCategory(i);
 						ri.setIngredientName(ingredient[0]);
 						ri.setIngredientAmount(ingredient[1]);
+						System.out.println(i+"/"+ingredient[0]+"/"+ingredient[1]);
 						ingList.add(ri);
 					}
 				}
@@ -87,19 +88,22 @@ public class RecipeFormEndServlet extends HttpServlet {
 		
 		//과정 사진 parsing
 		List<String> procedurePictures=new ArrayList();
-		int length=Integer.parseInt(mr.getParameter("procedure_picture_count"));
-		for(int i=0;i<length;i++) {
+		int procedureLength=Integer.parseInt(mr.getParameter("procedure_picture_count"));
+		for(int i=0;i<procedureLength;i++) {
 			String param="procedure_picture"+(i+1);
 			procedurePictures.add(mr.getFilesystemName(param));
+			System.out.println(param);
 		}
 		
 		int result=new RecipeService().insertRecipe(r);
 		int recipeEnrollNo=new RecipeService().selectRecipeEnrollNo(r);
 		int result2=new RecipeService().insertIngredientMap(ingMap, recipeEnrollNo);				
 		int result3=0;
-		for(int i=0;i<procedurePictures.size();i++) {
-			result3=new RecipeService().insertProcedurePicture(new RecipeService().selectRecipeEnrollNo(r), i+1, procedurePictures.get(i));
-			if(result3<0) break;
+		for(int i=0;i<procedureLength;i++) {
+			if(procedurePictures.get(i)!=null) {
+				result3=new RecipeService().insertProcedurePicture(new RecipeService().selectRecipeEnrollNo(r), i+1, procedurePictures.get(i));
+				if(result3<0) break;
+			}
 		}
 		
 		//결과 출력

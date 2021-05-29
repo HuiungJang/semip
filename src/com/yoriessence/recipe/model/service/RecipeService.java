@@ -6,6 +6,7 @@ import static com.yoriessence.common.JDBCTemplate.getConnection;
 import static com.yoriessence.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,8 +72,10 @@ public class RecipeService {
 			List<RecipeIngredient> list=(List<RecipeIngredient>)e.getValue();
 			for(RecipeIngredient ri:list) {
 				ri.setIngredientCategory(key);
-				result=dao.insertIngredient(conn, ri, recipeEnrollNo);
-				if(!(result>0)) break stop;
+				ri.setRecipeEnrollNo(recipeEnrollNo);
+				result=dao.insertIngredient(conn, ri);
+				System.out.println(result);
+//				if(!(result>0)) break stop;
 			}
 		}
 		if(result>0) commit(conn);
@@ -183,6 +186,11 @@ public class RecipeService {
 			}
 		}
 		if(result>0) {
+			Map<String, List<RecipeIngredient>> oriIng=new HashMap();
+			List<String> category=dao.selectIngredientCategory(conn, r.getRecipeEnrollNo());
+			for(String c:category) {
+				oriIng.put(c, dao.selectIngredient(conn, r.getRecipeEnrollNo(), c));
+			}
 			result=dao.deleteIngredient(conn, r.getRecipeEnrollNo());
 		}
 		if(result>0) {
@@ -196,17 +204,15 @@ public class RecipeService {
 				List<RecipeIngredient> list=(List<RecipeIngredient>)e.getValue();
 				for(RecipeIngredient ri:list) {
 					ri.setIngredientCategory(key);
-					result=dao.insertIngredient(conn, ri, r.getRecipeEnrollNo());
-					if(result==-1) break stop;
+					result=dao.insertIngredient(conn, ri);
+					if(result==0) break stop;
 				}
 			}
 		}
 		if(result>0) {
 			for(int i=0;i<pictures.size();i++) {
-				if(pictures.get(i)!=null) {
-					result=dao.updateProcedurePicture(conn, r.getRecipeEnrollNo(), i+1, pictures.get(i));
-					if(result==-1) break;
-				}
+				result=dao.updateProcedurePicture(conn, r.getRecipeEnrollNo(), i+1, pictures.get(i));
+				if(result==0) break;
 			}
 			if(result>0) {
 				commit(conn);

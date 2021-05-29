@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp"%>
-<%@ page import="java.util.List, java.util.Map, com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.recipe.model.vo.RecipeIngredient, com.yoriessence.recipe.model.vo.RecipeComment, com.yoriessence.recipe.model.vo.RecipePicture" %>
+<%@ page import="java.util.*, com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.recipe.model.vo.RecipeIngredient, com.yoriessence.recipe.model.vo.RecipeComment, com.yoriessence.recipe.model.vo.RecipePicture" %>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%
 	Recipe recipe=(Recipe)request.getAttribute("recipeView");
-	List<String> ingCategory=(List<String>)request.getAttribute("category");
+	/* List<String> ingCategory=(List<String>)request.getAttribute("category"); */
 	Map<String, List<RecipeIngredient>> ingredient=(Map<String, List<RecipeIngredient>>)request.getAttribute("ingredient");
 	List<RecipeComment> comments=(List<RecipeComment>)request.getAttribute("comments");
 	List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
@@ -263,17 +263,22 @@
                     <%if(recipe.getRecipeVideoAddress()!=null) {%>
                     	<p><%=recipe.getRecipeVideoAddress() %></p>
                     <%} %>
-                    <div class="info_align"><span>좋아요 <%=recipe.getRecommendCount() %></span><span>댓글 <%=comments.size() %></span><span>조회수 <%=recipe.getRecipeViewCount() %></span></div>
+                    <div class="info_align"><span id="recommend_info">좋아요 <%=recipe.getRecommendCount() %></span><span>댓글 <%=comments.size() %></span><span>조회수 <%=recipe.getRecipeViewCount() %></span></div>
                 </div>
                 <div id="recipe_ingredient">
                     <p class="info_title">재료</p>
                    	<div>
-	                    <%for(String c:ingCategory){ %>
+	                    <%
+	                    Set set=ingredient.entrySet();
+	 	                   Iterator it=set.iterator();
+	 	                   while(it.hasNext()){
+		 	                   	Map.Entry e=(Map.Entry)it.next();
+		 	                   	String ingCategory=(String)e.getKey();
+		 	                   	List<RecipeIngredient> ingList=(List<RecipeIngredient>)e.getValue();%>
 	                    	<div class="ingredient_container">
-		                    	<p class="ingredient_category"><%=c%></p>
-		                    	<%List<RecipeIngredient> riList=ingredient.get(c);%>
+		                    	<p class="ingredient_category"><%=ingCategory%></p>
 		                    	<ul class="ingredient_ul">
-			                    	<%for(RecipeIngredient ri:riList){%>
+			                    	<%for(RecipeIngredient ri:ingList){%>
 			                			<li class="ingredient_li">
 			                				<p class="ingredient_name"><%=ri.getIngredientName() %></p>
 			                				<p class="ingredient_amount"><%=ri.getIngredientAmount() %></p>
@@ -288,15 +293,16 @@
                     <p class="info_title">만드는 방법</p>
                     <div>
 	                    <ul>
-	                    	<% String[] procedure=recipe.getRecipeProcedure().split("Step.");
+ 	                    	<% String[] procedure=recipe.getRecipeProcedure().split("Step.");
 	                    	for(int i=0;i<procedure.length;i++) {%>
 	                        <li class="step">
 	                        	<p class="step_title">
 	                        	<p class="step_content"><%=procedure[i]%></p>
- 	                        	<%if(pictures.get(i)!=null && pictures.get(i).getRecipeEnrollPicture()!=null) { %>
+ 	                        	<%if(pictures.size()!=0 && i<=pictures.size() && pictures.get(i)!=null 
+ 	                        		&& pictures.get(i).getRecipeEnrollPicture()!=null) { %>
 	                        		<img src="<%=request.getContextPath() %>/upload/recipe/<%=pictures.get(i).getRecipeEnrollPicture()%>" class="step_img"></li>
 	                        	<%}%>
-	                       	<% } %>
+	                       	<% } %> 
 	                    </ul>
                     </div>
                 </div>
@@ -368,6 +374,24 @@
     		
 
     		$("#comment_title").html("댓글 <%=comments.size()%> 개");
+    		
+    		$("#recommend_info").click(e=>{
+    			$.ajax({
+    				url:"<%=request.getContextPath()%>/recipe/recommend",
+    				data:{
+    					/* loginId=loginMember.getMemberId() */
+    					loginId:"testId2",
+    					recipeEnrollNo:<%=recipe.getRecipeEnrollNo()%>
+    				},
+    				success:data=>{
+    					if(data>0) {
+    						$(e.target).css("color", "red");
+    						$("#recommend_info").html("좋아요 "+data);
+    					}
+    					else alert("자신의 레시피에는 추천할 수 없습니다.");
+    				}
+    			});
+    		});
     		
     		
     		

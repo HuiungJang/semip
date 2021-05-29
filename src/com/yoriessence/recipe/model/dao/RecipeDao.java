@@ -217,9 +217,8 @@ public class RecipeDao {
 		try {
 			//정렬 기준에 따라 분기해 다른 쿼리문 가져옴
 			String sqlKey=order.equals("recommend_count")?"recommendRecipeList":"dateRecipeList";
-			pstmt=conn.prepareStatement(prop.getProperty(sqlKey).replace("#", category));
+			pstmt=conn.prepareStatement(prop.getProperty(sqlKey).replaceFirst("#", category).replace("#", ingredient));
 			pstmt.setString(1, "%"+keyword+"%");
-			pstmt.setString(2, ingredient);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Recipe r=new Recipe();
@@ -303,15 +302,17 @@ public class RecipeDao {
 		return result;
 	}
 	
-	public int insertIngredient(Connection conn, RecipeIngredient ri, int recipeEnrollNo) {
+	public int insertIngredient(Connection conn, RecipeIngredient ri) {
 		int result=0;
 		PreparedStatement pstmt=null;
 		try{
 			pstmt=conn.prepareStatement(prop.getProperty("insertIngredient"));
-			pstmt.setInt(1, recipeEnrollNo);
+			System.out.println(prop.getProperty("insertIngredient"));
+			pstmt.setInt(1, ri.getRecipeEnrollNo());
 			pstmt.setString(2, ri.getIngredientName());
 			pstmt.setString(3, ri.getIngredientAmount());
 			pstmt.setString(4, ri.getIngredientCategory());
+			System.out.println(ri);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -329,6 +330,7 @@ public class RecipeDao {
 			pstmt.setInt(1, fileNo);
 			pstmt.setInt(2, recipeEnrollNo);
 			pstmt.setString(3, fileName);
+			System.out.println(fileNo+recipeEnrollNo+fileName);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -402,7 +404,7 @@ public class RecipeDao {
 		int result=0;
 		PreparedStatement pstmt=null;
 		try {
-			pstmt=conn.prepareStatement(prop.getProperty("insertProcedurePicture"));
+			pstmt=conn.prepareStatement(prop.getProperty("updateProcedurePicture"));
 			pstmt.setString(1, fileName);
 			pstmt.setInt(2, fileNo);
 			pstmt.setInt(3, recipeEnrollNo);

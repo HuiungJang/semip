@@ -58,6 +58,7 @@ public class RecipeViewServlet extends HttpServlet {
 		List<RecipePicture> pictures=rs.selectProcedurePicture(recipeEnrollNo);
 		for(RecipePicture rp:pictures) {
 			System.out.println(rp.getRecipeEnrollPicture());
+			
 		}
 		
 		if(r!=null) {

@@ -76,6 +76,8 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 						//각 bundle을 : 기준으로 나눠 얻은 재료의 이름, 양 배열
 						String[] ingredient=i.split(":");
 						RecipeIngredient ri=new RecipeIngredient();
+						ri.setRecipeEnrollNo(recipeEnrollNo);
+						ri.setIngredientCategory(b);
 						ri.setIngredientName(ingredient[0]);
 						ri.setIngredientAmount(ingredient[1]);
 						ingList.add(ri);
@@ -88,10 +90,13 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		
 		//과정 사진 parsing
 		List<String> procedurePictures=new ArrayList();
-		int length=Integer.parseInt(mr.getParameter("procedure_picture_count"));
+		int length=Integer.parseInt(mr.getParameter("procedure_count"));
 		for(int i=0;i<length;i++) {
 			String param="procedure_picture"+(i+1);
 			procedurePictures.add(mr.getFilesystemName(param));
+		}
+		for(String s:procedurePictures) {
+			System.out.println(s);
 		}
 	
 		int result=new RecipeService().updateRecipe(r, ingMap, procedurePictures);
@@ -101,7 +106,7 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		String loc="";
 		if(result>0) {
 			msg="등록을 성공했습니다.";
-			loc="recipe/recipeView?recipeEnrollNo="+recipeEnrollNo;
+			loc="/recipe/recipeView?recipeEnrollNo="+recipeEnrollNo;
 		}else {
 			msg="등록을 실패했습니다.";
 			loc="/recipe/recipeList";

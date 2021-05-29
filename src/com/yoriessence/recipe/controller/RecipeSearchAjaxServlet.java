@@ -36,7 +36,7 @@ public class RecipeSearchAjaxServlet extends HttpServlet {
 		String category=request.getParameter("category");
 		String ingredient=request.getParameter("ingredient");
 		String order=request.getParameter("order");
-		System.out.println(keyword+"/"+category+"/"+order);
+		System.out.println(keyword+"/"+category+"/"+ingredient+"/"+order);
 		List<Recipe> list=service.searchRecipe(keyword, category, ingredient, order);
 		request.setAttribute("recipeList", list);
 		request.getRequestDispatcher("/view/recipe/recipeSearchAjax.jsp").forward(request, response);		

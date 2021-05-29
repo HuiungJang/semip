@@ -284,8 +284,7 @@
 		}
 	} 
 	
-	//재료 묶음명을 hidden_name에, list 내용을 hidden_ing태그에 등록하는 함수
-	 const fn_update_ingredient=()=>{
+	const fn_update_ingredient=()=>{
 		let names="";
 		$("div#bundle_container").find($("input[name=ingredient_category]")).each((i,v)=>{
 			if($(v).val()!=""){
@@ -294,8 +293,6 @@
 			}
 		});
 		$("div#bundle_container").find($("input[name=hidden_name]")).val(names);
-		/* console.log($("div#bundle_container").find($("input[name=hidden_name]"))) */
-		console.log("hidden_name", $("div#bundle_container").find($("input[name=hidden_name]")).val())
 		 
 		$(".ingredient_bundle").each((i,v)=>{
 			const ingredient_li=$(v).find($("li.ingredient_li"));
@@ -309,11 +306,9 @@
 				}
 			});
 			$(v).find($("input.hidden_ing")).val(value).attr("name", $(v).find($("input[name=ingredient_category]")).val());
-			console.log($(v).find($("input.hidden_ing")).attr("name"));
-		})
-		
+		});
 	}
-	
+
 	const fn_procedure_update=()=>{
 		$("#procedure_picture_count").val($("div.step").length);
 		//div위에 몇 단계인지 표기
