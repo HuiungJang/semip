@@ -37,7 +37,7 @@ public class ShoppingCartInsertServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		String memberid="testId";
+		String memberid=request.getParameter("memberId");
 		String productname=request.getParameter("productname");
 		String productexplanation=request.getParameter("productexplanation");
 		int productprice=Integer.parseInt(request.getParameter("productprice"));

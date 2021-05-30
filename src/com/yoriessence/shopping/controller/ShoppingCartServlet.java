@@ -32,7 +32,7 @@ public class ShoppingCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String memberId="testId";
+		String memberId=request.getParameter("memberId");
 		/* String memberId=request.getParameter("memberId"); */// 임의의 유저아이디를 선언해서보냄 추후 변경
 		List<ShoppingCart> sc=new ShoppingCartService().ShoppingCartCheck(memberId);
 		System.out.println(sc);
