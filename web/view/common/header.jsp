@@ -129,14 +129,16 @@
   }
   mustStart();
   <%if(loginMember != null ){%>
-      <%if(loginMember.getUserId().equals("admin")){%>
-        $("#managerPage").attr("display","inline-block");
+  $(function(){
+      <%if(loginMember.getUserId().equals("ADMIN")){%>
+        $("#managerPage").css("display","inline-block");
         $("#managerPage").click(e=>{
         if(confirm("관리자 페이지로 이동하시겠습니까?")){
           location.assign("<%=request.getContextPath()%>/manager/main.do");
         }
         });
       <%}%>
+  })
   <%}%>
 </script>
 <body>
@@ -168,8 +170,8 @@
 	            </span>
 	            <ul id="dropdown_ul">
 	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
-	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
-	        			<li style="float:left;">
+	        			<li style="float:left; margin-left:50px"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left; margin-left:110px">
 		            	<%if(loginMember==null){ %>
 	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
 			            <%}else{ %>
