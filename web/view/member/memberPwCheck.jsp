@@ -2,7 +2,6 @@
 <%@ include file="/view/common/header.jsp"%>
 <%
 	Member m = (Member)request.getAttribute("member");
-	System.out.println(m.getPassword());
 %>
 <section>
 	<div id="update_div">
@@ -18,10 +17,11 @@
 
 <style>
 #update_div{
-	margin-left: 705px;
+	margin-top: 100px;
+	margin-left: 500px;
 	width:500px;
 	height:300px;
-	border:1px red solid;
+	border:1px black solid;
 	text-align:center;
 }
 p{
@@ -56,7 +56,7 @@ button{
 	});
 	const fn_pwck_validate=()=>{
 		const uppw=$("#up_pw");
-		const pw = <%=m.getPassword()%>;
+		const pw = '<%=m.getPassword()%>';
 		if(uppw.val()==""||uppw.val()!=pw){
 			alert("비밀번호가 일치하지 않습니다.");
 			uppw.focus();
