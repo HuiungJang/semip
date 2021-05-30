@@ -50,7 +50,7 @@
 	textarea[name="recipe_intro"]{
 		width:300px;
 	}	
-	textarea[name="step"]{
+	textarea.procedure_content{
 		width:480px;
 	}
 	
@@ -152,7 +152,7 @@
 							<option value="">재료별</option>
 							<option value="육류">육류</option>
 							<option value="채소류">채소류</option>
-							<option value="해산물">해물류</option>
+							<option value="해물류">해물류</option>
 							<option value="과일류">과일류</option>
 							<option value="달걀/유제품">달걀/유제품</option>
 							<option value="가공식품류">가공식품류</option>
@@ -196,7 +196,7 @@
 							<select name="recipe_difficult" id="recipe_difficult">
 								<option value="상">상</option>
 								<option value="중">중</option>
-								<option value="히">하</option>
+								<option value="하">하</option>
 							</select>
 						</div>
 					</div>
@@ -229,7 +229,7 @@
 						<input type="hidden" id="procedure_count" name="procedure_count" value="1"/>
 						<div class="step">
 							<h3>Step 1</h3>
-							<textarea name="procedure_content1"></textarea>
+							<textarea name="procedure_content1" class="procedure_content"></textarea>
 							<input type="file" style="display:none" class="procedure_picture" name="procedure_picture1"/>
 							<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px"/>
 						</div>
@@ -267,6 +267,8 @@
 
 <script>
 	const fn_submit_validate=()=>{
+		
+		
  		if($("#hidden_name").val().length==0){
 			alert("재료를 하나 이상 입력하세요.");
 			$("input[name=ingredient_category]").first().focus();
@@ -286,10 +288,17 @@
 	
 	const fn_update_ingredient=()=>{
 		let names="";
+		let nameDuplicateTest="";
 		$("div#bundle_container").find($("input[name=ingredient_category]")).each((i,v)=>{
 			if($(v).val()!=""){
-				if(i!=0) names+=",";
-				names+=$(v).val();
+				if($(v).val()!=nameDuplicateTest){
+					if(i!=0) names+=",";
+					nameDuplicateTest=$(v).val();
+					names+=$(v).val();					
+				}else{
+					alert("재료명을 중복없이 입력해주세요.");
+					$(v).val("");
+				}
 			}
 		});
 		$("div#bundle_container").find($("input[name=hidden_name]")).val(names);

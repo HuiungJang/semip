@@ -167,7 +167,7 @@
 							<option value="">재료별</option>
 							<option value="육류">육류</option>
 							<option value="채소류">채소류</option>
-							<option value="해산물">해물류</option>
+							<option value="해물류">해물류</option>
 							<option value="과일류">과일류</option>
 							<option value="달걀/유제품">달걀/유제품</option>
 							<option value="가공식품류">가공식품류</option>

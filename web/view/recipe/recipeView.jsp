@@ -13,10 +13,9 @@
 <style>
                 
     section{
-        width:1100px;
+        /* width:1100px; */
         margin:20px auto;
         padding :20px;
-        overflow:hidden;
     }
     
     #chef_Profile{
@@ -133,15 +132,15 @@
 		font-size:20px;
 		font-weight:bold;
 		color:red;
+		margin-bottom:20px;
 	}
 	
 	.ingredient_container>*{
 		display:inline-block;
-		margin-top:20px;
 		vertical-align:top;
 	}
 	.ingredient_category{
-		width:100px;
+		width:200px;
 	}
 	
 	.ingredient_li{
@@ -149,7 +148,7 @@
 	}
 	
 	.ingredient_name{
-		width:80px;
+		width:200px;
 	}
 	.ingredient_amount{
 		color:grey;
@@ -264,7 +263,19 @@
                     <%if(recipe.getRecipeVideoAddress()!=null) {%>
                     	<p><%=recipe.getRecipeVideoAddress() %></p>
                     <%} %>
-                    <div class="info_align"><span id="recommend_info">좋아요 <%=recipe.getRecommendCount() %></span><span>댓글 <%=comments.size() %></span><span>조회수 <%=recipe.getRecipeViewCount() %></span></div>
+                    <div class="info_align"><span id="recommend_info">좋아요 <%=recipe.getRecommendCount() %></span><span id="comment_info">댓글 <%=comments.size() %></span><span>조회수 <%=recipe.getRecipeViewCount() %></span></div>
+                </div>
+                <div id="cooking_info">
+                    <p class="info_title">요리 정보</p>
+                    <div>
+	                	<p>인원 <%=recipe.getRecipeInfoHowmany() %> 인분</p>
+	                	<p>시간 <%=recipe.getRecipeInfoTime() %> 분</p>
+	                	<p>난이도 <%=recipe.getRecipeDifficult() %></p>
+                	</div>
+                	<div>
+                		<p>주재료 <%=recipe.getMainIngredient() %></p>
+                		<p>카테고리 <%=recipe.getRecipeCategory() %></p>
+                	</div>
                 </div>
                 <div id="recipe_ingredient">
                     <p class="info_title">재료</p>
@@ -352,6 +363,7 @@
 						},
 						success:data=>{
 							$("#view_comment").html(data);
+							$("#comment_info").text("댓글 "+$(".comment_row").length);
 						}
 					});
      			}
@@ -387,7 +399,7 @@
     						$(e.target).css("color", "red");
     						$("#recommend_info").html("좋아요 "+data);
     					}
-    					else alert("자신의 레시피에는 추천할 수 없습니다.");
+    					else alert("자신의 레시피는 추천할 수 없습니다.");
     				}
     			});
     		});
