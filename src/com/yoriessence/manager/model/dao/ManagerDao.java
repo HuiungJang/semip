@@ -87,25 +87,37 @@ public class ManagerDao {
         try{
             psmt = conn.prepareStatement(pp.getProperty("getSortRef2"));
 
+
             if(delivery.equals("all")){
-                delivery = "전체";
                 psmt = conn.prepareStatement(pp.getProperty("getSortRef2All"));
+                psmt.setInt(1,(cPage-1)*numPerPage+1);
+                psmt.setInt(2,numPerPage*cPage);
 
             }else if(delivery.equals("ready")){
-                delivery ="배송준비";
+                delivery="배송준비";
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,delivery);
+                psmt.setInt(4,(cPage-1)*numPerPage+1);
+                psmt.setInt(5,numPerPage*cPage);
 
             }else if(delivery.equals("ing")){
-                delivery ="배송중";
+                delivery="배송중";
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,delivery);
+                psmt.setInt(4,(cPage-1)*numPerPage+1);
+                psmt.setInt(5,numPerPage*cPage);
 
             }else if(delivery.equals("finish")){
                 delivery="배송완료";
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,delivery);
+                psmt.setInt(4,(cPage-1)*numPerPage+1);
+                psmt.setInt(5,numPerPage*cPage);
             }
 
-            psmt.setString(1,searchDate);
-            psmt.setString(2,endDate);
-            psmt.setString(3,delivery);
-            psmt.setInt(4,(cPage-1)*numPerPage+1);
-            psmt.setInt(5,numPerPage*cPage);
 
             rs= psmt.executeQuery();
 
