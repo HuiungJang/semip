@@ -30,7 +30,7 @@ public class NoticeViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("utf-8");
 		int no=Integer.parseInt(request.getParameter("noticeNo"));
 		Notice n = new NoticeService().selectNotice(no);
 		

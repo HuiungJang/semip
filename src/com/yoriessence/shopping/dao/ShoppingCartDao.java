@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.yoriessence.shopping.vo.OrderDetails;
 import com.yoriessence.shopping.vo.Product;
+import com.yoriessence.shopping.vo.Refund;
 import com.yoriessence.shopping.vo.ShoppingCart;
 
 public class ShoppingCartDao {
@@ -27,8 +28,6 @@ public class ShoppingCartDao {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public List<ShoppingCart> ShoppingCartCheck(Connection conn,String memberId) {
 		PreparedStatement pstmt=null;
@@ -213,6 +212,7 @@ public class ShoppingCartDao {
 			pstmt.setInt(3, sc.getProductprice());
 			pstmt.setInt(4, sc.getProductnumber());
 			pstmt.setInt(5, sc.getProductshopify());
+			pstmt.setInt(6, sc.getProductno());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -241,47 +241,71 @@ public class ShoppingCartDao {
 		}return result;
 	}
 	
-	public List<OrderDetails> OrderDetails(Connection conn, String memberid){
+	public int shoplist(Connection conn, String memberid, String proname,int pronumber, int productprice, int prono){
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<OrderDetails> list=new ArrayList();
+		int result=0;
 		String sql=prop.getProperty("OrderDetails");
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, memberid);
+			pstmt.setInt(2, productprice);
+			pstmt.setString(3, proname);
+			pstmt.setInt(4, pronumber);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public List<OrderDetails> shoppinglistend(Connection conn,String memberid){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<OrderDetails> od=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("Order"));
+			pstmt.setString(1, memberid);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				OrderDetails od=new OrderDetails();
-				od.setMEMBERID(rs.getString("MEMBERID"));
-				od.setORDERAMOUTNT(rs.getInt("ORDERAMOUNT"));
-				od.setORDERDATE(rs.getDate("ORDERDATE"));
-				od.setPAYMENTDATE(rs.getDate("PAYMENTDATE"));
-				list.add(od);
+				OrderDetails ods=new OrderDetails();
+				ods.setOrdernumber(rs.getInt("ORDER_NUMBER"));
+				ods.setMemberid(rs.getString("MEMBERID"));
+				ods.setOrderamount(rs.getInt("ORDER_AMOUNT"));
+				ods.setOrderdate(rs.getDate("ORDER_DATE"));
+				ods.setPaymentdate(rs.getDate("PAYMENT_DATE"));
+				ods.setProductname(rs.getString("PRODUCT_NAME"));
+				ods.setProductamount(rs.getInt("PRODUCT_AMOUNT"));
+				ods.setShippingstatus(rs.getString("SHIPPING_STATUS"));
+				od.add(ods);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(pstmt);
-		}return list;
+		}return od;
 	}
+	
+	public int RefundInsert(Connection conn, Refund rd) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("RefundInsert"));
+			pstmt.setInt(1, rd.getOrdernumber());
+			pstmt.setString(2, rd.getMemberid());
+			pstmt.setString(3, rd.getProductname());
+			pstmt.setString(4, rd.getRefundinfo());
+			pstmt.setString(5, rd.getRefundreason());
+			pstmt.setString(6, rd.getRefundpic());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

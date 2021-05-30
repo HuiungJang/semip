@@ -6,10 +6,9 @@
 %>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	section{
+	/* section{
 		display:flex;
-		width:1910px;
-	}
+	} */
 	#point_container{
 		width:1100px;
 		margin:0 auto;
@@ -36,8 +35,12 @@
 		margin:30px;
 	} 
 	.point_row{
-		display:flex;
-		justify-content:space-between;
+		display:grid;
+		grid-template-columns:repeat(3, 1fr);
+		gap:50px;
+	}
+	.point_row>span:last-child{
+		text-align:right;
 	}
 	#pageBar{
 		display:flex;

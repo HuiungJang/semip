@@ -12,6 +12,23 @@
  		padding :20px;
 		overflow:hidden;	
 	}
+	
+	/* 검색창 */
+	.search_row{
+		display:flex;
+		justify-content:center;
+	}
+	#btn_search{
+		width:70px; height:50px;	
+	} 
+	
+	#keyword{
+		display:inline-block;
+		width:700px; height:50px;
+		margin-right:10px;	
+	} 
+	
+	/* 검색기준 선택 */
 /* 	
 	.filter_row>*{
 		float:left;
@@ -101,7 +118,7 @@
 		<div class="search_row">
 			<input type="hidden" name="keyword_hidden" id="keyword_hidden" value="">
 			<input type="search" name="keyword" id="keywork" value="<%=request.getAttribute("keyword")!=null?request.getAttribute("keyword"):""%>">
-			<input type="button" id="btn_search" value="검색">
+			<input type="button" id="btn_search" id="btn_search" value="검색">
 		</div>
 		<div id="recipe_search">
 			<div class="filter_row">

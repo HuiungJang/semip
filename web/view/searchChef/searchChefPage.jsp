@@ -3,8 +3,7 @@
 <%@ page import="com.yoriessence.recipe.model.vo.Recipe" %>
 <%@ page import="com.yoriessence.chef.model.vo.User" %>
 <%@ page import="com.yoriessence.chef.model.vo.RecipeComment" %>
-<%@ page import="com.yoriessence.chef.model.vo.RecipeRecommend" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="com.yoriessence.chef.model.vo.RecipeRecommend" %><%--
   Created by IntelliJ IDEA.
   User: jang
   Date: 2021/05/08
@@ -20,17 +19,16 @@
     List<RecipeComment> countComment = (List<RecipeComment>)request.getAttribute("countComment");
     List<RecipeRecommend> recipeRecommend = (List<RecipeRecommend>)request.getAttribute("recipeRecommends");
 
-
-
+    System.out.println(recipeRecommend.get(0).getProfileName());
     User userInfo = (User)request.getAttribute("userInfo");
 %>
 <section>
     <div id="chef_Profile">
         <div class="chefContainer">
-            <%if( recipeRecommend.size() >0){%>
+            <%if(recipeRecommend != null){%>
                 <span id="picContainer">
 
-                    <%if(recipeRecommend.get(0).getProfilePic() != null){%>
+                    <%if(recipeRecommend.get(0).getRepresentPicture() != null){%>
                         <img src="<%=request.getContextPath()%>/upload/profile/<%=recipeRecommend.get(0).getRepresentPicture()%>" height="200px" width="200px" style="border-radius: 200px">
                     <%}else{%>
                         <img src="<%=request.getContextPath()%>/img/icon/non_profile.png" height="200px" width="200px" style="border-radius: 200px">
@@ -62,13 +60,11 @@
                     </span>
                 </span>
                 <script>
-                  <%if(loginMember != null){%>
-                      $("#sendDM").click(e=>{
-                        let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=recipeRecommend.get(0).getMemberId()%>';
-                        let option ="width=520,height=770"
-                        window.open(url,'_self',option);
-                      });
-                  <%}%>
+                  $("#sendDM").click(e=>{
+                    let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=recipeRecommend.get(0).getMemberId()%>';
+                    let option ="width=520,height=770"
+                    window.open(url,'_self',option);
+                  });
                 </script>
             <%}%>
         </div>
@@ -86,28 +82,28 @@
         <% for(int i=0; i<chefRecipe.size(); i++){%>
             <div class="recipe">
                 <%if(chefRecipe.get(i).getRepresentPicture() != null){%>
-                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                    <a href=""><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}else{%>
-                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
+                    <a href=""><img src="" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}%>
                 <div class="recipe_info">
-                    <p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
+                    <p><a href=""><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
 <%--                    글 내용으로--%>
-                    <p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><%=chefRecipe.get(i).getMemberId()%></a></p>
+                    <p><a href=""><%=chefRecipe.get(i).getMemberId()%></a></p>
 <%--                    프로필로--%>
                     <span>좋아요
                     <%try{%>
                         <%=recipeRecommend.get(i).getRecipeRecommendNum()%>
-                    <%}catch (IndexOutOfBoundsException e){%>
+                    <%}catch (NullPointerException e){%>
                         0
                     <%}%>
                     </span>
 
                     <span> 댓글
                     <%try{%>
-                        <%=countComment.get(i).getCountRecipeComment()%>
+                        <%=countComment.get(i)%>
                     <%}catch (IndexOutOfBoundsException e){%>
                         0
                     <%}%>
@@ -253,13 +249,13 @@
          if(v.recommendsNum != null){
            val+='<div class="recipe">';
            if(v.recommendsNum[i].representPicture !== undefined){
-             val+='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recommendsNum[i].recipeEnrollNo+'"><img src="'+v.recommendsNum[i].representPicture+'" height="200px" width="200px"></a>';
+             val+='<a href=""><img src="'+v.recommendsNum[i].representPicture+'" height="200px" width="200px"></a>';
            }else{
-             val+='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recommendsNum[i].recipeEnrollNo+'"><img src="<%=request.getContextPath()%>/img/icon/non_recipe.png" height="200px" width="200px"></a>';
+             val+='<a href=""><img src="" height="200px" width="200px"></a>';
            }
             val+='<div class="recipe_info">';
-            val+='<p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recommendsNum[i].recipeEnrollNo+'">'+decodeURI(v.recommendsNum[i].recipeTitle)+'</a></p>';
-            val+='<p><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch='+v.recommendsNum[i].memberNickName+'">'+v.recommendsNum[i].memberId+'</a></p>';
+            val+='<p><a href="">'+decodeURI(v.recommendsNum[i].recipeTitle)+'</a></p>';
+            val+='<p><a href="">'+v.recommendsNum[i].memberId+'</a></p>';
             val += '<span>좋아요 ' + v.recommendsNum[i].recipeRecommendNum + ' </span>';
 
            try{

@@ -38,9 +38,9 @@ let sortday2 = 1;
 
           $(data).each((i, v)=> {
             val = '<div class="today_recommend_recipe">';
-            val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src='+v.representPicture+' height="200px" width="200px">';
+            val += '<a href=""><img id="today_recipe_img" src='+v.representPicture+' height="200px" width="200px">';
             val += '<div class="today_recipe_info">';
-            val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>'+v.recipeTitle+'</h2></a>';
+            val += '<a id="today_recipe_title" href=""><h2>'+v.recipeTitle+'</h2></a>';
             val += '<span id="today_recipe_memberId">'+v.memberId+'</span>';
             val += '<span id="today_recipe_viewCount">조회수'+v.recipeViewCount+'</span>';
             val += '</div>';
@@ -89,9 +89,9 @@ let sortday2 = 1;
             console.log();
             $(data).each((i, v)=> {
               val = '<div class="today_recommend_recipe">';
-              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src='+v.representPicture+' height="200px" width="200px">';
+              val += '<a href=""><img id="today_recipe_img" src='+v.representPicture+' height="200px" width="200px">';
               val += '<div class="today_recipe_info">';
-              val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>'+v.recipeTitle+'</h2></a>';
+              val += '<a id="today_recipe_title" href=""><h2>'+v.recipeTitle+'</h2></a>';
               val += '<span id="today_recipe_memberId">'+v.memberId+'</span>';
               val += '<span id="today_recipe_viewCount">조회수'+v.recipeViewCount+'</span>';
               val += '</div>';
@@ -129,9 +129,9 @@ let sortday2 = 1;
             $(data).each((i,v)=>{
               for(let i =0; i<v.periodRecipeJson.length; i++){
                 val += '<div class="recipe">';
-                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+                val +='<a href=""><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
                 val +='<div class="recipe_info">';
-                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
+                val +='<a href=""><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
                 val +='<span>'+decodeURI(v.periodRecipeJson[i].memberId)+'</span><br>';
                 val +='<span> 좋아요 '+v.periodRecipeJson[i].recipeRecommend+' </span>';
 
@@ -187,9 +187,9 @@ let sortday2 = 1;
     <%if(todayRecipe!= null){%>
         <%for(Recipe c : todayRecipe){%>
             <div class="today_recommend_recipe">
-                <a href='<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=c.getRecipeEnrollNo()%>'><img id="today_recipe_img" src="<%=c.getRepresentPicture()%>" height="200px" width="200px"></a>
+                <a href=""><img id="today_recipe_img" src="<%=c.getRepresentPicture()%>" height="200px" width="200px"></a>
                 <div class="today_recipe_info">
-                    <a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=c.getRecipeEnrollNo()%>"><h2><%=c.getRecipeTitle()%></h2></a>
+                    <a id="today_recipe_title" href=""><h2><%=c.getRecipeTitle()%></h2></a>
                     <span id="today_recipe_memberId"><%=c.getMemberId()%></span>
                     <span id="today_recipe_viewCount"><%=c.getRecipeViewCount()%></span>
                 </div>
@@ -214,13 +214,13 @@ let sortday2 = 1;
             <%for(int i=0; i<countRecipeLike.size(); i++){%>
                 <div class="recipe">
                     <%try{%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                        <a href=""><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
                     <%}catch (IndexOutOfBoundsException e){%>
-                        <a href=<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>""><img src="" height="200px" width="200px"></a>
+                        <a href=""><img src="" height="200px" width="200px"></a>
                     <%}%>
                     <div class="recipe_info">
                         <%try{%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>
+                        <a href=""><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>
                         <span><%=periodRecipe.get(i).getMemberId()%></span><br>
                         <span>좋아요 <%=periodRecipe.get(i).getRecommendCount()%> </span>
                         <span> 댓글 <%=countRecipeComment.get(i)%> </span>

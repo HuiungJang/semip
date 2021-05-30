@@ -42,7 +42,7 @@
 	}
 </style>
 <div id="container">
-	<h2>공지사항</h2>
+	<h2>도움말</h2>
 	<div class="sub_container">
             <div style="width:250px; height:250px;">
                 <ul class="menu">
@@ -50,7 +50,7 @@
                     <li style="background-color:lightgray"><a href="<%=request.getContextPath()%>/helper/helperList">도움말</a></li>
                     <li><a href="<%=request.getContextPath()%>/question/questionList">1:1문의</a></li>
                     <%if(loginMember!=null&&loginMember.getUserId().equals("1677958940")){%>
-                    <li><a href="<%=request.getContextPath()%>/notice/noticeForm">글쓰기</a></li>
+                    <li><a href="<%=request.getContextPath()%>/helper/helperForm">글쓰기</a></li>
                     <%} %>
                 </ul>
             </div>
@@ -66,10 +66,10 @@
                                 <td clospan="5">조회된 공지사항이 없습니다.</td>
                             </tr>
                         <%}else{ %>
-                        	<% for(Helper n : helper){ %>
+                        	<% for(Helper h : helper){ %>
                                 <tr>
-                                    <td><%=n.getNumber() %></td> <!-- 번호 -->
-                                    <td><a href="<%=request.getContextPath()%>/helper/helperView?helperNo=<%=n.getNumber()%>"><%=n.getTitle()%></a></td>
+                                    <td><%=h.getNumber() %></td> <!-- 번호 -->
+                                    <td><a href="<%=request.getContextPath()%>/helper/helperView?helperNo=<%=h.getNumber()%>"><%=h.getTitle()%></a></td>
                                 </tr> 
                            	<%}
                     	}%>

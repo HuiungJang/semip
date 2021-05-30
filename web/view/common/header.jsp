@@ -1,3 +1,4 @@
+
 <%@ page import="com.yoriessence.member.vo.Member" %><%--
   Created by IntelliJ IDEA.
   User: jang
@@ -40,49 +41,35 @@
         $("#recommend_recipe *").remove();
         $("#topChef *").remove();
         $("#recipe *").remove();
-
         const imgtag = ' <div class="recipe_icon"><img src="<%=request.getContextPath()%>/img/mainImg/recipe_icon.png" width="400px"></div>';
         $("#recommend_recipe").append(imgtag);
-
         $(data.bestThreeRecipe).each((i,v)=>{
           let val='';
-
           val +='<div class="recipeData">';
           val +='<a href="">';
-
           if(data.bestThreeRecipe[i].representPicture !== null) {
             val += '<img src="'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
           }else{
             val += '<img src="/img/icon/non_profile.png" width="250px" height="250px">';
           }
           val+='<br></a>'
-
           val+='<div><a href=""><span class="recipeTitle">'+data.bestThreeRecipe[i].recipeTitle+'</span></a><br>';
-
           if(data.bestThreeRecipe[i].recipeIntro!== null){
             val +=  '<span class="recipeInfo">'+data.bestThreeRecipe[i].recipeIntro+'</span><br>';
           }else{
             val +=  '<span class="recipeInfo">소개가 없습니다.</span><br>';
           }
-
           val+='</div>';
-
           $("#recommend_recipe").append(val);
         });
-
-
         const $span = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">셰프 TOP 5</span>';
         $("#topChef").append($span);
-
         $(data.bestFiveChef).each((i,v)=>{
             let val2='';
-
             val2 +='<div class="chefData">';
             val2 +='<a href="<%=request.getContextPath()%>/searchchef.do?chefsearch='+data.bestFiveChef[i].memberNickName+'">';
-
             if(data.bestFiveChef[i].representPicture !== null) {
               val2 += '<img src="<%=request.getContextPath()%>/upload/profile/'+data.bestFiveChef[i].representPicture+'" width="280px" height="280px">';
-
             }else{
               val2 += '<img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="280px" height="280px">';
             }
@@ -92,25 +79,18 @@
             val2 += '<a href="<%=request.getContextPath()%>/searchchef.do?chefsearch='+data.bestFiveChef[i].memberNickName+'"><span class="chefNick">'+data.bestFiveChef[i].memberNickName+'</span></a><br>';
             val2 += '<span>';
             val2 += '<button class="sendDM">DM 보내기</button><input type="hidden" value="'+data.bestFiveChef[i].memberId+'" class="chefId"></span></div></div>';
-
            $("#topChef").append(val2);
         });
-
         const $span2 = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">최근 레시피</span>';
         $("#recipe").append($span2);
         $(data.threeRecipe).each((i,v)=>{
             let val3=''
-
             val3 +=  ' <div class="recipeData">';
-
             if(data.threeRecipe[i].representPicture !== null) {
               val3 += '<a href=""><img src="'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
-
             }else{
               val3 += '<a href=""><img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="250px" height="250px"></a>';
-
             }
-
             val3 +=  '<div>';
             val3 +=  '<a href=""><span class="recipeTitle">'+data.threeRecipe[i].recipeTitle+'</span></a><br>';
             if(data.threeRecipe[i].recipeIntro!== null){
@@ -120,20 +100,15 @@
             }
             val3 +=  '</div>';
             val3 +=  '</div>';
-
           $("#recipe").append(val3);
         });
-
         $(function(){
           $(".sendDM").click((e)=>{
-
             let id = $(e.target).next().val();
             let option = "width=550,height=650,resizable=no"
             console.log(id);
-
             <%if(loginMember != null){%>
                 let url="<%=request.getContextPath()%>/message?memberId=<%=loginMember.getUserId()%>&&targetId="+id;
-
                 window.open(url,"_blank",option);
             <%}else{%>
                 if(confirm('로그인이 필요합니다. 로그인 하시겠습니까?')){
@@ -144,7 +119,6 @@
             <%}%>
           });
         });
-
       },
       error: (e, m, i) => {
         console.log(e);
@@ -154,11 +128,9 @@
     });
   }
   mustStart();
-
   <%if(loginMember != null ){%>
       <%if(loginMember.getUserId().equals("admin")){%>
         $("#managerPage").attr("display","inline-block");
-
         $("#managerPage").click(e=>{
         if(confirm("관리자 페이지로 이동하시겠습니까?")){
           location.assign("<%=request.getContextPath()%>/manager/main.do");
@@ -166,10 +138,6 @@
         });
       <%}%>
   <%}%>
-
-
-
-
 </script>
 <body>
 <div id="totalContainer">
@@ -194,38 +162,32 @@
         </div>
 
         <div class="controlIcon">
-            <span id="managerPage">
-                <button>관리자페이지</button>
-            </span>
-            <span>
-                    <a href="">
-                        <img src="<%=request.getContextPath()%>/img/icon/icon_search.png">
-                    </a>
-            </span>
-            <span>
-                <a href="">
-                    <img src="<%=request.getContextPath()%>/img/icon/icon_cart.png">
-                </a>
-            </span>
-
-            <%if(loginMember==null){ %>
-                <span>
-                    <a href="#none" class="LoginTriger">
-                        <img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt="">
-                    </a>
-                </span>
-            <%}else{ %>
-                <a><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" width="55px" height="55px"></a>
-                <ul id="dropdown_ul2">
-                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
-                    <li><a href="<%=request.getContextPath()%>/member/memberPwCheck?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
-                    <li><a href="#">나의레시피</a></li>
-                    <li><a href="#">주문정보</a></li>
-                    <li><a href="#">나의포인트</a></li>
-                    <li><a href="<%=request.getContextPath()%>/notice/noticeList">고객센터</a></li>
-                    <li><a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a></li>
-                </ul>
-            <%} %>
+        	<div id="dropdown">
+	            <span id="managerPage">
+	                <button>관리자페이지</button>
+	            </span>
+	            <ul id="dropdown_ul">
+	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
+	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left;">
+		            	<%if(loginMember==null){ %>
+	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
+			            <%}else{ %>
+			            <a><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" width="55px" height="55px"></a>
+		                <ul id="dropdown_ul2">
+		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/member/memberPwCheck?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
+		                    <li><a href="#">나의레시피</a></li>
+		                    <li><a href="#">주문정보</a></li>
+		                    <li><a href="#">나의포인트</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/notice/noticeList">고객센터</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a></li>
+		                </ul>
+	           			<%} %>
+	       				</li>
+	       			</ul>
+	       		</div>
+	       		
             <div class="popup">
                 <div class="popup-content-container">
                     <span class="close-button">x</span>
@@ -235,13 +197,6 @@
                             <input type="text" name="userId" id="login_id" class="input-default" placeholder="아이디" title="아이디 입력">
                         </div>
                         <div class="alert-container">
-                    <span id="loginAlertId" class="alert-text hidden">
-                        <span class="icon-close">
-                            ::before
-                            ::after
-                        </span>
-                        "아이디 또는 이메일 주소를 입력해주세요."
-                    </span>
                         </div>
                         <div class="input-container">
                             <input type="password" name="password" id="login_password" class="input-default" placeholder="비밀번호" title="비밀번호 입력">
@@ -296,14 +251,11 @@
 
     <script>
       // 로그인 로직 구현
-
       const Login_Popup=()=>{
         const url ="<%=request.getContextPath()%>/loginpopup";
         const status= "left=1000px , top= 500px, width=800px, height=500px"
-
         open(url,"_blank",status);
       }
-
       var model = document.querySelector(".popup");
       var trigger = document.querySelector(".LoginTriger");
       var closeButton = document.querySelector(".close-button");
@@ -316,13 +268,9 @@
           toggleModel();
         }
       }
-
       trigger.addEventListener("click",toggleModel);
       closeButton.addEventListener("click", toggleModel);
       window.addEventListener("click", windowOnClick);
-
-
-
       // 카카오 로그인
      	Kakao.init('9821b1adf6591b5708f7ee0615e8458b');
       Kakao.Auth.createLoginButton({
@@ -388,7 +336,6 @@
           gapi.auth2.getAuthInstance().attachClickHandler('GgCustomLogin', options, onSignIn, onSignInFailure);
         })
       }
-
       function onSignIn(googleUser) {
         var access_token = googleUser.getAuthResponse().access_token
         $.ajax({
@@ -410,14 +357,11 @@
       function onSignInFailure(t){
         console.log(t);
       }
-
-
       //웹소켓서버에 연결하기
       //WebSocket객체를 생성함
       const socket=new WebSocket("ws://localhost:9090/<%=request.getContextPath()%>/chatting");
       //http프로토콜로 통신하는 주소 ws:주소
       //https프로토콜이용 : wss:주소
-
       //socket설정
       //접속후 실행되는 이벤트 핸들러 등록
       socket.onopen=e=>{
@@ -431,7 +375,6 @@
         console.log(e);
         console.log(e.data);
         //Object형태의 String 데이터를 객체로 변환해주기
-
         console.log(JSON.parse(e.data));
         const msg=JSON.parse(e.data);
         //let msg=e.data.split(",");
@@ -445,9 +388,7 @@
           $("#msgContainer").append($("<p>").text("<"+msg["sender"]+"> "+msg["msg"]).css("text-align","right"));
         }
         //메세지처리에 대한 로직을 여기에 구현을 함.
-
       }
-
       const sendMsg=()=>{
         //웹소켓서버에 메세지를 전송하는 함수
         //전송할 메세지 전처리
@@ -458,13 +399,10 @@
         //JSON.stringify(object)함수를 이용
         socket.send(JSON.stringify(msg));
       }
-
       function Message(sender,reciver,msg){
         this.sender=sender;
         this.reciver=reciver;
         this.msg=msg;
       }
-
-
     </script>
     <%--        header 끝 section 시작--%>

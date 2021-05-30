@@ -6,6 +6,7 @@ import static com.yoriessence.common.JDBCTemplate.getConnection;
 import static com.yoriessence.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import com.yoriessence.recipe.model.dao.RecipeDao;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
-import com.yoriessence.recipe.model.vo.RecipePicture;
+import com.yoriessence.recipe.model.vo.RecipeProcedure;
 
 public class RecipeService {
 	
@@ -71,8 +72,10 @@ public class RecipeService {
 			List<RecipeIngredient> list=(List<RecipeIngredient>)e.getValue();
 			for(RecipeIngredient ri:list) {
 				ri.setIngredientCategory(key);
-				result=dao.insertIngredient(conn, ri, recipeEnrollNo);
-				if(!(result>0)) break stop;
+				ri.setRecipeEnrollNo(recipeEnrollNo);
+				result=dao.insertIngredient(conn, ri);
+				System.out.println(result);
+//				if(!(result>0)) break stop;
 			}
 		}
 		if(result>0) commit(conn);
@@ -81,17 +84,21 @@ public class RecipeService {
 		return result;
 	}
 	
-	public List<RecipePicture> selectProcedurePicture(int recipeEnrollNo){
+	//레시피 과정 가져오는 메소드
+//	public List<RecipePicture> selectProcedurePicture(int recipeEnrollNo){
+	public List<RecipeProcedure> selectProcedure(int recipeEnrollNo){
 		Connection conn=getConnection();
-		List<RecipePicture> list=dao.selectProcedurePicture(conn, recipeEnrollNo);
+		List<RecipeProcedure> list=dao.selectProcedure(conn, recipeEnrollNo);
 		close(conn);
 		return list;
 	}
 
 	//요리과정의 사진 저장하는 메소드
-	public int insertProcedurePicture(int recipeEnrollNo, int fileNo, String fileName) {
+//	public int insertProcedurePicture(int recipeEnrollNo, int fileNo, String fileName) {
+	public int insertProcedure(RecipeProcedure rp) {
 		Connection conn=getConnection();
-		int result=dao.insertProcedurePicture(conn, recipeEnrollNo, fileNo, fileName);
+//		int result=dao.insertProcedurePicture(conn, recipeEnrollNo, fileNo, fileName);
+		int result=dao.insertProcedure(conn, rp);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		return result;
@@ -174,7 +181,7 @@ public class RecipeService {
 	}
 	
 	//레시피 수정 메소드
-	public int updateRecipe(Recipe r, Map<String, List<RecipeIngredient>> ingMap, List<String> pictures) {
+	public int updateRecipe(Recipe r, Map<String, List<RecipeIngredient>> ingMap, List<RecipeProcedure> procedure) {
 		Connection conn=getConnection();
 		int result=dao.updateRecipe(conn, r);
 		if(result>0) {
@@ -183,6 +190,11 @@ public class RecipeService {
 			}
 		}
 		if(result>0) {
+			Map<String, List<RecipeIngredient>> oriIng=new HashMap();
+			List<String> category=dao.selectIngredientCategory(conn, r.getRecipeEnrollNo());
+			for(String c:category) {
+				oriIng.put(c, dao.selectIngredient(conn, r.getRecipeEnrollNo(), c));
+			}
 			result=dao.deleteIngredient(conn, r.getRecipeEnrollNo());
 		}
 		if(result>0) {
@@ -196,17 +208,17 @@ public class RecipeService {
 				List<RecipeIngredient> list=(List<RecipeIngredient>)e.getValue();
 				for(RecipeIngredient ri:list) {
 					ri.setIngredientCategory(key);
-					result=dao.insertIngredient(conn, ri, r.getRecipeEnrollNo());
-					if(result==-1) break stop;
+					result=dao.insertIngredient(conn, ri);
+					if(result==0) break stop;
 				}
 			}
 		}
 		if(result>0) {
-			for(int i=0;i<pictures.size();i++) {
-				if(pictures.get(i)!=null) {
-					result=dao.updateProcedurePicture(conn, r.getRecipeEnrollNo(), i+1, pictures.get(i));
-					if(result==-1) break;
-				}
+			dao.deleteProcedure(conn, r.getRecipeEnrollNo());
+			for(RecipeProcedure rp:procedure) {
+//				result=dao.updateProcedurePicture(conn, r.getRecipeEnrollNo(), i+1, pictures.get(i));
+				result=dao.insertProcedure(conn, rp);
+				if(result==0) break;
 			}
 			if(result>0) {
 				commit(conn);

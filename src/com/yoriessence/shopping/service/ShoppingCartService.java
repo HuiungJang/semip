@@ -11,6 +11,7 @@ import java.util.List;
 import com.yoriessence.shopping.dao.ShoppingCartDao;
 import com.yoriessence.shopping.vo.OrderDetails;
 import com.yoriessence.shopping.vo.Product;
+import com.yoriessence.shopping.vo.Refund;
 import com.yoriessence.shopping.vo.ShoppingCart;
 
 public class ShoppingCartService {
@@ -88,11 +89,28 @@ public class ShoppingCartService {
 		return result;
 	}
 	
-	public List<OrderDetails> OrderDetails(String memberid){
+	public void shoplist(String memberid,String proname,int pronumber,int productprice,int prono){
 		Connection conn=getConnection();
-		List<OrderDetails> list=dao.OrderDetails(conn,memberid);
+		int result=dao.shoplist(conn, memberid, proname, pronumber, productprice, prono);
+		if(result>0) commit(conn);
+		else rollback(conn);
 		close(conn);
-		return list;
+	}
+	
+	public List<OrderDetails> shoppinglistend(String memberid){
+		Connection conn=getConnection();
+		List<OrderDetails> od=dao.shoppinglistend(conn,memberid);
+		close(conn);
+		return od;
+	}
+	
+	public int RefundInsert(Refund rd) {
+		Connection conn=getConnection();
+		int result=dao.RefundInsert(conn, rd);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 
 }

@@ -4,10 +4,6 @@
 	String AuthenticationKey = (String)request.getAttribute("AuthenticationKey");
 	String userName = (String)request.getAttribute("userName");
 	String userId = (String)request.getAttribute("userId");
-	
-	System.out.println("11111"+userName);
-	System.out.println("22222"+userId);
-	
 	Member mName = (Member)request.getAttribute("mName");
 	Member mId = (Member)request.getAttribute("mId");
 %>

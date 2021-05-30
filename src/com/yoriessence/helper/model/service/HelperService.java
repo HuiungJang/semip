@@ -50,4 +50,12 @@ public class HelperService {
 		close(conn);
 		return result;
 	}
+	public int helperDelete(int no) {
+		Connection conn=getConnection();
+		int result=dao.helperDelete(conn, no);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 }

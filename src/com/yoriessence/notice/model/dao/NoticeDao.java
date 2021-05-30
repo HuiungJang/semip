@@ -124,5 +124,19 @@ public class NoticeDao {
 			close(pstmt);
 		}return result;
 	}
+	
+	public int noticeDelete(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(props.getProperty("noticeDelete"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 
 }

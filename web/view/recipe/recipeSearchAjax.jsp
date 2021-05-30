@@ -8,7 +8,7 @@
 			for(Recipe r:recipeList) {%>
 				<div class="recipe">
 					<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
-					<img src="<%=r.getRepresentPicture()==null?r.getRepresentPicture():request.getContextPath()+"/upload/recipe/no_image.png" %>" height="200px" width="200px">
+					<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
 					<p><%=r.getRecipeTitle() %></p>
 					<p><%=r.getMemberId() %></p>
 					<span>좋아요 <%=r.getRecommendCount() %></span>
