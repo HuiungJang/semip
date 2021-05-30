@@ -52,8 +52,8 @@ public class ManagerDao {
         List<ManagerPage> result = new ArrayList<>();
         try{
             psmt = conn.prepareStatement(pp.getProperty("getOrderList"));
-            psmt.setInt(1,cPage);
-            psmt.setInt(2,numPerPage);
+            psmt.setInt(1,(cPage-1)*numPerPage+1);
+            psmt.setInt(2,numPerPage*cPage);
 
             rs= psmt.executeQuery();
 
@@ -61,15 +61,11 @@ public class ManagerDao {
                 ManagerPage m = new ManagerPage();
                 m.setRowNum(rs.getInt("rnum"));
                 m.setOrderNumber(rs.getInt("order_number"));
-                m.setMemberId(rs.getString("memberid"));
-                m.setOrderAmount(rs.getInt("order_amount"));
-                m.setPayment(rs.getString("payment"));
-                m.setPaymentStatus(rs.getString("payment_status"));
-                m.setShippingStatus(rs.getString("shipping_status"));
-                m.setOrderDate(rs.getDate("order_date"));
-                m.setPaymentDate(rs.getDate("payment_date"));
                 m.setMemberName(rs.getString("member_name"));
                 m.setAmountPrice(rs.getInt("amountprice"));
+                m.setPaymentMethod(rs.getString("payment_method"));
+                m.setShippingStatus(rs.getString("shipping_status"));
+                m.setPaymentDate(rs.getDate("payment_date"));
                 m.setWaybill(rs.getString("waybill"));
 
                 result.add(m);
@@ -78,6 +74,138 @@ public class ManagerDao {
             e.printStackTrace();
         }finally {
             close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
+    public List<ManagerPage> getSortRef2(Connection conn,String searchDate, String endDate, String delivery,int cPage, int numPerPage){
+        PreparedStatement psmt = null;
+        ResultSet rs =null;
+        List<ManagerPage> result = new ArrayList<>();
+        try{
+            psmt = conn.prepareStatement(pp.getProperty("getSortRef2"));
+
+            if(delivery.equals("all")){
+                delivery = "전체";
+                psmt = conn.prepareStatement(pp.getProperty("getSortRef2All"));
+
+            }else if(delivery.equals("ready")){
+                delivery ="배송준비";
+
+            }else if(delivery.equals("ing")){
+                delivery ="배송중";
+
+            }else if(delivery.equals("finish")){
+                delivery="배송완료";
+            }
+
+            psmt.setString(1,searchDate);
+            psmt.setString(2,endDate);
+            psmt.setString(3,delivery);
+            psmt.setInt(4,(cPage-1)*numPerPage+1);
+            psmt.setInt(5,numPerPage*cPage);
+
+            rs= psmt.executeQuery();
+
+            while (rs.next()){
+                ManagerPage m = new ManagerPage();
+                m.setRowNum(rs.getInt("rnum"));
+                m.setOrderNumber(rs.getInt("order_number"));
+                m.setMemberName(rs.getString("member_name"));
+                m.setAmountPrice(rs.getInt("amountprice"));
+                m.setPaymentMethod(rs.getString("payment_method"));
+                m.setShippingStatus(rs.getString("shipping_status"));
+                m.setPaymentDate(rs.getDate("payment_date"));
+                m.setWaybill(rs.getString("waybill"));
+
+                result.add(m);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
+    public List<ManagerPage> getSortRef3(Connection conn,String searchDate, String endDate, String searchCondition,String searchVal,int cPage, int numPerPage){
+        PreparedStatement psmt = null;
+        ResultSet rs =null;
+        List<ManagerPage> result = new ArrayList<>();
+        try{
+//            psmt = conn.prepareStatement(pp.getProperty("getSortRef3"));
+
+            if(searchCondition.equals("orderNum")){
+                psmt = conn.prepareStatement(pp.getProperty("getSortRef3OrderNum"));
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,searchVal);
+
+            }else if(searchCondition.equals("memberName")){
+                psmt = conn.prepareStatement(pp.getProperty("getSortRef3MemberName"));
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,searchVal);
+
+            }else if(searchCondition.equals("memberId")){
+                psmt = conn.prepareStatement(pp.getProperty("getSortRef3MemberId"));
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,searchVal);
+
+            }else if(searchCondition.equals("productName")){
+                psmt = conn.prepareStatement(pp.getProperty("getSortRef3ProductName"));
+                psmt.setString(1,searchDate);
+                psmt.setString(2,endDate);
+                psmt.setString(3,searchVal);
+            }
+
+            psmt.setInt(4,(cPage-1)*numPerPage+1);
+            psmt.setInt(5,numPerPage*cPage);
+
+            rs= psmt.executeQuery();
+
+            while (rs.next()){
+                ManagerPage m = new ManagerPage();
+                m.setRowNum(rs.getInt("rnum"));
+                m.setOrderNumber(rs.getInt("order_number"));
+                m.setMemberName(rs.getString("member_name"));
+                m.setAmountPrice(rs.getInt("amountprice"));
+                m.setPaymentMethod(rs.getString("payment_method"));
+                m.setShippingStatus(rs.getString("shipping_status"));
+                m.setPaymentDate(rs.getDate("payment_date"));
+                m.setWaybill(rs.getString("waybill"));
+
+                result.add(m);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
+    public int updateWaybill(Connection conn,String waybill,int orderNum){
+        PreparedStatement psmt = null;
+        int result = 0;
+
+        try{
+            psmt = conn.prepareStatement(pp.getProperty("updateWaybill"));
+
+            psmt.setString(1,waybill);
+            psmt.setInt(2,orderNum);
+
+            result = psmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally{
             close(psmt);
         }
 
