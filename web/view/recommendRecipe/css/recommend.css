@@ -73,17 +73,23 @@ section{
 
 #today_recommend_recipe_list{
     width:900px;
-    display:flex;
+    display:grid;
     align-items:center;
+    justify-items: center;
     margin:30px auto;
     padding-bottom:20px;
     border-bottom:1px solid #1f695b;
-    justify-content:space-between;
+    grid-template-columns: repeat(3,1fr);
 }
 #today_recommend_recipe a{
     font-size:50px;
     text-align:center;
 }
+.today_recommend_recipe>div{
+    display: inline-block;
+    height: 267px;
+}
+
 .title_container_grid{
     margin:0 auto;
     padding-top:20px;

@@ -191,7 +191,7 @@
     const endDate = $(".endDate").val();
 
     // 주문현황별 조회
-    if($(".sortRe2f").css("display") ==='grid'){
+    if($(".sortRef2").css("display") ==='grid'){
         const delivery = $(".deliveryState>div>input:checked").val();
         $.ajax({
           url:'<%=request.getContextPath()%>/manager/sort2',
@@ -204,7 +204,7 @@
             $(".data").remove();
 
             let val = '';
-
+            console.log(data);
             $(data).each((i,v)=>{
               val= '<div class="data">';
               val+='<div><input type="checkbox" class="checkRow"></div>';
@@ -255,7 +255,7 @@
           },
           success:data=>{
             $(".data").remove();
-
+            console.log(data);
             let val = '';
 
             $(data).each((i,v)=>{

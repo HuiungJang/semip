@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/view/common/css/message.css">
 </head>
 <%
-    String memberId = request.getParameter("memberId");
-    String targetId = request.getParameter("targetId");
+    String memberId = (String)request.getAttribute("memberId");
+    String targetId = (String)request.getAttribute("targetId");
     List<Profile> profile = (List<Profile>)request.getAttribute("profile");
 %>
 
@@ -61,7 +61,11 @@
         <div id="messageTop">
             <div class="messageProfile">
                 <a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=targetId%>">
-                    <img src="<%=request.getContextPath()%>/img/icon/<%=profile.get(0).getProfilePic()%>>">
+                    <%if(profile.get(0).getProfilePic() != null ){%>
+                        <img src="<%=request.getContextPath()%>/upload/profile/<%=profile.get(0).getProfilePic()%>>">
+                    <%}else{%>
+                        <img src="<%=request.getContextPath()%>/img/icon/non_profile.png>">
+                    <%}%>
                 </a>
             </div>
             <div class="messageBtn">
