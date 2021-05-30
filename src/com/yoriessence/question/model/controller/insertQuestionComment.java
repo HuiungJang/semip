@@ -1,26 +1,27 @@
-package com.yoriessence.member.controller;
+package com.yoriessence.question.model.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yoriessence.member.service.MemberService;
-import com.yoriessence.member.vo.Member;
+import com.yoriessence.question.model.service.QuestionService;
+import com.yoriessence.question.model.vo.QuestionComment;
 
 /**
- * Servlet implementation class MemberKakaoEnrollEndServlet
+ * Servlet implementation class insertQuestionComment
  */
-@WebServlet(name="kakoEnrollEndservlet",urlPatterns="/member/memberKakaoEnrollEnd")
-public class MemberKakaoEnrollEndServlet extends HttpServlet {
+@WebServlet("/question/insertQuestionComment")
+public class insertQuestionComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberKakaoEnrollEndServlet() {
+    public insertQuestionComment() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,26 +31,28 @@ public class MemberKakaoEnrollEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String userId=request.getParameter("userId");
-		String userPw=request.getParameter("password");
-		String userName=request.getParameter("userName");
-		String userNick=request.getParameter("userNick");
-		String email=request.getParameter("email");
-		String phone=request.getParameter("phone");
-		String address=request.getParameter("address");
 		
-		int point =0;
-		String grade ="no";
-	
-		Member m = new Member(userId,userName,userPw,userNick,email,address,grade,point,phone,"kakao");
+		String commentNumber=request.getParameter("commentNumber");
+		String commentMemberId=request.getParameter("CommentMemberId");
+		String commentContent=request.getParameter("commentContent");
+		String commentPic="";
 		
-		int result = new MemberService().insertMember(m);
+		QuestionComment qc=new QuestionComment();
+		qc.setCommentNumber(commentNumber);
+		qc.setCommentMemberId(commentMemberId);
+		qc.setCommentContent(commentContent);
+		qc.setCommentPic(commentPic);
 		
-		String loc="/";
-		String msg=result>0?"회원가입성공":"회원가입실패";
+		int result = new QuestionService().insertQuestionComment(qc);
+		String msg="";
+		String loc="/question/questionView?questionNo="+commentNumber;
+		if(result>0) {
+			msg="답변등록 성공";
+		}else {
+			msg="답변등록 실패";
+		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		
 		request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
 	}
 

@@ -10,6 +10,7 @@
     display: grid;
 	grid-template-rows: minmax(200px,auto);
 	margin:0 auto;
+	position: relative;
 }
 #managerPage{
 	display: none;
@@ -23,7 +24,6 @@
 .header>div{
 	display: inline-block;
 }
-
 /* 헤더 메뉴부분 */
 .header .menu{
 	margin-left: 200px;
@@ -38,6 +38,9 @@
 
 /* 헤더 메뉴 아이콘*/
 .header .controlIcon{
+	width:300px;
+	height:350px;
+	z-index:2;
 }
 .header .controlIcon>span>a>img{
 	padding-left: 20px;
@@ -52,14 +55,17 @@
 	width:300px;
 	height:250px;
 	margin-left:150px;
-	margin-top: 100px;
+	margin-top: 150px;
 }
 #dropdown ul{
 	list-style: none;
 }
-#dropdown_ul li{
+#dropdown_ul2{
+	z-index:200;
+	list-style: none;
+}
+#dropdown_ul>li{
 	margin-right: 10px;
-
 }
 #dropdown_ul2 li{
 	border:1px solid black;
@@ -212,10 +218,6 @@
 .close-button:hover {
 	background-color: darkgray;
 }
-/*														*/
-
-
-
 /* section 부*/
 .main-content {
 	display: grid;

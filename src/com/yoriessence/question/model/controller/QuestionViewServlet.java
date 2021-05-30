@@ -1,6 +1,7 @@
-package com.yoriessence.notice.model.controller;
+package com.yoriessence.question.model.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yoriessence.notice.model.service.NoticeService;
-import com.yoriessence.notice.model.vo.Notice;
+import com.yoriessence.question.model.service.QuestionService;
+import com.yoriessence.question.model.vo.Question;
+import com.yoriessence.question.model.vo.QuestionComment;
 
 /**
  * Servlet implementation class NoticeViewServlet
  */
-@WebServlet("/notice/noticeView")
-public class NoticeViewServlet extends HttpServlet {
+@WebServlet("/question/questionView")
+public class QuestionViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeViewServlet() {
+    public QuestionViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +33,14 @@ public class NoticeViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		int no=Integer.parseInt(request.getParameter("noticeNo"));
-		Notice n = new NoticeService().selectNotice(no);
+		int no=Integer.parseInt(request.getParameter("questionNo"));
+		Question q = new QuestionService().selectQuestion(no);
+		QuestionComment qc = new QuestionService().selectQuestionComment(no);
+//		request.setAttribute("comments", comments);
+		request.setAttribute("questionComment", qc);
+		request.setAttribute("question", q);
 		
-		request.setAttribute("notice", n);
-		
-		request.getRequestDispatcher("/view/notice/noticeView.jsp").forward(request, response);
+		request.getRequestDispatcher("/view/question/questionView.jsp").forward(request, response);
 	
 	}
 

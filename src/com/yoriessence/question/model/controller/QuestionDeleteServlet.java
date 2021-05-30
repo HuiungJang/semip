@@ -1,26 +1,26 @@
-package com.yoriessence.member.controller;
+package com.yoriessence.question.model.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yoriessence.member.service.MemberService;
-import com.yoriessence.member.vo.Member;
+import com.yoriessence.question.model.service.QuestionService;
 
 /**
- * Servlet implementation class MemberKakaoEnrollEndServlet
+ * Servlet implementation class QuestionDeleteServlet
  */
-@WebServlet(name="kakoEnrollEndservlet",urlPatterns="/member/memberKakaoEnrollEnd")
-public class MemberKakaoEnrollEndServlet extends HttpServlet {
+@WebServlet("/question/questionDelete")
+public class QuestionDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberKakaoEnrollEndServlet() {
+    public QuestionDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,28 +29,24 @@ public class MemberKakaoEnrollEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String userId=request.getParameter("userId");
-		String userPw=request.getParameter("password");
-		String userName=request.getParameter("userName");
-		String userNick=request.getParameter("userNick");
-		String email=request.getParameter("email");
-		String phone=request.getParameter("phone");
-		String address=request.getParameter("address");
+		int QuestionNumber=Integer.parseInt(request.getParameter("no"));
+		int result = new QuestionService().questionDelete(QuestionNumber);
 		
-		int point =0;
-		String grade ="no";
-	
-		Member m = new Member(userId,userName,userPw,userNick,email,address,grade,point,phone,"kakao");
+		String msg="";
+		String loc="";
+		System.out.println(result);
+		if(result>0) {
+			msg="문의를 삭제하였습니다.";
+			loc="/question/questionList";
+		}else {
+			msg="문의삭제를 실패하였습니다.";
+			loc="/question/questionList";
+		}
 		
-		int result = new MemberService().insertMember(m);
-		
-		String loc="/";
-		String msg=result>0?"회원가입성공":"회원가입실패";
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		
 		request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
+	
 	}
 
 	/**

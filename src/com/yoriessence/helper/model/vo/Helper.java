@@ -4,18 +4,16 @@ public class Helper {
 	private int number;
 	private String title;
 	private String content;
-	private String filePath;
 	
 	public Helper() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Helper(int number, String title, String content, String filePath) {
+	public Helper(int number, String title, String content) {
 		super();
 		this.number = number;
 		this.title = title;
 		this.content = content;
-		this.filePath = filePath;
 	}
 
 	public int getNumber() {
@@ -41,14 +39,5 @@ public class Helper {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-	
 	
 }

@@ -68,11 +68,8 @@
                 <div class="divStyle">
                     <h3 class="join_title"><label for="nickname">주소</label></h3>
                      <div class="div_input_address">
-                        <input type="text" id="mainaddress" name="address" class="address" maxlength="20" placeholder="우편번호 / 주소">
+                        <input type="text" id="mainaddress" name="address" class="address" maxlength="50" placeholder="우편번호 / 주소 / 상세주소 ">
                         <button type="button" onclick="findAddr();" class="div_input_addr_button">우편번호 찾기</button>
-                    </div>
-                    <div class="div_input_address" style="margin-top: 10px;">
-                        <input type="text" id="subaddress" name="subaddress" class="address" maxlength="20" placeholder="상세주소">
                     </div>
                     <span class="error_next_box"></span>
                 </div>

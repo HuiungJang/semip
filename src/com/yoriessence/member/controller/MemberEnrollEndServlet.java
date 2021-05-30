@@ -38,7 +38,7 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		String userNick = request.getParameter("userNick");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address")+request.getParameter("subaddress");
+		String address = request.getParameter("address");
 		
 		int point =0;
 		String grade ="no";

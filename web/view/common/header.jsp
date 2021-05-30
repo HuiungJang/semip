@@ -194,38 +194,32 @@
         </div>
 
         <div class="controlIcon">
-            <span id="managerPage">
-                <button>관리자페이지</button>
-            </span>
-            <span>
-                    <a href="">
-                        <img src="<%=request.getContextPath()%>/img/icon/icon_search.png">
-                    </a>
-            </span>
-            <span>
-                <a href="">
-                    <img src="<%=request.getContextPath()%>/img/icon/icon_cart.png">
-                </a>
-            </span>
-
-            <%if(loginMember==null){ %>
-                <span>
-                    <a href="#none" class="LoginTriger">
-                        <img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt="">
-                    </a>
-                </span>
-            <%}else{ %>
-                <a><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" width="55px" height="55px"></a>
-                <ul id="dropdown_ul2">
-                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
-                    <li><a href="<%=request.getContextPath()%>/member/memberPwCheck?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
-                    <li><a href="#">나의레시피</a></li>
-                    <li><a href="#">주문정보</a></li>
-                    <li><a href="#">나의포인트</a></li>
-                    <li><a href="<%=request.getContextPath()%>/notice/noticeList">고객센터</a></li>
-                    <li><a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a></li>
-                </ul>
-            <%} %>
+        	<div id="dropdown">
+	            <span id="managerPage">
+	                <button>관리자페이지</button>
+	            </span>
+	            <ul id="dropdown_ul">
+	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
+	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left;">
+		            	<%if(loginMember==null){ %>
+	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
+			            <%}else{ %>
+			            <a><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" width="55px" height="55px"></a>
+		                <ul id="dropdown_ul2">
+		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/member/memberPwCheck?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
+		                    <li><a href="#">나의레시피</a></li>
+		                    <li><a href="#">주문정보</a></li>
+		                    <li><a href="#">나의포인트</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/notice/noticeList">고객센터</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a></li>
+		                </ul>
+	           			<%} %>
+	       				</li>
+	       			</ul>
+	       		</div>
+	       		
             <div class="popup">
                 <div class="popup-content-container">
                     <span class="close-button">x</span>
@@ -235,13 +229,6 @@
                             <input type="text" name="userId" id="login_id" class="input-default" placeholder="아이디" title="아이디 입력">
                         </div>
                         <div class="alert-container">
-                    <span id="loginAlertId" class="alert-text hidden">
-                        <span class="icon-close">
-                            ::before
-                            ::after
-                        </span>
-                        "아이디 또는 이메일 주소를 입력해주세요."
-                    </span>
                         </div>
                         <div class="input-container">
                             <input type="password" name="password" id="login_password" class="input-default" placeholder="비밀번호" title="비밀번호 입력">

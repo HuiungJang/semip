@@ -39,7 +39,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String grade = request.getParameter("grade");
 		int point = Integer.parseInt(request.getParameter("point"));
-		String address = request.getParameter("address")+","+request.getParameter("subaddress");
+		String address = request.getParameter("address");
 		String snsconn = request.getParameter("snsconn");
 		
 		Member m = new Member(userId, userName, userPw, userNick, email, address, grade, point, phone, snsconn);

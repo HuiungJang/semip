@@ -81,7 +81,6 @@ public class HelperDao {
 				h.setNumber(rs.getInt("helper_no"));
 				h.setTitle(rs.getString("helper_title"));
 				h.setContent(rs.getString("helper_content"));
-				h.setFilePath(rs.getString("filepath"));
 				}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -98,7 +97,6 @@ public class HelperDao {
 			pstmt=conn.prepareStatement(props.getProperty("insertHelper"));
 			pstmt.setString(1, h.getTitle());
 			pstmt.setString(2, h.getContent());
-			pstmt.setString(3, h.getFilePath());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -114,8 +112,7 @@ public class HelperDao {
 			pstmt=conn.prepareStatement(props.getProperty("helperUpdate"));
 			pstmt.setString(1, h.getTitle());
 			pstmt.setString(2, h.getContent());
-			pstmt.setString(3, h.getFilePath());
-			pstmt.setInt(4, h.getNumber());
+			pstmt.setInt(3, h.getNumber());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -123,5 +120,18 @@ public class HelperDao {
 			close(pstmt);
 		}return result;
 	}
-
+	
+	public int helperDelete(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(props.getProperty("helperDelete"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 }
