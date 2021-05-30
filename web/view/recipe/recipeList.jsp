@@ -18,11 +18,11 @@
 		display:flex;
 		justify-content:center;
 	}
-	#btn_search{
+	.search_row>input#btn_search{
 		width:70px; height:50px;	
 	} 
 	
-	#keyword{
+	.search_row>input#keyword{
 		display:inline-block;
 		width:700px; height:50px;
 		margin-right:10px;	
@@ -117,7 +117,7 @@
 	<%-- <form action="<%=request.getContextPath() %>/recipe/recipeSearch" method="post"> --%>
 		<div class="search_row">
 			<input type="hidden" name="keyword_hidden" id="keyword_hidden" value="">
-			<input type="search" name="keyword" id="keywork" value="<%=request.getAttribute("keyword")!=null?request.getAttribute("keyword"):""%>">
+			<input type="search" name="keyword" id="keyword" value="<%=request.getAttribute("keyword")!=null?request.getAttribute("keyword"):""%>">
 			<input type="button" id="btn_search" id="btn_search" value="검색">
 		</div>
 		<div id="recipe_search">

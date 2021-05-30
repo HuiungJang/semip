@@ -9,6 +9,7 @@
 	List<RecipeComment> comments=(List<RecipeComment>)request.getAttribute("comments");
 	/* List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures"); */
 	List<RecipeProcedure> procedure=(List<RecipeProcedure>)request.getAttribute("procedure");
+	List<RecipeRecommend> recommend=(List<RecipeRecommend>)request.getAttribute("recommend");
 %>
 <style>
                 
@@ -81,6 +82,11 @@
      	border-bottom:1px solid black;
 	}
 	
+	/* 로그인 유저가 좋아요 누른 레시피일때 적용할 클래스 */
+	.recommended{
+		color:#1F695B ;
+	}
+	
     #recipe_info{
         text-align:center;
     }
@@ -107,7 +113,7 @@
     }
                 
 	/* 레시피 메뉴 */
-	.menu{
+	.recipe_menu{
 		position:absolute;
 		top:50px;
 		right:50px;
@@ -131,7 +137,7 @@
 	.info_title{
 		font-size:20px;
 		font-weight:bold;
-		color:red;
+		color:#1F695B;
 		margin-bottom:20px;
 	}
 	
@@ -241,16 +247,19 @@
             </div>
         </div>
         <div id="chef_recipe">
-        	<form action="<%=request.getContextPath()%>/recipe/recipeUpdate" method="post">
-	        	<div class="menu">
+        	<%-- <% if(loginMember.getUserId().equals(recipe.getMemberId())) {%> --%>
+	        	<div class="recipe_menu">
 		      		<a id="btn_menu">메뉴</a>
 		      		<div class="recipe_menubar">
-		      			<input type="hidden" name="recipeEnrollNo" value="<%=recipe.getRecipeEnrollNo()%>"/>
-		      			<button type="submit" id="recipeUpdate">수정</button>
-		      			<button id="recipeDelete">삭제</button>
+	       				<form action="<%=request.getContextPath()%>/recipe/recipeUpdate?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
+			      			<button type="submit" id="recipeUpdate">수정</button>
+			      		</form>
+	       				<form action="<%=request.getContextPath()%>/recipe/recipeDelete?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
+		      				<button type="submit" id="recipeDelete" onsubmit="fn_delete_validate()">삭제</button>
+		      			</form>
 		      		</div>
 		      	</div>
-	      	</form>
+	      	<%-- <%} %> --%>
             <div class="recipe_container">
                 <div id="recipe_info">
                 	<%if(recipe.getRepresentPicture()!=null){ %>
@@ -263,7 +272,20 @@
                     <%if(recipe.getRecipeVideoAddress()!=null) {%>
                     	<p><%=recipe.getRecipeVideoAddress() %></p>
                     <%} %>
-                    <div class="info_align"><span id="recommend_info">좋아요 <%=recipe.getRecommendCount() %></span><span id="comment_info">댓글 <%=comments.size() %></span><span>조회수 <%=recipe.getRecipeViewCount() %></span></div>
+                    <div class="info_align">
+                    	<%
+                    	boolean flag=false;
+                    	for(RecipeRecommend rr:recommend) { 
+                    		/* if(rr.getMemberId().equals(loginMember.getUserId())) { */
+                    		if(rr.getMemberId().equals("testId2")) {
+                    			flag=true;
+                    			break;
+                    		}%>
+                    	<% } %>
+                    	<span id="recommend_info" class=<%=flag?"recommended":""%>>좋아요 <%=recipe.getRecommendCount() %></span>
+                    	<input type="checkbox" id="recommend_check" style="display:none" <%=flag?"checked":"" %>>
+                    	<span id="comment_info">댓글 <%=comments.size() %></span>
+                    	<span id="view_count_info">조회수 <%=recipe.getRecipeViewCount() %></span></div>
                 </div>
                 <div id="cooking_info">
                     <p class="info_title">요리 정보</p>
@@ -369,6 +391,14 @@
      			}
     		});
     		
+    		const fn_delete_validate=()=>{
+    			if(confirm("삭제 후엔 복구가 불가능합니다. 정말로 삭제하시겠습니까?")){
+    				return true;
+    			}
+   				return false; 
+    		}
+    		
+    		
     		$("#btn_menu").click(e=>{
     			const menu=$(e.target).next();
     			if(menu.css("display")=="block"){
@@ -387,21 +417,24 @@
     		$("#comment_title").html("댓글 <%=comments.size()%> 개");
     		
     		$("#recommend_info").click(e=>{
-    			$.ajax({
-    				url:"<%=request.getContextPath()%>/recipe/recommend",
-    				data:{
-    					/* loginId=loginMember.getMemberId() */
-    					loginId:"testId2",
-    					recipeEnrollNo:<%=recipe.getRecipeEnrollNo()%>
-    				},
-    				success:data=>{
-    					if(data>0) {
-    						$(e.target).css("color", "red");
-    						$("#recommend_info").html("좋아요 "+data);
-    					}
-    					else alert("자신의 레시피는 추천할 수 없습니다.");
-    				}
-    			});
+			    $("#recommend_check").click();
+			    let checked=$("#recommend_check").prop("checked");
+    			<%-- if(<%=!(loginMember.getUserId().equals(recipe.getMemberId()))%>){ --%>
+		    			$.ajax({
+		    				url:"<%=request.getContextPath()%>/recipe/recommend",
+		    				data:{
+		    					/* loginId=loginMember.getMemberId() */
+		    					loginId:"testId2",
+		    					recipeEnrollNo:<%=recipe.getRecipeEnrollNo()%>,
+		    					check:checked
+		    				},
+		    				success:data=>{
+	    						$("#recommend_info").html(data).toggleClass("recommended");
+		    				}
+		    			});
+/*     			}else{
+    				alert("자신의 레시피에는 추천할 수 없습니다.");
+    			} */
     		});
     		
     		

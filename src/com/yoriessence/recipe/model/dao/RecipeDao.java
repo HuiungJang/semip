@@ -15,8 +15,8 @@ import java.util.Properties;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
-import com.yoriessence.recipe.model.vo.RecipePicture;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
+import com.yoriessence.recipe.model.vo.RecipeRecommend;
 
 public class RecipeDao {
 	
@@ -51,7 +51,6 @@ public class RecipeDao {
 				r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
 				r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
 				r.setRecipeDifficult(rs.getString("recipe_difficult"));
-				r.setRecipeProcedure(rs.getString("recipe_procedure"));
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
@@ -105,7 +104,6 @@ public class RecipeDao {
 				r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
 				r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
 				r.setRecipeDifficult(rs.getString("recipe_difficult"));
-				r.setRecipeProcedure(rs.getString("recipe_procedure"));
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
@@ -186,6 +184,31 @@ public class RecipeDao {
 		return result;
 	}
 	
+	//추천 리스트 메소드
+	public List<RecipeRecommend> selectRecommendList(Connection conn, int recipeEnrollNo){
+		List<RecipeRecommend> list=new ArrayList();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("selectRecommendList"));
+			pstmt.setInt(1, recipeEnrollNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				RecipeRecommend rr=new RecipeRecommend();
+				rr.setRecipeEnrollNo(rs.getInt("recipe_Enroll_No"));
+				rr.setRecipeRecommendDate(rs.getDate("recipe_Recommend_Date"));
+				rr.setMemberId(rs.getString("member_id"));
+				list.add(rr);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	public List<RecipeComment> selectComment(Connection conn, int recipeEnrollNo){
 		List<RecipeComment> list=new ArrayList();
 		PreparedStatement pstmt=null;
@@ -233,7 +256,6 @@ public class RecipeDao {
 				r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
 				r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
 				r.setRecipeDifficult(rs.getString("recipe_difficult"));
-				r.setRecipeProcedure(rs.getString("recipe_procedure"));
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
@@ -296,10 +318,9 @@ public class RecipeDao {
 			pstmt.setInt(7, r.getRecipeInfoHowmany());
 			pstmt.setInt(8, r.getRecipeInfoTime());
 			pstmt.setString(9, r.getRecipeDifficult());
-			pstmt.setString(10, r.getRecipeProcedure());
-			pstmt.setString(11, r.getRecipeTip());
-			pstmt.setString(12, r.getRecipeTag());
-			pstmt.setString(13, r.getMainIngredient());
+			pstmt.setString(10, r.getRecipeTip());
+			pstmt.setString(11, r.getRecipeTag());
+			pstmt.setString(12, r.getMainIngredient());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -372,6 +393,22 @@ public class RecipeDao {
 		return result;
 	}
 	
+	public int insertRecommend(Connection conn, RecipeRecommend rr) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("insertRecommend"));
+			pstmt.setInt(1, rr.getRecipeEnrollNo());
+			pstmt.setString(2, rr.getMemberId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public int updateRecipe(Connection conn, Recipe r) {
 		int result=0;
 		PreparedStatement pstmt=null;
@@ -384,11 +421,10 @@ public class RecipeDao {
 			pstmt.setInt(5, r.getRecipeInfoHowmany());
 			pstmt.setInt(6, r.getRecipeInfoTime());
 			pstmt.setString(7, r.getRecipeDifficult());
-			pstmt.setString(8, r.getRecipeProcedure());
-			pstmt.setString(9, r.getRecipeTip());
-			pstmt.setString(10, r.getRecipeTag());
-			pstmt.setString(11, r.getMainIngredient());
-			pstmt.setInt(12, r.getRecipeEnrollNo());
+			pstmt.setString(8, r.getRecipeTip());
+			pstmt.setString(9, r.getRecipeTag());
+			pstmt.setString(10, r.getMainIngredient());
+			pstmt.setInt(11, r.getRecipeEnrollNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -469,6 +505,68 @@ public class RecipeDao {
 		try {
 			pstmt=conn.prepareStatement(prop.getProperty("deleteProcedure"));
 			pstmt.setInt(1, recipeEnrollNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteAllComment(Connection conn, int recipeEnrollNo) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("deleteAllComment"));
+			pstmt.setInt(1, recipeEnrollNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteAllRecommend(Connection conn, int recipeEnrollNo) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("deleteAllRecommend"));
+			pstmt.setInt(1, recipeEnrollNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteRecommend(Connection conn, RecipeRecommend rr) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("deleteRecommend"));
+			pstmt.setInt(1, rr.getRecipeEnrollNo());
+			pstmt.setString(2, rr.getMemberId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateRecipeViewCount(Connection conn, Recipe r) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("updateRecipeViewCount"));
+			pstmt.setInt(1, r.getRecipeViewCount()+1);
+			pstmt.setInt(2, r.getRecipeEnrollNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

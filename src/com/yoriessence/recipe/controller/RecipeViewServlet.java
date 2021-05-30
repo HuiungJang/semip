@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yoriessence.member.vo.Member;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
+import com.yoriessence.recipe.model.vo.RecipeRecommend;
 
 /**
  * Servlet implementation class RecipeViewServlet
@@ -42,6 +44,11 @@ public class RecipeViewServlet extends HttpServlet {
 		RecipeService rs=new RecipeService();
 		Recipe r=rs.selectRecipe(recipeEnrollNo);
 		
+		//로그인한 사람과 작성자 아이디 비교해 조회수 올리기
+//		if(!(((Member)(request.getSession(false)).getAttribute("loginMember")).getUserId().equals(r.getMemberId()))) {
+			rs.updateRecipeViewCount(r);
+//		}
+		
 		//재료 분류 가져옴
 		List<String> ingCategory=rs.selectIngredientCategory(recipeEnrollNo);
 		
@@ -64,6 +71,9 @@ public class RecipeViewServlet extends HttpServlet {
 		//레시피 과정 가져오기ㅏ
 		List<RecipeProcedure> procedure=rs.selectProcedure(recipeEnrollNo);
 		
+		//레시피의 추천 목록 가져오기
+		List<RecipeRecommend> recommend=rs.selectRecommendList(recipeEnrollNo);
+		
 		if(r!=null) {
 			request.setAttribute("recipeView", r);
 			request.setAttribute("category", ingCategory);
@@ -71,6 +81,7 @@ public class RecipeViewServlet extends HttpServlet {
 			request.setAttribute("comments", comments);
 //			request.setAttribute("pictures", pictures);
 			request.setAttribute("procedure", procedure);
+			request.setAttribute("recommend", recommend);
 			request.getRequestDispatcher("/view/recipe/recipeView.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "이미 삭제되었거나 존재하지 않는 레시피입니다.");

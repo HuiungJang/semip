@@ -17,6 +17,7 @@ import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
+import com.yoriessence.recipe.model.vo.RecipeRecommend;
 
 public class RecipeService {
 	
@@ -131,10 +132,21 @@ public class RecipeService {
 		return list;
 	}
 	
+	public List<RecipeRecommend> selectRecommendList(int recipeEnrollNo){
+		Connection conn=getConnection();
+		List<RecipeRecommend> list=dao.selectRecommendList(conn, recipeEnrollNo);
+		close(conn);
+		return list;
+	}
+	
 	//특정 레시피 삭제
 	public int deleteRecipe(int recipeEnrollNo) {
 		Connection conn=getConnection();
 		int result=dao.deleteRecipe(conn, recipeEnrollNo);
+		dao.deleteAllComment(conn, recipeEnrollNo);
+		dao.deleteIngredient(conn, recipeEnrollNo);
+		dao.deleteProcedure(conn, recipeEnrollNo);
+		dao.deleteAllRecommend(conn, recipeEnrollNo);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
@@ -147,6 +159,16 @@ public class RecipeService {
 		int result=dao.deleteIngredient(conn, recipeEnrollNo);
 		if(result>0) commit(conn);
 		else rollback(conn);
+		return result;
+	}
+	
+	//레시피 추천 취소하기
+	public int deleteRecommend(RecipeRecommend rr) {
+		Connection conn=getConnection();
+		int result=dao.deleteRecommend(conn, rr);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
 		return result;
 	}
 	
@@ -174,6 +196,16 @@ public class RecipeService {
 	public int insertComment(RecipeComment comment) {
 		Connection conn=getConnection();
 		int result=dao.insertComment(conn, comment);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//레시피 번호 기준으로 추천하는 메소드
+	public int insertRecommend(RecipeRecommend rr) {
+		Connection conn=getConnection();
+		int result=dao.insertRecommend(conn, rr);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
@@ -232,5 +264,13 @@ public class RecipeService {
 		
 	}
 	
+	//레시피 조회수 올리는 메소드
+	public int updateRecipeViewCount(Recipe r) {
+		Connection conn=getConnection();
+		int result=dao.updateRecipeViewCount(conn, r);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+	}
 	
 }
