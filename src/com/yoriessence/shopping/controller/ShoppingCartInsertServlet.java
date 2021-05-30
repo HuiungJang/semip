@@ -43,6 +43,7 @@ public class ShoppingCartInsertServlet extends HttpServlet {
 		int productprice=Integer.parseInt(request.getParameter("productprice"));
 		int su=Integer.parseInt(request.getParameter("su"));
 		int productshopify=Integer.parseInt(request.getParameter("productshopify"));
+		int productno=Integer.parseInt(request.getParameter("productno"));
 		
 		ShoppingCart sc=new ShoppingCart();
 		sc.setMemberid(memberid);
@@ -50,10 +51,11 @@ public class ShoppingCartInsertServlet extends HttpServlet {
 		sc.setProductprice(productprice);
 		sc.setProductnumber(su);
 		sc.setProductshopify(productshopify);
-
+		sc.setProductno(productno);
+		
 		int result=new ShoppingCartService().insertShoppingCart(sc);
 		
-		int productno=Integer.parseInt(request.getParameter("productno"));
+		productno=Integer.parseInt(request.getParameter("productno"));
 		
 		String msg="";
 		String loc="";

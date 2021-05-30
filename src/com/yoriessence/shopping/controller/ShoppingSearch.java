@@ -2,6 +2,7 @@ package com.yoriessence.shopping.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.shopping.service.ShoppingCartService;
+import com.yoriessence.shopping.vo.Product;
 
 /**
- * Servlet implementation class DeleteShoppingCartServlet
+ * Servlet implementation class ShoppingSearch
  */
-@WebServlet(name = "DeleteShoppingCart", urlPatterns = { "/DeleteShopping" })
-public class DeleteShoppingCartServlet extends HttpServlet {
+@WebServlet("/shopping/search")
+public class ShoppingSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteShoppingCartServlet() {
+    public ShoppingSearch() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,15 +32,20 @@ public class DeleteShoppingCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String productname=request.getParameter("productname");
+		String search = request.getParameter("search");
 		
-		int result=new ShoppingCartService().deleteShopping(productname);
-		String msg=result>0?"정상적으로 삭제되었습니다":"삭제에 실패했습니다 다시 시도해주세요";
-		String loc="/view/shopping/shopping.jsp";
+		Product pds=new ShoppingCartService().Productsearch(search);
 		
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/shopping/cart").forward(request, response);
+		if(pds!=null) {
+			request.setAttribute("pds", pds);
+			request.getRequestDispatcher("/view/shopping/shoppingsearch.jsp").forward(request, response);;
+			
+		}else {
+			request.setAttribute("msg", "존재하지 않는 상품입니다.");
+			request.setAttribute("loc", "/shopping/mall");
+			request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
+		}
+		
 	}
 
 	/**

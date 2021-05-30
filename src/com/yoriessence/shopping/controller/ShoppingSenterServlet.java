@@ -13,19 +13,19 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.yoriessence.shopping.service.ShoppingCartService;
-import com.yoriessence.shopping.vo.Product;
+import com.yoriessence.shopping.vo.Refund;
 
 /**
- * Servlet implementation class ProductInsert
+ * Servlet implementation class ShoppingSenterServlet
  */
-@WebServlet("/ProductInsert")
-public class ProductInsert extends HttpServlet {
+@WebServlet("/shoppingsenter")
+public class ShoppingSenterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductInsert() {
+    public ShoppingSenterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,31 +46,29 @@ public class ProductInsert extends HttpServlet {
 		int maxSize=1024*1024*10;
 		MultipartRequest mr=new MultipartRequest(request,path,maxSize,"UTF-8",new DefaultFileRenamePolicy());
 		
-		Product pd=new Product();
-		pd.setStock(Integer.parseInt(mr.getParameter("stock")));
-		pd.setPrice(Integer.parseInt(mr.getParameter("price")));
-		pd.setExplanation(mr.getParameter("explantion"));
-		pd.setProductName(mr.getParameter("productname"));
-		pd.setProductkategorie(mr.getParameter("kategorie"));
-		pd.setProductshopify(Integer.parseInt(mr.getParameter("productshopify")));
-		pd.setProductImage(mr.getFilesystemName("productimage"));
+		Refund rd=new Refund();
 		
+		rd.setMemberid(mr.getParameter("memberid"));
+		rd.setProductname(mr.getParameter("productname"));
+		rd.setOrdernumber(Integer.parseInt(mr.getParameter("ordernumber")));
+		rd.setRefundinfo(mr.getParameter("kategorie"));
+		rd.setRefundpic(mr.getFilesystemName("productimage"));
+		rd.setRefundreason(mr.getParameter("titlesenter"));
 		
-		int result=new ShoppingCartService().ProductInsert(pd);
+		int result=new ShoppingCartService().RefundInsert(rd);
 		
 		String msg="";
 		String loc="";
 		if(result>0) {
-			msg="상품등록 성공";
+			msg="문의사항등록 성공";
 			loc="/index.jsp";
 		}else {
-			msg="상품등록 실패";
+			msg="문의사항등록 실패";
 			loc="/index.jsp";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
-		
 	}
 
 	/**

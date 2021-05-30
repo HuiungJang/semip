@@ -3,85 +3,106 @@ package com.yoriessence.shopping.vo;
 import java.util.Date;
 
 public class OrderDetails {
-	private int ORDERNUMBER;
-	private String MEMBERID;
-	private int ORDERAMOUTNT;
-	private String PAYMENT;
-	private String PAYMENTSTATUS;
-	private Date ORDERDATE;
-	private Date PAYMENTDATE;
+	private int Ordernumber;
+	private String memberid ;
+	private int Orderamount;
+	private Date orderdate;
+	private Date paymentdate;
+	private String productname;
+	private int productamount;
+	private String shippingstatus;
 	
 	public OrderDetails() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public OrderDetails(int oRDERNUMBER, String mEMBERID, int oRDERAMOUTNT, String pAYMENT, String pAYMENTSTATUS,
-			Date oRDERDATE, Date pAYMENTDATE) {
+	public OrderDetails(int ordernumber, String memberid, int orderamount, Date orderdate, Date paymentdate,
+			String productname, int productamount, String shippingstatus) {
 		super();
-		ORDERNUMBER = oRDERNUMBER;
-		MEMBERID = mEMBERID;
-		ORDERAMOUTNT = oRDERAMOUTNT;
-		PAYMENT = pAYMENT;
-		PAYMENTSTATUS = pAYMENTSTATUS;
-		ORDERDATE = oRDERDATE;
-		PAYMENTDATE = pAYMENTDATE;
+		this.Ordernumber = ordernumber;
+		this.memberid = memberid;
+		this.Orderamount = orderamount;
+		this.orderdate = orderdate;
+		this.paymentdate = paymentdate;
+		this.productname = productname;
+		this.productamount = productamount;
+		this.shippingstatus = shippingstatus;
 	}
 
-	public int getORDERNUMBER() {
-		return ORDERNUMBER;
+
+
+	public int getOrdernumber() {
+		return Ordernumber;
 	}
 
-	public void setORDERNUMBER(int oRDERNUMBER) {
-		ORDERNUMBER = oRDERNUMBER;
+	public void setOrdernumber(int ordernumber) {
+		Ordernumber = ordernumber;
 	}
 
-	public String getMEMBERID() {
-		return MEMBERID;
+	public String getMemberid() {
+		return memberid;
 	}
 
-	public void setMEMBERID(String mEMBERID) {
-		MEMBERID = mEMBERID;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
-	public int getORDERAMOUTNT() {
-		return ORDERAMOUTNT;
+	public int getOrderamount() {
+		return Orderamount;
 	}
 
-	public void setORDERAMOUTNT(int oRDERAMOUTNT) {
-		ORDERAMOUTNT = oRDERAMOUTNT;
+	public void setOrderamount(int orderamount) {
+		Orderamount = orderamount;
 	}
 
-	public String getPAYMENT() {
-		return PAYMENT;
+	public Date getOrderdate() {
+		return orderdate;
 	}
 
-	public void setPAYMENT(String pAYMENT) {
-		PAYMENT = pAYMENT;
+	public void setOrderdate(Date orderdate) {
+		this.orderdate = orderdate;
 	}
 
-	public String getPAYMENTSTATUS() {
-		return PAYMENTSTATUS;
+	public Date getPaymentdate() {
+		return paymentdate;
 	}
 
-	public void setPAYMENTSTATUS(String pAYMENTSTATUS) {
-		PAYMENTSTATUS = pAYMENTSTATUS;
+	public void setPaymentdate(Date paymentdate) {
+		this.paymentdate = paymentdate;
 	}
 
-	public Date getORDERDATE() {
-		return ORDERDATE;
+	public String getProductname() {
+		return productname;
 	}
 
-	public void setORDERDATE(Date oRDERDATE) {
-		ORDERDATE = oRDERDATE;
+	public void setProductname(String productname) {
+		this.productname = productname;
 	}
 
-	public Date getPAYMENTDATE() {
-		return PAYMENTDATE;
+	public int getProductamount() {
+		return productamount;
 	}
 
-	public void setPAYMENTDATE(Date pAYMENTDATE) {
-		PAYMENTDATE = pAYMENTDATE;
+	public void setProductamount(int productamount) {
+		this.productamount = productamount;
 	}
+
+	public String getShippingstatus() {
+		return shippingstatus;
+	}
+
+	public void setShippingstatus(String shippingstatus) {
+		this.shippingstatus = shippingstatus;
+	}
+
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.yoriessence.shopping.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.shopping.service.ShoppingCartService;
+import com.yoriessence.shopping.vo.OrderDetails;
 
 /**
- * Servlet implementation class DeleteShoppingCartServlet
+ * Servlet implementation class ShoppingListEndServlet
  */
-@WebServlet(name = "DeleteShoppingCart", urlPatterns = { "/DeleteShopping" })
-public class DeleteShoppingCartServlet extends HttpServlet {
+@WebServlet("/ShoppingListEndServlet")
+public class ShoppingListEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteShoppingCartServlet() {
+    public ShoppingListEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,15 +32,11 @@ public class DeleteShoppingCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String productname=request.getParameter("productname");
-		
-		int result=new ShoppingCartService().deleteShopping(productname);
-		String msg=result>0?"정상적으로 삭제되었습니다":"삭제에 실패했습니다 다시 시도해주세요";
-		String loc="/view/shopping/shopping.jsp";
-		
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/shopping/cart").forward(request, response);
+		String memberid="testId";
+		/* String memberid=request.getParameter("memberId"); */
+		List<OrderDetails> od=new ShoppingCartService().shoppinglistend(memberid);
+		request.setAttribute("od", od);
+		request.getRequestDispatcher("/view/shopping/ShoppingListEnd.jsp").forward(request, response);
 	}
 
 	/**
