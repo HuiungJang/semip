@@ -31,29 +31,29 @@
 </head>
 <script>
   // 가져와야할것.
-  // 셰프 좋아요순 5명
-  // 레시피 좋아요순 3개
-  // 레시피 3개
   function mustStart() {
     $.ajax({
       url: '<%=request.getContextPath()%>/mainpage.do',
       success: data => {
+
         $("#recommend_recipe *").remove();
         $("#topChef *").remove();
         $("#recipe *").remove();
+
         const imgtag = ' <div class="recipe_icon"><img src="<%=request.getContextPath()%>/img/mainImg/recipe_icon.png" width="400px"></div>';
+
         $("#recommend_recipe").append(imgtag);
         $(data.bestThreeRecipe).each((i,v)=>{
           let val='';
           val +='<div class="recipeData">';
-          val +='<a href="">';
+          val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.bestThreeRecipe[i].recipeEnrollNum+'">';
           if(data.bestThreeRecipe[i].representPicture !== null) {
-            val += '<img src="'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
+            val += '<img src="<%=request.getContextPath()%>/upload/recipe'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
           }else{
-            val += '<img src="/img/icon/non_profile.png" width="250px" height="250px">';
+            val += '<img src="<%=request.getContextPath()%>/img/recipe/non_recipe_pic.png" width="250px" height="250px">';
           }
           val+='<br></a>'
-          val+='<div><a href=""><span class="recipeTitle">'+data.bestThreeRecipe[i].recipeTitle+'</span></a><br>';
+          val+='<div><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.bestThreeRecipe[i].recipeEnrollNum+'"><span class="recipeTitle">'+data.bestThreeRecipe[i].recipeTitle+'</span></a><br>';
           if(data.bestThreeRecipe[i].recipeIntro!== null){
             val +=  '<span class="recipeInfo">'+data.bestThreeRecipe[i].recipeIntro+'</span><br>';
           }else{
@@ -62,9 +62,15 @@
           val+='</div>';
           $("#recommend_recipe").append(val);
         });
+        // 레시피 좋아요순 3개 끝
+
+
+        // 셰프 좋아요순 5명
         const $span = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">셰프 TOP 5</span>';
         $("#topChef").append($span);
+
         $(data.bestFiveChef).each((i,v)=>{
+
             let val2='';
             val2 +='<div class="chefData">';
             val2 +='<a href="<%=request.getContextPath()%>/searchchef.do?chefsearch='+data.bestFiveChef[i].memberNickName+'">';
@@ -81,18 +87,22 @@
             val2 += '<button class="sendDM">DM 보내기</button><input type="hidden" value="'+data.bestFiveChef[i].memberId+'" class="chefId"></span></div></div>';
            $("#topChef").append(val2);
         });
+        // 셰프 좋아요순 5명 끝
+
+        // 레시피 3개
         const $span2 = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">최근 레시피</span>';
         $("#recipe").append($span2);
         $(data.threeRecipe).each((i,v)=>{
+          console.log(v);
             let val3=''
             val3 +=  ' <div class="recipeData">';
             if(data.threeRecipe[i].representPicture !== null) {
-              val3 += '<a href=""><img src="'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
+              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
             }else{
-              val3 += '<a href=""><img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="250px" height="250px"></a>';
+              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="250px" height="250px"></a>';
             }
             val3 +=  '<div>';
-            val3 +=  '<a href=""><span class="recipeTitle">'+data.threeRecipe[i].recipeTitle+'</span></a><br>';
+            val3 +=  '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><span class="recipeTitle">'+data.threeRecipe[i].recipeTitle+'</span></a><br>';
             if(data.threeRecipe[i].recipeIntro!== null){
                 val3 +=  '<span class="recipeInfo">'+data.threeRecipe[i].recipeIntro+'</span><br>';
             }else{
@@ -102,13 +112,16 @@
             val3 +=  '</div>';
           $("#recipe").append(val3);
         });
+        // 레시피 3개 끝
+
+        // dm button
         $(function(){
           $(".sendDM").click((e)=>{
             let id = $(e.target).next().val();
             let option = "width=550,height=650,resizable=no"
             console.log(id);
             <%if(loginMember != null){%>
-                let url="<%=request.getContextPath()%>/message?memberId=<%=loginMember.getUserId()%>&&targetId="+id;
+                let url="<%=request.getContextPath()%>/message?memberId=<%=loginMember.getUserId()%>&targetId="+id;
                 window.open(url,"_blank",option);
             <%}else{%>
                 if(confirm('로그인이 필요합니다. 로그인 하시겠습니까?')){
@@ -169,7 +182,7 @@
 	                <button>관리자페이지</button>
 	            </span>
 	            <ul id="dropdown_ul">
-	        			<li style="float:left;"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
+	        			<li style="float:left;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
 	        			<li style="float:left; margin-left:50px"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
 	        			<li style="float:left; margin-left:110px">
 		            	<%if(loginMember==null){ %>

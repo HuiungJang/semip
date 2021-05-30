@@ -30,6 +30,16 @@ public class SearchChefServlet extends HttpServlet {
 
         List<Profile> chefProfile = new UserService().chefProfile(chefName);
         // 셰프 닉네임으로 검색해서 프로필 가져옴
+        if(chefProfile == null){
+            new UserService().createProfile(chefName);
+            // 기본 프로필 생성함
+            // 로그인 후 프로필 눌렀을 때 프로필 없으면 생성
+            // 넘어오는 값은 아이디로 고정
+            // 다시 프로필 가져와서 저장함
+            List<Profile> reGetChefProfile = new UserService().chefProfile(chefName);
+            request.setAttribute("chefProfile",reGetChefProfile);
+        }
+
         if( chefProfile == null){
             // 잘못된 입력으로 검색해서 결과가 없다면 다른 페이지로 연결해주고 이 메소드를 끝내자
 
@@ -40,15 +50,7 @@ public class SearchChefServlet extends HttpServlet {
         }else{
             request.setAttribute("chefProfile",chefProfile);
 
-            if(chefProfile.size() == 0){
-                new UserService().createProfile(chefName);
-                // 기본 프로필 생성함
-                // 로그인 후 프로필 눌렀을 때 프로필 없으면 생성
-                // 넘어오는 값은 아이디로 고정
-                // 다시 프로필 가져와서 저장함
-                List<Profile> reGetChefProfile = new UserService().chefProfile(chefName);
-                request.setAttribute("chefProfile",reGetChefProfile);
-            }
+
 
             int cPage;
             int numPerPage = 12;

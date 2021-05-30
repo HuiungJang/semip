@@ -72,7 +72,7 @@ public class SortRef2Servlet extends HttpServlet {
         response.setContentType("application/json;charset=utf-8;");
 
         Map<String,Object> data = new HashMap<>();
-        data.put("getSortRef3",getSortRef2);
+        data.put("getSortRef2",getSortRef2);
         data.put("pageBar",pageBar);
 
         out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data));
