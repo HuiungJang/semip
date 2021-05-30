@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Properties;
 import static com.yoriessence.common.JDBCTemplate.getConnection;
 import static com.yoriessence.common.JDBCTemplate.close;
+import static com.yoriessence.common.JDBCTemplate.commit;
+import static com.yoriessence.common.JDBCTemplate.rollback;
 
 public class ManagerService {
     private Properties pp = new Properties();
@@ -39,13 +41,6 @@ public class ManagerService {
     }
 
     // 관리자 페이지 정렬
-    public List<ManagerPage> getSortRef1(String searchDate, String endDate, String paymentMethod,int cPage, int numPerPage){
-        Connection conn = getConnection();
-        List<ManagerPage> result = dao.getSortRef1(conn,searchDate,endDate,paymentMethod,cPage,numPerPage);
-        close(conn);
-        return result;
-    }
-
     public List<ManagerPage> getSortRef2(String searchDate, String endDate, String delivery,int cPage, int numPerPage){
         Connection conn = getConnection();
         List<ManagerPage> result = dao.getSortRef2(conn,searchDate,endDate,delivery,cPage,numPerPage);
@@ -59,4 +54,16 @@ public class ManagerService {
         close(conn);
         return result;
     }
+
+    public int updateWaybill(String waybill, int orderNum){
+        Connection conn = getConnection();
+        int result = dao.updateWaybill(conn,waybill,orderNum);
+
+        if(result>0)commit(conn);
+        else rollback(conn);
+
+        close(conn);
+        return result;
+    }
+
 }
