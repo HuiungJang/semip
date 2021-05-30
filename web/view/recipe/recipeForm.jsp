@@ -50,7 +50,7 @@
 	textarea[name="recipe_intro"]{
 		width:300px;
 	}	
-	textarea[name="step"]{
+	textarea.procedure_content{
 		width:480px;
 	}
 	
@@ -152,7 +152,7 @@
 							<option value="">재료별</option>
 							<option value="육류">육류</option>
 							<option value="채소류">채소류</option>
-							<option value="해산물">해물류</option>
+							<option value="해물류">해물류</option>
 							<option value="과일류">과일류</option>
 							<option value="달걀/유제품">달걀/유제품</option>
 							<option value="가공식품류">가공식품류</option>
@@ -196,7 +196,7 @@
 							<select name="recipe_difficult" id="recipe_difficult">
 								<option value="상">상</option>
 								<option value="중">중</option>
-								<option value="히">하</option>
+								<option value="하">하</option>
 							</select>
 						</div>
 					</div>
@@ -225,11 +225,11 @@
 				<div class="input_container procedure_container">
 					<p class="input_title">요리순서</p>
 					<div class="step_container">
-						<input type="hidden" id="recipe_procedure" name="recipe_procedure"/>
-						<input type="hidden" id="procedure_picture_count" name="procedure_picture_count" value="1"/>
+						<!-- <input type="hidden" id="recipe_procedure" name="recipe_procedure"/> -->
+						<input type="hidden" id="procedure_count" name="procedure_count" value="1"/>
 						<div class="step">
 							<h3>Step 1</h3>
-							<textarea name="step"></textarea>
+							<textarea name="procedure_content1" class="procedure_content"></textarea>
 							<input type="file" style="display:none" class="procedure_picture" name="procedure_picture1"/>
 							<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px"/>
 						</div>
@@ -267,6 +267,8 @@
 
 <script>
 	const fn_submit_validate=()=>{
+		
+		
  		if($("#hidden_name").val().length==0){
 			alert("재료를 하나 이상 입력하세요.");
 			$("input[name=ingredient_category]").first().focus();
@@ -284,18 +286,22 @@
 		}
 	} 
 	
-	//재료 묶음명을 hidden_name에, list 내용을 hidden_ing태그에 등록하는 함수
-	 const fn_update_ingredient=()=>{
+	const fn_update_ingredient=()=>{
 		let names="";
+		let nameDuplicateTest="";
 		$("div#bundle_container").find($("input[name=ingredient_category]")).each((i,v)=>{
 			if($(v).val()!=""){
-				if(i!=0) names+=",";
-				names+=$(v).val();
+				if($(v).val()!=nameDuplicateTest){
+					if(i!=0) names+=",";
+					nameDuplicateTest=$(v).val();
+					names+=$(v).val();					
+				}else{
+					alert("재료명을 중복없이 입력해주세요.");
+					$(v).val("");
+				}
 			}
 		});
 		$("div#bundle_container").find($("input[name=hidden_name]")).val(names);
-		/* console.log($("div#bundle_container").find($("input[name=hidden_name]"))) */
-		console.log("hidden_name", $("div#bundle_container").find($("input[name=hidden_name]")).val())
 		 
 		$(".ingredient_bundle").each((i,v)=>{
 			const ingredient_li=$(v).find($("li.ingredient_li"));
@@ -309,24 +315,25 @@
 				}
 			});
 			$(v).find($("input.hidden_ing")).val(value).attr("name", $(v).find($("input[name=ingredient_category]")).val());
-			console.log($(v).find($("input.hidden_ing")).attr("name"));
-		})
-		
+		});
 	}
-	
+
 	const fn_procedure_update=()=>{
-		$("#procedure_picture_count").val($("div.step").length);
-		//div위에 몇 단계인지 표기
+		//div위에 몇 단계인지 표기하고 file 태그의 이름 변경
 		$("div.step").each((i,v)=>{
 			$(v).find("input.procedure_picture").attr("name", "procedure_picture"+(i+1));
+			$(v).find("textarea").attr("name", "procedure_content"+(i+1));
 			$(v).find("h3").text("Step"+(i+1));
 		});
+/* 		//과정을 parsing처리할 수 있도록 하나의 string으로 만들기
 		let value="";
 		$("textarea[name=step]").each((i,v)=>{
 			if(i!=0) value+="Step.";
 			value+=$(v).val();
 		});
-		$("input#recipe_procedure").val(value);
+		$("input#recipe_procedure").val(value); */
+		//단계 수 세기
+		$("#procedure_count").val($("div.step").length);
 	}
 
 	

@@ -7,20 +7,20 @@ public class ShoppingCart {
 	private int productprice;
 	private int productnumber;
 	private int productshopify;
-	
+	private int productno;
 	
 	public ShoppingCart() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ShoppingCart(String memberid, String productname, int productprice, int productnumber, int productshopify) {
+	public ShoppingCart(String memberid, String productname, int productprice, int productnumber, int productshopify, int productno) {
 		super();
 		this.memberid = memberid;
 		this.productname = productname;
 		this.productprice = productprice;
 		this.productnumber = productnumber;
 		this.productshopify = productshopify;
-	
+		this.productno =productno;
 	}
 
 	public String getMemberid() {
@@ -63,7 +63,15 @@ public class ShoppingCart {
 		this.productshopify = productshopify;
 	}
 
+	public int getProductno() {
+		return productno;
+	}
 
+	public void setProductno(int productno) {
+		this.productno = productno;
+	}
+
+	
 	
 	
 	

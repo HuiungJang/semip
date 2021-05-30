@@ -17,8 +17,12 @@
 		margin:30px;
 	} 
 	.point_row{
-		display:flex;
-		justify-content:space-between;
+		display:grid;
+		grid-template-columns:repeat(3, 1fr);
+		gap:50px;
+	}
+	.point_row>span:last-child{
+		text-align:right;
 	}
 	#pageBar{
 		display:flex;

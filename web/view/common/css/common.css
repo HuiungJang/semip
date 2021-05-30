@@ -327,3 +327,6 @@
 	grid-template-columns: 200px 1100px 200px;
 	justify-items: center;
 }
+.footer div{
+	margin-left: 335px;
+}

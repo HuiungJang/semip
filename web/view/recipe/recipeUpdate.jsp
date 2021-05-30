@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp" %>
-<%@ page import="java.util.List, java.util.Map, com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.recipe.model.vo.RecipeIngredient, com.yoriessence.recipe.model.vo.RecipeComment, com.yoriessence.recipe.model.vo.RecipePicture" %>
+<%@ page import="com.yoriessence.recipe.model.vo.*, java.util.*" %>
 
 <%
 	Recipe recipe=(Recipe)request.getAttribute("recipe");
-	List<String> ingCategory=(List<String>)request.getAttribute("category");
+	/* List<String> ingCategory=(List<String>)request.getAttribute("category"); */
 	Map<String, List<RecipeIngredient>> ingredient=(Map<String, List<RecipeIngredient>>)request.getAttribute("ingredient");
-	List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
+	//List<RecipePicture> pictures=(List<RecipePicture>)request.getAttribute("pictures");
+	List<RecipeProcedure> procedure=(List<RecipeProcedure>)request.getAttribute("procedure");
 %>
 
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -146,7 +147,7 @@
 				</div>
 				<div class="input_container">
 					<p class="input_title">레시피 소개</p>
-					<div class="input"><textarea name="recipe_intro" id="recipe_intro"><%=recipe.getRecipeIntro() %></textarea></div>
+					<div class="input"><textarea name="recipe_intro" id="recipe_intro"><%=recipe.getRecipeIntro()!=null?recipe.getRecipeIntro():"" %></textarea></div>
 				</div>
 				<div class="input_container">
 					<p class="input_title">동영상</p>
@@ -166,7 +167,7 @@
 							<option value="">재료별</option>
 							<option value="육류">육류</option>
 							<option value="채소류">채소류</option>
-							<option value="해산물">해물류</option>
+							<option value="해물류">해물류</option>
 							<option value="과일류">과일류</option>
 							<option value="달걀/유제품">달걀/유제품</option>
 							<option value="가공식품류">가공식품류</option>
@@ -221,22 +222,26 @@
                     <p class="input_title">재료</p>
                    	<div id="bundle_container">
                    		<input type="hidden" name="hidden_name" id="hidden_name" value="" class="hidden_name"/>
- 	                    <%for(String c:ingCategory){ %>
-							<div class="ingredient_bundle">
-		                    	<input type="text" name="ingredient_category" value="<%=c %>">
-		                    	<ul class="ingredient_ul">
-			                    	<%
-			                    	List<RecipeIngredient> riList=ingredient.get(c);
-			                    	for(RecipeIngredient ri:riList){%>
+ 	                    <%
+	 	                   Set set=ingredient.entrySet();
+	 	                   Iterator it=set.iterator();
+	 	                   while(it.hasNext()){
+		 	                   	Map.Entry e=(Map.Entry)it.next();
+		 	                   	String ingCategory=(String)e.getKey();
+		 	                   	List<RecipeIngredient> ingList=(List<RecipeIngredient>)e.getValue();%>
+								<div class="ingredient_bundle">
+			                    	<input type="text" name="ingredient_category" value="<%=ingCategory %>">
+			                    	<ul class="ingredient_ul">
+			                    	<% for(RecipeIngredient ri:ingList){%>
 			                			<li class="ingredient_li">
 			                				<input type="text" name="ingredient_name" value="<%=ri.getIngredientName()%>"/><input type="text" name="ingredient_amount" value="<%=ri.getIngredientAmount()%>"/><a>x</a>
 		                				</li>
 			                  		<%}%>
-			                  		<li class="btn_li to_center"><button type="button" class="btn_add_ingredient_li">추가</button></li>
-		                  		</ul>
-                				<input type="hidden" name="" value="" class="hidden_ing"/>
-	                  		</div>
-	                    <%} %>
+			                  			<li class="btn_li to_center"><button type="button" class="btn_add_ingredient_li">추가</button></li>
+			                  		</ul>
+	                				<input type="hidden" name="" value="" class="hidden_ing"/>
+                				</div>
+ 	                   <%}%>
                     </div>
                 </div>
 			</div>
@@ -245,17 +250,15 @@
 				<div class="input_container procedure_container">
 					<p class="input_title">요리순서</p>
 					<div class="step_container">
-						<input type="hidden" id="recipe_procedure" name="recipe_procedure"/>
-						<input type="hidden" id="procedure_picture_count" name="procedure_picture_count" value="1"/>
-                    	<% 
-                    	String[] procedure=recipe.getRecipeProcedure().split("Step.");
-                    	for(int i=0;i<procedure.length;i++) {%>
+						<!-- <input type="hidden" id="recipe_procedure" name="recipe_procedure"/> -->
+						<input type="hidden" id="procedure_count" name="procedure_count" value="1"/>
+                    	<%for(RecipeProcedure rp:procedure) {%>
                         <div class="step">
 							<h3>Step 1</h3>
-                        	<textarea name="step"><%=procedure[i]%></textarea>
+                        	<textarea name="procedure_content1"><%=rp.getProcedureContent()%></textarea>
                         	<input type="file" value="" style="display:none" class="procedure_picture" name="procedure_picture1"/>
-                        	<%if(pictures.get(i)!=null && pictures.get(i).getRecipeEnrollPicture()!=null) { %>
-	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=pictures.get(i).getRecipeEnrollPicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
+                        	<%if(rp.getProcedurePicture()!=null) { %>
+	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%}else {%>
 	                        	<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%} %>
@@ -302,7 +305,7 @@
 		}else if($("#hidden_ing").val().length==0){
 			alert("재료를 하나 이상 입력하세요.");
 			$("input[name=ingredient_name]").first().focus();
-		}else if($("#recipe_procedure").val()==""){
+		}else if($("#recipe_procedure").val()!==undefined||$("#recipe_procedure").val()==""){
 			alert("요리 과정을 입력하세요.");
 			$("textarea[name=step]").first().focus();
 			return false;
@@ -334,26 +337,28 @@
 				}
 			});
 			$(v).find($("input.hidden_ing")).val(value).attr("name", $(v).find($("input[name=ingredient_category]")).val());
-		})
+		});
 	}
 
 	const fn_procedure_update=()=>{
-		$("#procedure_picture_count").val($("div.step").length);
-		//div위에 몇 단계인지 표기
+		//div위에 몇 단계인지 표기하고 file 태그의 이름 변경
 		$("div.step").each((i,v)=>{
 			$(v).find("input.procedure_picture").attr("name", "procedure_picture"+(i+1));
+			$(v).find("textarea").attr("name", "procedure_content"+(i+1));
 			$(v).find("h3").text("Step"+(i+1));
 		});
+/* 		//과정을 parsing처리할 수 있도록 하나의 string으로 만들기
 		let value="";
 		$("textarea[name=step]").each((i,v)=>{
 			if(i!=0) value+="Step.";
 			value+=$(v).val();
 		});
-		$("input#recipe_procedure").val(value);
+		$("input#recipe_procedure").val(value); */
+		//단계 수 세기
+		$("#procedure_count").val($("div.step").length);
 	}
 	
 	$(function(){
-		 
 		
 		
 		//요리 카테고리 자동선택
@@ -454,6 +459,7 @@
 			fn_update_ingredient();
 		});
 		
+		//단계 수정됐을때 값 반영하기
 		$("textarea[name=step]").blur(e=>{
 			fn_procedure_update();
 		});
@@ -468,7 +474,6 @@
 			$("div.step_container").append(div);
 			fn_procedure_update();
 		});
-		
 
  		$("#thumbnail_preview").click(e=>{
 			$(e.target).prev().click();

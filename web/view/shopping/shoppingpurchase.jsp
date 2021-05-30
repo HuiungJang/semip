@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.yoriessence.shopping.vo.Product" %>
 <%
@@ -79,18 +80,18 @@
 						<input type="hidden" name="productprice" value=<%=pd.getPrice() %>>
 					</li>
 					<li>수량 :
-						<input type="number" id="su" name="su" max=<%=pd.getStock() %> min=0 value=0>
+						<input type="number" id="su" name="su" max=<%=pd.getStock() %> min=1 value=0>
 					</li>
 					<li>
 						배송비 :<%=pd.getProductshopify() %>
 						<input type="hidden" name="productshopify" value=<%=pd.getProductshopify() %>>
 					</li><br>
 					<li>
-						<button onclick="test();" class="pont">바로주문</button>
 						<button type="submit" id="gocart" class="pont">장바구니</button>
 					</li>
 				</ul>
 			</form>
+						<button onclick="test();" class="pont">바로주문</button>
 		</div>
 	</div>
 		
@@ -156,6 +157,6 @@
 	}
 </script>
 
-	
+
 
 <%@ include file="/view/common/footer.jsp"%>
