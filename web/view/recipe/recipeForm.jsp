@@ -124,7 +124,7 @@
 		<form action="<%=request.getContextPath() %>/recipe/recipeFormEnd" method="post" enctype="multipart/form-data" onsubmit="return fn_submit_validate();">
 			<div id="basic_info" class="info">
 				<input type="file" style="display:none" name="represent_picture" id="represent_picture"/>
-				<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" id="thumbnail_preview"/>
+				<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" id="thumbnail_preview"/>
 				<input type="hidden" name="member_id" id="member_id" value="testId"/>
 				<div class="input_container">
 					<p class="input_title">레시피 제목</p>
@@ -231,7 +231,7 @@
 							<h3>Step 1</h3>
 							<textarea name="procedure_content1" class="procedure_content"></textarea>
 							<input type="file" style="display:none" class="procedure_picture" name="procedure_picture1"/>
-							<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px"/>
+							<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" name="procedure_thumbnail" width="100px" height="100px"/>
 						</div>
 					</div>
 				</div>

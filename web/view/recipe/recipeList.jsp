@@ -184,7 +184,7 @@
 		<%if(productList.size()!=0){ 
 			for(Product p:productList) {%>
 			<div class="mealkit" onclick="location.replace('<%=request.getContextPath()%>/shopping/shopping?productNo=<%=p.getProductNo() %>')">
-				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"" %>" height="200px" width="200px">
+				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"/img/recipe/no_image.png" %>" height="200px" width="200px">
 				<div class="mealkit_info">
 					<h4><%=p.getProductName() %></h4>
 					<span>가격 <%=p.getPrice() %></span><span>장바구니</span>

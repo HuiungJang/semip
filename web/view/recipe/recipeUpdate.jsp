@@ -42,7 +42,7 @@
 
 	/* 입력창 설정 */
 	input, select, textarea{
-		background-color:rgb(235, 235, 235);
+		/* background-color:rgb(235, 235, 235); */
 		border-radius:3px;
 		border:rgb(182, 182, 182) 1px solid;
 		height:40px;
@@ -137,7 +137,7 @@
 				<%if(recipe.getRepresentPicture()!=null){ %>
 					<img src="<%=request.getContextPath() %>/upload/recipe/<%=recipe.getRepresentPicture() %>" id="thumbnail_preview"/>
 				<%}else{ %>
-					<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" id="thumbnail_preview"/>
+					<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" style="background-color:#DCDCDC" id="thumbnail_preview"/>
 				<%} %>
 				<input type="hidden" name="recipe_enroll_no" value="<%=recipe.getRecipeEnrollNo() %>">
 				<input type="hidden" name="member_id" id="member_id" value="testId"/>
@@ -260,7 +260,7 @@
                         	<%if(rp.getProcedurePicture()!=null) { %>
 	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%}else {%>
-	                        	<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
+	                        	<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" name="procedure_thumbnail" width="100px" height="100px" style="background-color:#DCDCDC" class="step_img">
 	                        <%} %>
 	                    </div>
 	                    <%} %>
