@@ -60,11 +60,19 @@
                     </span>
                 </span>
                 <script>
-                  $("#sendDM").click(e=>{
-                    let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=recipeRecommend.get(0).getMemberId()%>';
-                    let option ="width=520,height=770"
-                    window.open(url,'_self',option);
-                  });
+                    $("#sendDM").click(e=>{
+                      <%if(loginMember !=null){%>
+                          let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=recipeRecommend.get(0).getMemberId()%>';
+                          let option ="width=520,height=770"
+                          window.open(url,'_self',option);
+
+                      <%}else{%>
+                            if(confirm("로그인이 필요합니다. 로그인하시겠습니까?")){
+                            trigger.click();
+                            }
+                      <%}%>
+                    });
+
                 </script>
             <%}%>
         </div>
@@ -96,7 +104,7 @@
                     <span>좋아요
                     <%try{%>
                         <%=recipeRecommend.get(i).getRecipeRecommendNum()%>
-                    <%}catch (NullPointerException e){%>
+                    <%}catch (IndexOutOfBoundsException e){%>
                         0
                     <%}%>
                     </span>
@@ -115,8 +123,9 @@
         <%}%>
     <%}%>
     </div>
-
-
+    <div id="pageBar">
+        <%=request.getAttribute("pageBar")%>
+    </div>
 </section>
 <script>
   'use strict;'

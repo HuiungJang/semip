@@ -363,52 +363,5 @@
       function onSignInFailure(t){
         console.log(t);
       }
-      //웹소켓서버에 연결하기
-      //WebSocket객체를 생성함
-      const socket=new WebSocket("ws://localhost:9090/<%=request.getContextPath()%>/chatting");
-      //http프로토콜로 통신하는 주소 ws:주소
-      //https프로토콜이용 : wss:주소
-      //socket설정
-      //접속후 실행되는 이벤트 핸들러 등록
-      socket.onopen=e=>{
-        console.log("웹소켓서버에 접속 성공!");
-        console.log(e);
-      }
-      //웹소켓서버에서 sendText, sendObject매소드를 실행하면 실행되는 함수
-      socket.onmessage=e=>{
-        console.log("메세지수신");
-        //수신된데이터를 받으려면 이벤트객체의 data속성을 이용함
-        console.log(e);
-        console.log(e.data);
-        //Object형태의 String 데이터를 객체로 변환해주기
-        console.log(JSON.parse(e.data));
-        const msg=JSON.parse(e.data);
-        //let msg=e.data.split(",");
-        //0 : 보낸사람
-        //1 : 메세지
-        if(msg["sender"]==$("#sender").val()){
-          //$("#msgContainer").append($("<p>").text("<"+msg[0]+"> "+msg[2]).css("text-align","left"));
-          $("#msgContainer").append($("<p>").text("<"+msg["sender"]+"> "+msg["msg"]).css("text-align","left"));
-        }else{
-          //$("#msgContainer").append($("<p>").text("<"+msg[0]+"> "+msg[2]).css("text-align","right"));
-          $("#msgContainer").append($("<p>").text("<"+msg["sender"]+"> "+msg["msg"]).css("text-align","right"));
-        }
-        //메세지처리에 대한 로직을 여기에 구현을 함.
-      }
-      const sendMsg=()=>{
-        //웹소켓서버에 메세지를 전송하는 함수
-        //전송할 메세지 전처리
-        //전처리한 메세지를 전송하는방법 : socket.send("데이터전송");
-        //socket.send($("#sender").val()+","+$("#receiver").val()+","+$("#msg").val());
-        msg=new Message($("#sender").val(),$("#receiver").val(),$("#msg").val());
-        //javascript 객체를 스트링으로 변환해서 전송
-        //JSON.stringify(object)함수를 이용
-        socket.send(JSON.stringify(msg));
-      }
-      function Message(sender,reciver,msg){
-        this.sender=sender;
-        this.reciver=reciver;
-        this.msg=msg;
-      }
     </script>
     <%--        header 끝 section 시작--%>

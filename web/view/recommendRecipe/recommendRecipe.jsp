@@ -126,62 +126,67 @@ let sortday2 = 1;
       sortday1 = sortday1-1;
     });
 
-    $("#best_recipe_sort a").click((e)=>{
-        const val = $(e.target).text();
-
-        $.ajax({
-          url:'<%=request.getContextPath()%>/sortrecommend.do',
-          data:{
-            "sortVal":val
-          },
-          dataType:'json',
-
-          success:(data)=>{
-            $("#recipe_list *").remove();
-
-            let val ='';
-            const pageBarJson = data.pageBarJson;
-            $(data).each((i,v)=>{
-
-              console.log(v);
-
-              for(let i =0; i<v.periodRecipeJson.length; i++){
-                val += '<div class="recipe">';
-                val +='<a href=""><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
-                val +='<div class="recipe_info">';
-                val +='<a href=""><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
-                val +='<span>'+decodeURI(v.periodRecipeJson[i].memberId)+'</span><br>';
-
-                if(v.periodRecipeJson[i].recipeRecommend === undefined){
-                  val +='<span> 좋아요 0 </span>';
-                }else{
-                  val +='<span> 좋아요 '+v.periodRecipeJson[i].recipeRecommend+' </span>';
-                }
-
-                if(v.countRecipeCommentJson[i] === undefined){
-                  val +='<span> 댓글 0 </span>';
-                }else{
-                  val +='<span> 댓글 '+v.countRecipeCommentJson[i]+' </span>';
-                }
-
-                val +='<span> 조회수 '+v.periodRecipeJson[i].recipeViewCount+'</span>';
-                val +='</div>';
-                val +='</div>';
-              }
-              $("#recipe_list").append(val);
-            });
-            $("#pageBar *").remove();
-            $("#pageBar").append(pageBarJson);
-          },
-          error:(e,s,m)=>{
-            console.log(e);
-            console.log(s);
-            console.log(m);
-          }
-        });
-    });
+    sortRecipe();
 
   });
+
+  function sortRecipe(cPage){
+    $("#best_recipe_sort a").click((e)=>{
+      const val = $(e.target).text();
+
+      $.ajax({
+        url:'<%=request.getContextPath()%>/sortrecommend.do',
+        data:{
+          "sortVal":val,
+          "cPage":cPage,
+        },
+        dataType:'json',
+
+        success:(data)=>{
+          $("#recipe_list *").remove();
+
+          let val ='';
+          const pageBarJson = data.pageBarJson;
+          $(data).each((i,v)=>{
+
+            console.log(v);
+
+            for(let i =0; i<v.periodRecipeJson.length; i++){
+              val += '<div class="recipe">';
+              val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+              val +='<div class="recipe_info">';
+              val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
+              val +='<span>'+decodeURI(v.periodRecipeJson[i].memberId)+'</span><br>';
+
+              if(v.periodRecipeJson[i].recipeRecommend === undefined){
+                val +='<span> 좋아요 0 </span>';
+              }else{
+                val +='<span> 좋아요 '+v.periodRecipeJson[i].recipeRecommend+' </span>';
+              }
+
+              if(v.countRecipeCommentJson[i] === undefined){
+                val +='<span> 댓글 0 </span>';
+              }else{
+                val +='<span> 댓글 '+v.countRecipeCommentJson[i]+' </span>';
+              }
+
+              val +='<span> 조회수 '+v.periodRecipeJson[i].recipeViewCount+'</span>';
+              val +='</div>';
+              val +='</div>';
+            }
+            $("#recipe_list").append(val);
+          });
+          $("#pageBar *").remove();
+          $("#pageBar").append(pageBarJson);
+        },
+        error:(e,s,m)=>{
+          console.log(e);
+          console.log(s);
+          console.log(m);
+        }
+      });
+    });
+  }
 </script>
 <section>
     <div id="prev_recipe_button">
@@ -210,9 +215,9 @@ let sortday2 = 1;
     <%if(todayRecipe.size()>0){%>
         <%for(int i = 0; i<todayRecipe.size(); i++){%>
             <div class="today_recommend_recipe">
-                <a href=""><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/<%=todayRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/<%=todayRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
                 <div class="today_recipe_info">
-                    <a id="today_recipe_title" href=""><h2><%=todayRecipe.get(i).getRecipeTitle()%></h2></a>87
+                    <a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><h2><%=todayRecipe.get(i).getRecipeTitle()%></h2></a>87
                     <span id="today_recipe_memberId"><%=todayRecipe.get(i).getMemberId()%></span>
                     <span id="today_recipe_viewCount"><%=todayRecipe.get(i).getRecipeViewCount()%></span>
                 </div>
@@ -247,12 +252,12 @@ let sortday2 = 1;
             <%for(int i=0; i<periodRecipe.size(); i++){%>
                 <div class="recipe">
                     <%if(periodRecipe.get(i).getRepresentPicture() != null){%>
-                        <a href=""><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
                     <%}else{%>
-                        <a href=""><img src="" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
                     <%}%>
                     <div class="recipe_info">
-                        <a href=""><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>
                         <span><%=periodRecipe.get(i).getMemberId()%></span><br>
 
                         <%try{%>
@@ -266,7 +271,6 @@ let sortday2 = 1;
                         <%}catch (IndexOutOfBoundsException e){%>
                             <span> 0</span>
                         <%}%>
-
                         <span> 조회수 <%=periodRecipe.get(i).getRecipeViewCount()%></span>
                     </div>
                 </div>
