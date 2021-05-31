@@ -73,9 +73,9 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 			if(cPage==pageNo) {
 				pageBar+="<span style='background-color:#8CC7BC;'>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()
+				pageBar+="<span href='"+request.getContextPath()
 				+"/shopping/mall?cPage="+pageNo
-				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a>";	
+				+"&numPerpage="+numPerpage+"'>"+pageNo+"</span>";	
 			}
 			pageNo++;
 		}
@@ -83,14 +83,14 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</a>";
+			pageBar+="<span href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</span>";
 		}
 		
 		
 		Set<Product> rndPro=new HashSet();
 		for(int i=0;i<list.size();i++) {
 			int rnd=(int)(Math.random()*list.size());
-			if(rndPro.size()>5) {
+			if(rndPro.size()>4) {
 				break;
 			}else {
 				rndPro.add(list.get(rnd));
