@@ -110,7 +110,7 @@ public class ShoppingCartDao {
 		String sql=prop.getProperty("searchproduct");
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, search);
+			pstmt.setString(1, "%"+search+"%");
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				pds=new Product();
