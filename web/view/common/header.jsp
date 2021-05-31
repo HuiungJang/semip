@@ -179,6 +179,9 @@
             <span>
                 <a href="<%=request.getContextPath()%>/recipe/recipeList">레시피</a>
             </span>
+            <span>
+            	<a href="<%=request.getContextPath()%>/shopping/mall">요리에센스스토어</a>
+            </span>
         </div>
 
         <div class="controlIcon">
