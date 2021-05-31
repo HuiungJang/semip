@@ -24,15 +24,30 @@ public class RecipeService {
 	private RecipeDao dao=new RecipeDao();
 	
 	//모든 레시피 가져오는 메소드
-	public List<Recipe> selectRecipeList(){
+	public List<Recipe> selectRecipeList(int cPage, int numPerpage){
 		Connection conn=getConnection();
-		List<Recipe> list=dao.selectRecipeList(conn);
+		List<Recipe> list=dao.selectRecipeList(conn, cPage, numPerpage);
 		for(Recipe r:list) {
 			r.setRecommendCount(dao.selectRecommendCount(conn, r.getRecipeEnrollNo()));
 			r.setCommentCount(dao.selectComment(conn, r.getRecipeEnrollNo()).size());
 		}
 		close(conn);
 		return list;
+	}
+	
+	//모든 레시피 갯수 가져옴
+	public int selectRecipeCount() {
+		Connection conn=getConnection();
+		int result=dao.selectRecipeCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int selectRecipeCount(String keyword, String category, String ingredient) {
+		Connection conn=getConnection();
+		int result=dao.selectRecipeCount(conn, keyword, category, ingredient);
+		close(conn);
+		return result;
 	}
 
 	//특정 레시피의 등록번호 조회
@@ -181,9 +196,9 @@ public class RecipeService {
 	}
 	
 	//레시피 검색하기
-	public List<Recipe> searchRecipe(String keyword, String category, String ingredient, String order){
+	public List<Recipe> searchRecipe(String keyword, String category, String ingredient, String order, int cPage, int numPerpage){
 		Connection conn=getConnection();
-		List<Recipe> list=dao.searchRecipe(conn, keyword, category, ingredient, order);
+		List<Recipe> list=dao.searchRecipe(conn, keyword, category, ingredient, order, cPage, numPerpage);
 		for(Recipe r:list) {
 			r.setRecommendCount(dao.selectRecommendCount(conn, r.getRecipeEnrollNo()));
 			r.setCommentCount(dao.selectComment(conn, r.getRecipeEnrollNo()).size());

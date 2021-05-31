@@ -31,13 +31,14 @@ public class RecipeDao {
 		}
 	}
 	
-	public List<Recipe> selectRecipeList(Connection conn){
+	public List<Recipe> selectRecipeList(Connection conn, int cPage, int numPerpage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Recipe> list=new ArrayList();
 		try{
 			pstmt=conn.prepareStatement(prop.getProperty("selectRecipeList"));
-			System.out.println(prop.getProperty("selectRecipeList"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Recipe r=new Recipe();
@@ -65,6 +66,41 @@ public class RecipeDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public int selectRecipeCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("selectRecipeCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) result=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectRecipeCount(Connection conn, String keyword, String category, String ingredient) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("selectRecipeSearchCount").replaceFirst("#", category).replace("#", ingredient));
+			pstmt.setString(1, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) result=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 
 	
@@ -236,7 +272,7 @@ public class RecipeDao {
 	}
 	
 	//특정 기준에 의해 레시피 검색하는 메소드
-	public List<Recipe> searchRecipe(Connection conn, String keyword, String category, String ingredient, String order){
+	public List<Recipe> searchRecipe(Connection conn, String keyword, String category, String ingredient, String order, int cPage, int numPerpage){
 		List<Recipe> list=new ArrayList();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -245,6 +281,8 @@ public class RecipeDao {
 			String sqlKey=order.equals("recommend_count")?"recommendRecipeList":"dateRecipeList";
 			pstmt=conn.prepareStatement(prop.getProperty(sqlKey).replaceFirst("#", category).replace("#", ingredient));
 			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Recipe r=new Recipe();
