@@ -13,10 +13,8 @@
         <img src="<%=request.getContextPath()%>/img/mainImg/bannerpng.png"
              width="1500px" height="300px">
     </div>
-
     <div id="recommend_recipe">
-    </div>
-
+    </div>  
     <div id="topChef">
     </div>
 

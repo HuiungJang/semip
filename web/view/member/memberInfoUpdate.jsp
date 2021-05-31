@@ -13,7 +13,7 @@
          <p>정보를 정확하게 입력해주세요.</p>
      </div>
      <br>
-     <hr style="border: 1px red solid; margin-top:20px;" >
+     <hr style="border: 1px #1F695B solid; margin-top:20px;" >
      <div class="infoinput">
      	<div class="divStyle">
          	<h4>필수정보입력</h4>
@@ -33,7 +33,7 @@
              <!-- <!-- PW2 -->
              <div>
              	<input type="hidden" id="pswd2" name="userPwck" class="int" maxlength="20">
-             </div> -->
+             </div>
              <!-- NAME -->
              <div class="divStyle">
                   <h3 class="join_title"><label for="name">이름</label></h3>
@@ -80,7 +80,7 @@
                  <span class="box int_pass">
                      <input type="password" id="pswd1" name="password" class="int" maxlength="20">
                      <span id="alertTxt">사용불가</span>
-                     <img src="jpg/m_icon_check_disable.png" id="pswd1_img1" class="pswdImg">
+                     <img src="<%=request.getContextPath()%>/img/icon/icon_check_disable.png" id="pswd1_img1" class="pswdImg">
                  </span>
                  <span class="error_next_box"></span>
              </div>
@@ -90,7 +90,7 @@
                   <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
                  <span class="box int_pass_check">
                      <input type="password" id="pswd2" name="password2" class="int" maxlength="20">
-                     <img src="jpg/m_icon_pass.png" id="pswd2_img1" class="pswdImg">
+                     <img src="<%=request.getContextPath()%>/img/icon/icon_pass.png" id="pswd2_img1" class="pswdImg">
                  </span>
                  <span class="error_next_box"></span>
              </div>
@@ -146,7 +146,7 @@
                  <span class="error_next_box"></span>
              </div>
              <br>
-          <hr style="border: 1px red solid; margin-top:20px;">
+          <hr style="border: 1px #1F695B solid; margin-top:20px;">
           <br>
           <div class="joinCheck" >
           	<input type="hidden" name="grade" value="<%=m.getMembergrade()%>">
@@ -239,6 +239,21 @@
 		}
 		const pswd1=$("#pswd1").val();
 		const pswd2=$("#pswd2").val();
+		const num = pswd1.search(/[0-9]/g);
+		const eng = pswd1.search(/[a-z]/ig);
+		if(pswd1.length < 8 || pswd1.length > 15){
+			console.log("1");
+			alert("비밀번호는 8자리 ~ 15자리 이내로 입력해주세요.");
+			return false;
+		}else if(pswd1.search(/\s/) != -1){
+			console.log("2");
+		 	alert("비밀번호는 공백 없이 입력해주세요.");
+		  	return false;
+		}else if(num < 0 || eng < 0){
+			 console.log("3");
+		  	alert("비밀번호는 영문,숫자를 혼합하여 입력해주세요.");
+		  	return false;
+		}
 		if(pswd1==""||pswd2==""){
 			alert("비밀번호를 입력해야합니다.")
 			return false;

@@ -80,10 +80,10 @@ public class UserService {
         return chefProfile;
     };
 
-    public List<Recipe> getRecipe(String chefName){
+    public List<Recipe> getRecipe(String chefName,int cPage,int numPerPage){
         // 셰프가 올린 레시피 전부 가져오는 서비스
         Connection conn = getConnection();
-        List<Recipe> getRecipe = dao.getRecipe(conn,chefName);
+        List<Recipe> getRecipe = dao.getRecipe(conn,chefName,cPage,numPerPage);
         close(conn);
 
         return getRecipe;
@@ -106,6 +106,20 @@ public class UserService {
 
         close(conn);
 
+        return result;
+    }
+
+    public int getRecommendNum(String chefId, int recipeEnrollNum){
+        Connection conn =getConnection();
+        int result = dao.getRecommendNum(conn,chefId,recipeEnrollNum);
+        close(conn);
+        return result;
+    }
+
+    public int getCommentNum(String chefId, int recipeEnrollNum){
+        Connection conn =getConnection();
+        int result = dao.getCommentNum(conn,chefId,recipeEnrollNum);
+        close(conn);
         return result;
     }
 

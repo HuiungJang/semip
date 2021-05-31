@@ -60,7 +60,7 @@
 	textarea[name="recipe_intro"]{
 		width:300px;
 	}	
-	textarea[name="step"]{
+	textarea.procedure_content{
 		width:480px;
 	}
 	
@@ -211,7 +211,7 @@
 							<select name="recipe_difficult" id="recipe_difficult">
 								<option value="상">상</option>
 								<option value="중">중</option>
-								<option value="히">하</option>
+								<option value="하">하</option>
 							</select>
 						</div>
 					</div>
@@ -255,7 +255,7 @@
                     	<%for(RecipeProcedure rp:procedure) {%>
                         <div class="step">
 							<h3>Step 1</h3>
-                        	<textarea name="procedure_content1"><%=rp.getProcedureContent()%></textarea>
+                        	<textarea name="procedure_content1" class="procedure_content"><%=rp.getProcedureContent()%></textarea>
                         	<input type="file" value="" style="display:none" class="procedure_picture" name="procedure_picture1"/>
                         	<%if(rp.getProcedurePicture()!=null) { %>
 	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
@@ -370,6 +370,27 @@
 		//요리 메인재료 자동선택
 		$("#main_ingredient").children().each((i,v)=>{
 			if($(v).val()=="<%=recipe.getMainIngredient()%>") {
+				$(v).prop("selected", "true");
+			}
+		});
+		
+		//요리 인원 자동선택
+		$("#recipe_info_howmany").children().each((i,v)=>{
+			if($(v).val()=="<%=recipe.getRecipeInfoHowmany()%>") {
+				$(v).prop("selected", "true");
+			}
+		});
+		
+		//요리 시간 자동선택
+		$("#recipe_info_time").children().each((i,v)=>{
+			if($(v).val()=="<%=recipe.getRecipeInfoTime()%>") {
+				$(v).prop("selected", "true");
+			}
+		});
+		
+		//요리 난이도 자동선택
+		$("#recipe_difficult").children().each((i,v)=>{
+			if($(v).val()=="<%=recipe.getRecipeDifficult()%>") {
 				$(v).prop("selected", "true");
 			}
 		});

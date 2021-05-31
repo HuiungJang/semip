@@ -6,10 +6,11 @@
 	List<Question> question=(List<Question>)request.getAttribute("question");
 %>
 <style>
-	div#notice-container{width:900px; margin:0 auto; text-align:center;}
-	table#tbl-notice{width:900px; margin-left:10px; border:1px solid black; border-collapse:collapse;clear:both;}
-	table#tbl-notice th {height:50px; border:1px solid; padding: 5px 0; text-align:center;}
-	table#tbl-notice td {height:100px; border:1px solid; padding: 5px 0; text-align:center;}
+	div#notice-container{width:900px; margin:0 auto; text-align:center; font-size:20px;}
+	table#tbl-notice{width:900px; margin-left:10px; border-collapse:collapse; clear:both; line-height:1.5; font-size:20px;}
+	table#tbl-notice thead th {height:50px; padding: 5px 0; text-align:center; border-bottom:3px solid #8CC7BC; color:#1F695B; font-weight:bold; background:#f3f6f7; vertical-align:middle;}
+	table#tbl-notice tbody th {height:100px; padding: 5px 0; text-align:center; border-bottom:1px solid #1F695B; color:#1F695B; font-weight:bold; background:#f3f6f7; vertical-align:middle;}
+	table#tbl-notice td {height:100px; padding: 5px 0; text-align:center; vertical-align:middle; border-bottom:1px solid #1F695B;}
 	input#btn-add{float:right;margin:0 0 15px;}
 	.container{
     border: 1px red solid;
@@ -48,18 +49,20 @@
                 <ul class="menu">
                     <li><a href="<%=request.getContextPath()%>/notice/noticeList">공지사항</a></li>
                     <li><a href="<%=request.getContextPath()%>/helper/helperList">도움말</a></li>
-                    <li style="background-color:lightgray"><a href="<%=request.getContextPath()%>/question/questionList">1:1문의</a></li>
+                    <li style="background-color:#8CC7BC"><a href="<%=request.getContextPath()%>/question/questionList">1:1문의</a></li>
                     <li><a href="<%=request.getContextPath()%>/question/questionForm">글쓰기</a></li>
                 </ul>
             </div>
             <div id="notice-container">
                 <table id="tbl-notice">
-                    <tr>
-                        <th style="width:80px;">문의번호</th>
-                        <th>제목</th>
-                        <th style="width:130px;">작성자</th>
-                        <th style="width:100px;">첨부파일</th>
-                    </tr>
+                	<thead>
+	                    <tr>
+	                        <th style="width:80px;">문의번호</th>
+	                        <th>제목</th>
+	                        <th style="width:130px;">작성자</th>
+	                        <th style="width:100px;">첨부파일</th>
+	                    </tr>
+                	</thead>
                     <tbody>
                     	<%if(question.isEmpty()) {%>
                             <tr>
@@ -70,7 +73,7 @@
                         <%}else{ %>
                         	<% for(Question q : question){ %>
                                 <tr>
-                                    <td><%=q.getQuestionNumber() %></td> <!-- 번호 -->
+                                    <th><%=q.getQuestionNumber() %></th> <!-- 번호 -->
                                     <td><a href="<%=request.getContextPath()%>/question/questionView?questionNo=<%=q.getQuestionNumber()%>"><%=q.getQuestionTitle()%></a></td>
                                     <td><%=q.getMemberId()%>
                                     <td>

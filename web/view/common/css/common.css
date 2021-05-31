@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@636&family=Nanum+Gothic:wght@400;700&display=swap');
 /*font-family: 'Nanum Gothic', sans-serif;*/
 
-*{margin:0; padding:0; list-style:none; text-decoration: none; color:#000000;}
+*{margin:0; padding:0; list-style:none; text-decoration: none; color:#000000; font-family:'Nanum Gothic';}
 
 #totalContainer{
 	width:1500px;
@@ -26,10 +26,11 @@
 }
 /* 헤더 메뉴부분 */
 .header .menu{
-	margin-left: 200px;
+	margin-left: 50px;
+	margin-top: 40px;
 }
 .header .menu>span a{
-	font-size:40px;
+	font-size:35px;
 	padding-left: 30px;
 }
 .header .menu>span a:hover {
@@ -39,8 +40,8 @@
 /* 헤더 메뉴 아이콘*/
 .header .controlIcon{
 	width:300px;
-	/* height:350px; */
 	z-index:2;
+	margin-top:40px;
 }
 .header .controlIcon>span>a>img{
 	padding-left: 20px;
@@ -192,9 +193,9 @@
 .join a{
 	font-family: Dosis;
 	font-size:25px;
-	border: 1px #ba9180 solid;
+	border: 1px #1F695B solid;
 	background-color: white;
-	color: #ba9180;
+	color: #1F695B;
 	text-decoration: none;
 	display: inline-block;
 	width: 95%;
@@ -263,6 +264,9 @@
 
 .main-content #recommend_recipe .recipeData div{
 	display: inline-block;
+}
+.main-content #recommend_recipe .recipeData>a>img{
+	margin-top:45px;
 }
 .main-content #recommend_recipe .recipeData div span{
 	font-size:25px;

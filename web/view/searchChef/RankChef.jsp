@@ -77,13 +77,17 @@
                     </div>
                 </div>
                 <script>
-                  <%if(loginMember != null){%>
-                      $(".messageBtn button").click(e=>{
+                  $(".messageBtn button").click(e=>{
+                     <%if(loginMember != null){%>
                         let url='<%=request.getContextPath()%>/message?memberId=<%=loginMember.getUserId()%>&targetId=<%=chefInfo.get(i).getMemberId()%>';
                         let option ="width=520,height=660"
                         window.open(url,'_blank',option);
-                      });
-                  <%}%>
+                    <%}else{%>
+                        if(confirm("로그인이 필요합니다. 로그인 하시겠습니까?")){
+                          trigger.click();
+                        }
+                    <%}%>
+                  });
                 </script>
             <%}%>
         <%}%>

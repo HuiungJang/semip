@@ -13,16 +13,16 @@ import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 
 /**
- * Servlet implementation class RecipeSearchAjaxServlet
+ * Servlet implementation class RecipePageMoveServlet
  */
-@WebServlet("/recipe/recipeSearchAjax")
-public class RecipeSearchAjaxServlet extends HttpServlet {
+@WebServlet("/recipe/recipePageMove")
+public class RecipePageMoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeSearchAjaxServlet() {
+    public RecipePageMoveServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -82,10 +82,11 @@ public class RecipeSearchAjaxServlet extends HttpServlet {
 //				+"/point/pointView?cPage="+pageNo+"'>다음</a>";
 			pageBar+="<a onclick='pageMove("+pageNo+")'>다음</a>";
 		}
-
+		
+	
 		request.setAttribute("pageBar", pageBar);
+		
 		request.setAttribute("recipeList", list);
-		request.setAttribute("keyword", keyword);
 		request.getRequestDispatcher("/view/recipe/recipeSearchAjax.jsp").forward(request, response);		
 	}
 

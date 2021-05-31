@@ -7,8 +7,18 @@ public class Profile {
     private String profilePic;
     private String profileSnsUrl1;
     private String profileSnsUrl2;
+    private String memberNickName;
+
+
 
     public Profile() {
+    }
+    public String getMemberNickName() {
+        return memberNickName;
+    }
+
+    public void setMemberNickName(String memberNickName) {
+        this.memberNickName = memberNickName;
     }
 
     public String getMemberId() {

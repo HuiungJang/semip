@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
+import com.yoriessence.shopping.vo.Product;
 
 /**
  * Servlet implementation class RecipeListServlet
@@ -31,7 +32,80 @@ public class RecipeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Recipe> list=new RecipeService().selectRecipeList();
+		
+		int cPage;
+		int numPerpage=15;
+		try {
+			cPage=Integer.parseInt(request.getParameter("cPage"));
+		}catch(NumberFormatException e) {
+			cPage=1;
+		}
+		
+		List<Recipe> list=new RecipeService().selectRecipeList(cPage, numPerpage);
+		
+		int totalData=new RecipeService().selectRecipeCount();
+		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
+		
+		int pageBarSize=5;
+		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
+		int pageEnd=pageNo+pageBarSize-1;
+		
+		String pageBar="";
+		if(pageNo==1) {
+			pageBar+="<span>이전</span>";
+		}else {
+//			pageBar+="<a href='"+request.getContextPath()
+//				+"/point/pointView?cPage='"+(pageNo-1)+">이전</a>";
+			pageBar+="<a onclick='pageMove("+(pageNo-1)+")'>이전</a>";
+		}
+		
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(pageNo==cPage) {
+				pageBar+="<span class='cPage'>"+pageNo+"</span>";
+			}else {
+//				pageBar+="<a href='"+request.getContextPath()+"/point/pointView?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a onclick='pageMove("+pageNo+")'>"+pageNo+"</a>";
+			}
+			pageNo++;
+		}
+		
+		if(pageNo>totalPage) {
+			pageBar+="<span>다음</span>";
+		}else {
+//			pageBar+="<a href='"+request.getContextPath()
+//				+"/point/pointView?cPage="+pageNo+"'>다음</a>";
+			pageBar+="<a onclick='pageMove("+pageNo+")'>다음</a>";
+		}
+		
+	
+		request.setAttribute("pageBar", pageBar);
+		
+		//관련제품 받아오기
+		cPage=1;
+		numPerpage=3;
+		String keyword="";
+		List<Product> product=new RecipeService().selectProduct(keyword, cPage, numPerpage);
+		
+		String beforeBtn="";
+		String afterBtn="";
+		
+		if(cPage!=1) {
+			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'>&lt;</button>";
+		}else {
+			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'>&lt;</button>";
+		}
+		
+		if(cPage!=3) {
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'>&gt;</button>";
+		}else {
+			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'>&gt;</button>";
+		}
+		
+		request.setAttribute("productList", product);
+		request.setAttribute("beforeBtn", beforeBtn);
+		request.setAttribute("afterBtn", afterBtn);
+		
+		
 		request.setAttribute("recipeList", list);
 		request.getRequestDispatcher("/view/recipe/recipeList.jsp").forward(request, response);
 	}

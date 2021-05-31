@@ -13,19 +13,21 @@ public class RecipeComment {
 	private String recipeComment;
 	private Date commentEnrollDate;
 	private String recipeCommentWriter;
+	private String writerProfile;
 	
 	public RecipeComment() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public RecipeComment(int recipeCommentNo, int recipeEnrollNo, String recipeComment, Date commentEnrollDate,
-			String recipeCommentWriter) {
+			String recipeCommentWriter, String writerProfile) {
 		super();
 		this.recipeCommentNo = recipeCommentNo;
 		this.recipeEnrollNo = recipeEnrollNo;
 		this.recipeComment = recipeComment;
 		this.commentEnrollDate = commentEnrollDate;
 		this.recipeCommentWriter = recipeCommentWriter;
+		this.writerProfile = writerProfile;
 	}
 
 	public int getRecipeCommentNo() {
@@ -68,12 +70,22 @@ public class RecipeComment {
 		this.recipeCommentWriter = recipeCommentWriter;
 	}
 
+	public String getWriterProfile() {
+		return writerProfile;
+	}
+
+	public void setWriterProfile(String writerProfile) {
+		this.writerProfile = writerProfile;
+	}
+
 	@Override
 	public String toString() {
 		return "RecipeComment [recipeCommentNo=" + recipeCommentNo + ", recipeEnrollNo=" + recipeEnrollNo
 				+ ", recipeComment=" + recipeComment + ", commentEnrollDate=" + commentEnrollDate
-				+ ", recipeCommentWriter=" + recipeCommentWriter + "]";
+				+ ", recipeCommentWriter=" + recipeCommentWriter + ", writerProfile=" + writerProfile + "]";
 	}
+	
+	
 
 	
 	

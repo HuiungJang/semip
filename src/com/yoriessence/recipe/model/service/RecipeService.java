@@ -17,21 +17,38 @@ import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
+import com.yoriessence.recipe.model.vo.RecipeRecommend;
+import com.yoriessence.shopping.vo.Product;
 
 public class RecipeService {
 	
 	private RecipeDao dao=new RecipeDao();
 	
 	//모든 레시피 가져오는 메소드
-	public List<Recipe> selectRecipeList(){
+	public List<Recipe> selectRecipeList(int cPage, int numPerpage){
 		Connection conn=getConnection();
-		List<Recipe> list=dao.selectRecipeList(conn);
+		List<Recipe> list=dao.selectRecipeList(conn, cPage, numPerpage);
 		for(Recipe r:list) {
 			r.setRecommendCount(dao.selectRecommendCount(conn, r.getRecipeEnrollNo()));
 			r.setCommentCount(dao.selectComment(conn, r.getRecipeEnrollNo()).size());
 		}
 		close(conn);
 		return list;
+	}
+	
+	//모든 레시피 갯수 가져옴
+	public int selectRecipeCount() {
+		Connection conn=getConnection();
+		int result=dao.selectRecipeCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int selectRecipeCount(String keyword, String category, String ingredient) {
+		Connection conn=getConnection();
+		int result=dao.selectRecipeCount(conn, keyword, category, ingredient);
+		close(conn);
+		return result;
 	}
 
 	//특정 레시피의 등록번호 조회
@@ -48,6 +65,14 @@ public class RecipeService {
 		List<String> list=dao.selectIngredientCategory(conn, recipeEnrollNo);
 		close(conn);
 		return list;
+	}
+	
+	//댓글 작성자의 프로필 이미지 가져오기
+	public String selectMemberProfile(String userId) {
+		Connection conn=getConnection();
+		String img=dao.selectMemberProfile(conn, userId);
+		close(conn);
+		return img;
 	}
 	
 	//레시피 등록 메소드
@@ -131,10 +156,21 @@ public class RecipeService {
 		return list;
 	}
 	
+	public List<RecipeRecommend> selectRecommendList(int recipeEnrollNo){
+		Connection conn=getConnection();
+		List<RecipeRecommend> list=dao.selectRecommendList(conn, recipeEnrollNo);
+		close(conn);
+		return list;
+	}
+	
 	//특정 레시피 삭제
 	public int deleteRecipe(int recipeEnrollNo) {
 		Connection conn=getConnection();
 		int result=dao.deleteRecipe(conn, recipeEnrollNo);
+		dao.deleteAllComment(conn, recipeEnrollNo);
+		dao.deleteIngredient(conn, recipeEnrollNo);
+		dao.deleteProcedure(conn, recipeEnrollNo);
+		dao.deleteAllRecommend(conn, recipeEnrollNo);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
@@ -150,10 +186,20 @@ public class RecipeService {
 		return result;
 	}
 	
-	//레시피 검색하기
-	public List<Recipe> searchRecipe(String keyword, String category, String ingredient, String order){
+	//레시피 추천 취소하기
+	public int deleteRecommend(RecipeRecommend rr) {
 		Connection conn=getConnection();
-		List<Recipe> list=dao.searchRecipe(conn, keyword, category, ingredient, order);
+		int result=dao.deleteRecommend(conn, rr);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//레시피 검색하기
+	public List<Recipe> searchRecipe(String keyword, String category, String ingredient, String order, int cPage, int numPerpage){
+		Connection conn=getConnection();
+		List<Recipe> list=dao.searchRecipe(conn, keyword, category, ingredient, order, cPage, numPerpage);
 		for(Recipe r:list) {
 			r.setRecommendCount(dao.selectRecommendCount(conn, r.getRecipeEnrollNo()));
 			r.setCommentCount(dao.selectComment(conn, r.getRecipeEnrollNo()).size());
@@ -174,6 +220,16 @@ public class RecipeService {
 	public int insertComment(RecipeComment comment) {
 		Connection conn=getConnection();
 		int result=dao.insertComment(conn, comment);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	//레시피 번호 기준으로 추천하는 메소드
+	public int insertRecommend(RecipeRecommend rr) {
+		Connection conn=getConnection();
+		int result=dao.insertRecommend(conn, rr);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
@@ -232,5 +288,20 @@ public class RecipeService {
 		
 	}
 	
+	//레시피 조회수 올리는 메소드
+	public int updateRecipeViewCount(Recipe r) {
+		Connection conn=getConnection();
+		int result=dao.updateRecipeViewCount(conn, r);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+	}
+	
+	public List<Product> selectProduct(String keyword, int cPage, int numPerpage){
+		Connection conn=getConnection();
+		List<Product> list=dao.selectProduct(conn, keyword, cPage, numPerpage);
+		close(conn);
+		return list;
+	}
 	
 }

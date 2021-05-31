@@ -1,5 +1,6 @@
 package com.yoriessence.chef.controller.searchChef;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.yoriessence.chef.model.service.UserService;
 import com.yoriessence.chef.model.vo.Profile;
@@ -50,14 +51,14 @@ public class SearchChefAjaxServlet extends HttpServlet {
             pageBar+="<span></span>";
 
         }else{
-            pageBar+="<span><a href='"+request.getContextPath()+"/rankchef.do?cPage="+(cPage-1)+"'>이전</a></span>";
+            pageBar+="<span><a href='javascript:sortAjax("+(cPage-1)+",\""+chefId+"\""+",\""+sortVal+"\""+")'>이전</a></span>";
         }
 
         while(!(pageNo>pageEnd||pageNo>totalPage)){
             if(cPage==pageNo){
                 pageBar+="<span>"+pageNo+"</span>";
             }else{
-                pageBar+="<span><a href='"+request.getContextPath()+"/rankchef.do?cPage="+pageNo+"'>"+pageNo+"</a></span>";
+                pageBar+="<span><a href='javascript:sortAjax("+pageNo+",\""+chefId+"\""+",\""+sortVal+"\""+")'>"+pageNo+"</a></span>";
             }
             pageNo++;
         }
@@ -65,35 +66,40 @@ public class SearchChefAjaxServlet extends HttpServlet {
         if(pageNo>totalPage){
             pageBar+="<span></span>";
         }else{
-            pageBar+="<span><a href='"+request.getContextPath()+"/chef/rankchef.do?cPage="+cPage+"'>다음</a></span>";
+            pageBar+="<span><a href='<span><a href='javascript:sortAjax("+cPage+",\""+chefId+"\""+",\""+sortVal+"\""+")'>다음</a></span>";
+        }
+
+        List<RecipeRecommend> recipeInfo = new UserService().recipeRecommendNum(chefId,sortVal,cPage,numPerPage);
+        Map<Integer,Object> countComment = new HashMap<>();
+        Map<Integer,Object> countRecommend = new HashMap<>();
+
+        for(int i = 0; i<recipeInfo.size(); i++){
+            int getRecommendNum = new UserService().getRecommendNum(chefId,recipeInfo.get(i).getRecipeEnrollNum());
+
+            countRecommend.put(recipeInfo.get(i).getRecipeEnrollNum(),getRecommendNum);
+        }
+
+        for(int i = 0; i<recipeInfo.size(); i++){
+            int getCommentNum = new UserService().getCommentNum(chefId,recipeInfo.get(i).getRecipeEnrollNum());
+
+            countComment.put(recipeInfo.get(i).getRecipeEnrollNum(),getCommentNum);
         }
 
 
-        // 셰프가 올린 레시피에 달린 댓글 개수 가져옴
-        List<RecipeComment> recipeComments = new UserService().recipeCommentNum(chefId);
-        for(RecipeComment r : recipeComments){
-            r.setMemberName(URLEncoder.encode(r.getMemberName(),"utf-8"));
-            r.setMemberNickName(URLEncoder.encode(r.getMemberNickName(),"utf-8"));
-        }
-
-        // 댓글 수 포함 레시피를 정렬해서 가져옴
-        List<RecipeRecommend> recipeRecommend = new UserService().recipeRecommendNum(chefId,sortVal,cPage,numPerPage);
-        for(RecipeRecommend r : recipeRecommend){
-            r.setRecipeTitle(URLEncoder.encode(r.getRecipeTitle(),"utf-8"));
-            r.setMemberId(URLEncoder.encode(r.getMemberId(),"utf-8"));
-        }
-        Gson gson = new Gson();
+        ObjectMapper mapper = new ObjectMapper();
         PrintWriter out = response.getWriter();
 
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json; charset=utf-8");
 
         Map<String,Object> data = new HashMap<>();
-        data.put("commentsNum",recipeComments);
-        data.put("recommendsNum",recipeRecommend);
+
+        data.put("recipeInfo",recipeInfo);
+        data.put("countComment",countComment);
+        data.put("countRecommend",countRecommend);
         data.put("pageBar",pageBar);
 
-        out.println(gson.toJson(data));
+        out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data));
 
         out.flush();
         out.close();

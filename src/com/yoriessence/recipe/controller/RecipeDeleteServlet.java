@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
-import com.yoriessence.recipe.model.vo.RecipeRecommend;
 
 /**
- * Servlet implementation class RecommendServlet
+ * Servlet implementation class RecipeDeleteServlet
  */
-@WebServlet("/recipe/recommend")
-public class RecommendServlet extends HttpServlet {
+@WebServlet("/recipe/recipeDelete")
+public class RecipeDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecommendServlet() {
+    public RecipeDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,27 +30,21 @@ public class RecommendServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RecipeService service=new RecipeService();
-		
-		String loginId=request.getParameter("loginId");
 		int recipeEnrollNo=Integer.parseInt(request.getParameter("recipeEnrollNo"));
-		boolean check=Boolean.parseBoolean(request.getParameter("check"));
-
-		RecipeRecommend rr=new RecipeRecommend();
-		rr.setRecipeEnrollNo(recipeEnrollNo);
-		rr.setMemberId(loginId);
+		int result=new RecipeService().deleteRecipe(recipeEnrollNo);
 		
-		int result=0;
-		if(!check) {
-			result=service.deleteRecommend(rr);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="삭제가 완료되었습니다.";
+			loc="/recipe/recipeList";
 		}else {
-			result=service.insertRecommend(rr);
+			msg="삭제를 실패했습니다.";
+			loc="/recipe/recipeView?recipeEnrollNo="+recipeEnrollNo;
 		}
-		
-		request.setAttribute("recommend", service.selectRecommendList(recipeEnrollNo));
-		request.getRequestDispatcher("/view/recipe/recipeRecommendAjax.jsp").forward(request, response);
-		
-		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);
 	}
 
 	/**
