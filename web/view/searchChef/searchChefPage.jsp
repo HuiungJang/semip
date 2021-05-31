@@ -49,13 +49,13 @@
                         <%if(chefProfile.get(0).getProfileSnsUrl1() == null){%>
                             <span><a href=""><img class="snsIcon1" src=""></a></span>
                         <%}else{%>
-                            <span><a href="http://www.<%=chefProfile.get(0).getProfileSnsUrl1()%>"><img class="snsIcon1" src=""></a></span>
+                            <span><a href="https://<%=chefProfile.get(0).getProfileSnsUrl1()%>"><img class="snsIcon1" src=""></a></span>
                         <%}%>
 
                         <%if(chefProfile.get(0).getProfileSnsUrl2() == null){%>
                             <span><a href=""><img class="snsIcon2" src=""></a></span>
                         <%}else{%>
-                            <span><a href="http://www.<%=chefProfile.get(0).getProfileSnsUrl2()%>"><img class="snsIcon2" src=""></a></span>
+                            <span><a href="https://<%=chefProfile.get(0).getProfileSnsUrl2()%>"><img class="snsIcon2" src=""></a></span>
                         <%}%>
                     </span>
                 </span>
@@ -88,14 +88,14 @@
         <% for(int i=0; i<chefRecipe.size(); i++){%>
             <div class="recipe">
                 <%if(chefRecipe.get(i).getRepresentPicture() != null){%>
-                    <a href=""><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}else{%>
-                    <a href=""><img src="" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}%>
                 <div class="recipe_info">
-                    <p><a href=""><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
+                    <p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
 <%--                    글 내용으로--%>
                     <p><a href=""><%=chefRecipe.get(i).getMemberId()%></a></p>
 <%--                    프로필로--%>
@@ -268,14 +268,14 @@
             val = '<div class="recipe">';
 
             if (v.representPicture !== undefined) {
-              val += '<a href=""><img src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px"></a>';
+              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px"></a>';
             } else {
-              val += '<a href=""><img src="<%=request.getContextPath()%>/img/recipe/non_recipe.png" height="200px" width="200px"></a>';
+              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/recipe/non_recipe.png" height="200px" width="200px"></a>';
             }
 
             val += '<div class="recipe_info">';
-            val += '<p><a href="">' + decodeURI(v.recipeTitle) + '</a></p>';
-            val += '<p><a href="">' + v.memberId + '</a></p>';
+            val += '<p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'">' + decodeURI(v.recipeTitle) + '</a></p>';
+            val += '<p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'">' + v.memberId + '</a></p>';
 
             for (let j in data.countRecommend) {
               if (v.recipeEnrollNum === j) {
