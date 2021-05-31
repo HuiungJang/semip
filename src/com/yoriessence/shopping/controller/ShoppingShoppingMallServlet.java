@@ -64,18 +64,18 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()
+			pageBar+="<span><a href='"+request.getContextPath()
 			+"/shopping/mall?cPage="+(pageNo-1)
-			+"&numPerpage="+numPerpage+"'>[이전]</a>";
+			+"&numPerpage="+numPerpage+"'>[이전]</a></span>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span style='background-color:#8CC7BC;'>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()
+				pageBar+="<span><a href='"+request.getContextPath()
 				+"/shopping/mall?cPage="+pageNo
-				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a>";	
+				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a></span>";
 			}
 			pageNo++;
 		}
@@ -83,14 +83,14 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</a>";
+			pageBar+="<span><a href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</a></span>";
 		}
 		
 		
 		Set<Product> rndPro=new HashSet();
 		for(int i=0;i<list.size();i++) {
 			int rnd=(int)(Math.random()*list.size());
-			if(rndPro.size()>5) {
+			if(rndPro.size()>4) {
 				break;
 			}else {
 				rndPro.add(list.get(rnd));
