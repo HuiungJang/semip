@@ -185,7 +185,7 @@
 		                <ul id="dropdown_ul2">
 		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/member/memberupdateConn?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
-		                    <li><a href="#">나의레시피</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">나의레시피</a></li>
 		                    <li><a href="#">주문정보</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/recipe/recipeForm">레시피작성</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=loginMember.getUserId()%>">나의포인트</a></li>
