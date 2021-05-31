@@ -7,7 +7,7 @@
 	<div id="update_div">
 		<h1>회원정보수정</h1><br>
 		<p>개인정보 보호를 위해 비밀번호를 확인 합니다.</p><br>
-		<form action="<%=request.getContextPath() %>/member/memberupdateConn" id="checkform" name="checkform" method="post" onsubmit="fn_pwck_validate();">
+		<form action="<%=request.getContextPath() %>/member/memberupdateConn" id="checkform" name="checkform" method="post" onsubmit="fn_pwck_validate();"> <!-- 암호화오류해결 return추가 -->
 			비밀번호 <input type="password" id="up_pw" class="up_pw">
 			<input type="hidden" name="userId" value="<%=loginMember.getUserId()%>">
 			<button type="submit">확인</button>
@@ -21,7 +21,7 @@
 	margin-left: 500px;
 	width:500px;
 	height:300px;
-	border:1px black solid;
+	border:1px #1F695B solid;
 	text-align:center;
 }
 p{
