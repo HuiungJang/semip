@@ -22,9 +22,9 @@ public class PasswordEncryptWrapper extends HttpServletRequestWrapper {
 		//매개변수 name의 값이 password일때 암호화처리하자
 		if(name.equals("password")||name.equals("password_new")) {
 			//암호화시켜서 반환하자!
-			System.out.println("암호화전 : "+super.getParameter(name));
+//			System.out.println("암호화전 : "+super.getParameter(name));
 			value=getSHA512(super.getParameter(name));
-			System.out.println("암호화후 : "+value);
+//			System.out.println("암호화후 : "+value);
 		}else {
 			value=super.getParameter(name);
 		}

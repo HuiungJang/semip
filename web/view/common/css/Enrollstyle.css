@@ -1,14 +1,9 @@
-.header{
-	width: 1910px;
-	height: 175px;
-	background-color: rgb(136, 133, 122);
-/* border : 1px red solid; */
-}
 .hCommon{
 	display: inline-block;
 }
 .bodyall{
-    margin-left: 600px;
+	margin-top: 100px;
+    margin-left: 400px;
     width: 800px;
 }
 .mainRogo{
@@ -16,11 +11,11 @@
     margin-left: 42.5%;
 }
 .menu {
-    color: white;
+    color: black;
     margin-left: 300px;
 }
 .menu a {
-    color: white;
+    color: black;
 }
 .joinPhrase p{
     margin-left: 5%;

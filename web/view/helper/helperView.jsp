@@ -7,15 +7,19 @@
 <div id="helper-container">
 	<h2>공지사항</h2>
         <table id="tbl-helper">
-        <tr class="tr_title">
-            <td><%=h.getTitle() %></td>
-        </tr>
+        <thead>
+	        <tr class="tr_title">
+	            <th><%=h.getTitle() %></th>
+	        </tr>
+        </thead>
+        <tbody>
         <tr class="tr_content">
             <td><%=h.getContent() %></td>
         </tr>
+        </tbody>
         <%if(loginMember!=null&&loginMember.getUserId().equals("1677958940")){%>
-        <tr>
-            <th colspan="2">
+        <tr style="height:100px;">
+            <th colspan="2" style="text-align:center;">
                 <input type="button" value="수정하기" onclick="location.assign('<%=request.getContextPath()%>/helper/helperUpdate?no=<%=h.getNumber()%>')">
                 <input type="button" value="삭제하기" onclick="location.assign('<%=request.getContextPath()%>/helper/helperDelete?no=<%=h.getNumber()%>')">
             </th>
@@ -27,18 +31,15 @@
 <style>
     section#helper-container{width:900px; height:600px; margin:0 auto; text-align:center;}
     section#helper-container h2{margin:10px 0;}
-    table#tbl-helper{width:900px; height:600px; margin:0 auto; margin-top:100px; border:1px solid black; border-collapse:collapse; clear:both; }
-    table#tbl-helper th {width: 125px; border:1px solid; padding: 5px 0; text-align:center;} 
-    table#tbl-helper td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
+    table#tbl-helper{width:900px; height:600px; margin:0 auto; margin-top:100px; border-collapse:collapse; clear:both; }
+    table#tbl-helper thead th {height:50px; padding: 5px 0; text-align:left; border-bottom:3px solid #036;color:#369; font-weight:bold; background:#f3f6f7; vertical-align:middle;} 
+    table#tbl-helper tbody td {height:100px; padding: 5px 0; text-align:left; vertical-align:middle; border-bottom:1px solid #ccc;}
     #helper-container>h2{
 	    text-align: center;
 	    font-size: 35px;
 	    margin-top:50px;
 	}
-	.tr_title>td{
-		height:70px;
-		text-align:center;
-	}
+
 	.tr_file{
 		height:50px;
 	}
