@@ -26,7 +26,12 @@
 }
 /* 헤더 메뉴부분 */
 .header .menu{
+<<<<<<< HEAD
 	margin-left: 130px;
+=======
+	margin-left: 50px;
+	margin-top: 40px;
+>>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 }
 .header .menu>span a{
 	font-size:40px;
@@ -39,8 +44,8 @@
 /* 헤더 메뉴 아이콘*/
 .header .controlIcon{
 	width:300px;
-	/* height:350px; */
 	z-index:2;
+	margin-top:40px;
 }
 .header .controlIcon>span>a>img{
 	padding-left: 20px;
@@ -192,9 +197,9 @@
 .join a{
 	font-family: Dosis;
 	font-size:25px;
-	border: 1px #ba9180 solid;
+	border: 1px #1F695B solid;
 	background-color: white;
-	color: #ba9180;
+	color: #1F695B;
 	text-decoration: none;
 	display: inline-block;
 	width: 95%;
@@ -263,6 +268,9 @@
 
 .main-content #recommend_recipe .recipeData div{
 	display: inline-block;
+}
+.main-content #recommend_recipe .recipeData>a>img{
+	margin-top:45px;
 }
 .main-content #recommend_recipe .recipeData div span{
 	font-size:25px;

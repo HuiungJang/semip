@@ -779,7 +779,6 @@ public class UserDao {
                 r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
                 r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
                 r.setRecipeDifficult(rs.getString("recipe_difficult"));
-                r.setRecipeProcedure(rs.getString("recipe_procedure"));
                 r.setRecipeTip(rs.getString("recipe_tip"));
                 r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 
@@ -808,7 +807,6 @@ public class UserDao {
                     r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
                     r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
                     r.setRecipeDifficult(rs.getString("recipe_difficult"));
-                    r.setRecipeProcedure(rs.getString("recipe_procedure"));
                     r.setRecipeTip(rs.getString("recipe_tip"));
                     r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 

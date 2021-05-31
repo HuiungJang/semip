@@ -190,9 +190,9 @@
 	                <button>관리자페이지</button>
 	            </span>
 	            <ul id="dropdown_ul">
-	        			<li style="float:left;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
-	        			<li style="float:left; margin-left:50px"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
-	        			<li style="float:left; margin-left:110px">
+	        			<li style="float:left; margin-left:-40px;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
+	        			<li style="float:left; margin-left:27px"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left; margin-left:100px">
 		            	<%if(loginMember==null){ %>
 	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
 			            <%}else{ %>
@@ -229,9 +229,7 @@
                         </div>
                         <div class="SearchIdPwSpan">
                     <span>
-                        <a href="">아이디 찾기</a>
-                        <span>/</span>
-                        <a href="">비밀번호 찾기</a>
+                        <a href="<%=request.getContextPath()%>/member/IdPasswordConn">아이디 찾기 / 비밀번호 찾기</a>
                     </span>
                         </div>
                         <div class="IdCheck">
