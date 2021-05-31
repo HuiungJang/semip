@@ -51,6 +51,14 @@ public class RecipeService {
 		return list;
 	}
 	
+	//댓글 작성자의 프로필 이미지 가져오기
+	public String selectMemberProfile(String userId) {
+		Connection conn=getConnection();
+		String img=dao.selectMemberProfile(conn, userId);
+		close(conn);
+		return img;
+	}
+	
 	//레시피 등록 메소드
 	public int insertRecipe(Recipe r) {
 		Connection conn=getConnection();

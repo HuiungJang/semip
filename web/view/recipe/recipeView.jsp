@@ -123,11 +123,14 @@
 		border:#DCDCDC solid 1px;
 		padding:10px;
 		width:60px;
+		position:absolute;
+		top:75px;
+		right:0px;
 	}
 	.recipe_menubar>*{
 		display:block;
 	}
-	.recipe_menubar>button{
+	.recipe_menubar button{
 		border:none;
 		background-color:white;
 	}
@@ -248,17 +251,15 @@
         </div>
         <div id="chef_recipe">
         	<%-- <% if(loginMember.getUserId().equals(recipe.getMemberId())) {%> --%>
-	        	<div class="recipe_menu">
-		      		<a id="btn_menu">메뉴</a>
-		      		<div class="recipe_menubar">
-	       				<form action="<%=request.getContextPath()%>/recipe/recipeUpdate?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
-			      			<button type="submit" id="recipeUpdate">수정</button>
-			      		</form>
-	       				<form action="<%=request.getContextPath()%>/recipe/recipeDelete?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
-		      				<button type="submit" id="recipeDelete" onsubmit="fn_delete_validate()">삭제</button>
-		      			</form>
-		      		</div>
-		      	</div>
+	        	<a class="recipe_menu">메뉴</a>
+	      		<div class="recipe_menubar">
+       				<form action="<%=request.getContextPath()%>/recipe/recipeUpdate?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
+		      			<button type="submit" id="recipeUpdate">수정</button>
+		      		</form>
+       				<form action="<%=request.getContextPath()%>/recipe/recipeDelete?recipeEnrollNo=<%=recipe.getRecipeEnrollNo() %>" method="post">
+	      				<button type="submit" id="recipeDelete" onsubmit="fn_delete_validate()">삭제</button>
+	      			</form>
+	      		</div>
 	      	<%-- <%} %> --%>
             <div class="recipe_container">
                 <div id="recipe_info">
@@ -352,7 +353,7 @@
 	                <%if(comments.size()!=0){ 
 	                	for(RecipeComment c:comments){%>
 		                <div class="comment_row">
-		                    <img class="profile_img" src="">
+		                    <img class="profile_img" src="<%=c.getWriterProfile()!=null?c.getWriterProfile():"" %>">
 		                    <div class="comment_info">
 		                    	<a class="comment_writer"><%=c.getRecipeCommentWriter() %></a>
 		                    	<p class="comment_date"><%=c.getCommentEnrollDate() %></p>
@@ -399,8 +400,8 @@
     		}
     		
     		
-    		$("#btn_menu").click(e=>{
-    			const menu=$(e.target).next();
+    		$("a.recipe_menu").click(e=>{
+    			const menu=$("div.recipe_menubar");
     			if(menu.css("display")=="block"){
     				menu.css("display","none");
     			}else{

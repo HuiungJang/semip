@@ -209,6 +209,7 @@ public class RecipeDao {
 		return list;
 	}
 	
+	//레시피의 모든 댓글 가져오는 메소드
 	public List<RecipeComment> selectComment(Connection conn, int recipeEnrollNo){
 		List<RecipeComment> list=new ArrayList();
 		PreparedStatement pstmt=null;
@@ -234,6 +235,7 @@ public class RecipeDao {
 		return list;
 	}
 	
+	//특정 기준에 의해 레시피 검색하는 메소드
 	public List<Recipe> searchRecipe(Connection conn, String keyword, String category, String ingredient, String order){
 		List<Recipe> list=new ArrayList();
 		PreparedStatement pstmt=null;
@@ -301,6 +303,28 @@ public class RecipeDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	//댓글 작성자의 프로필 이미지 가져오는 메소드
+	public String selectMemberProfile(Connection conn, String userId) {
+		String result=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("selectMemberProfile"));
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getString(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	
