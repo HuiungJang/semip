@@ -9,7 +9,7 @@
 				<button type="button" class="div_btn" onclick="id_send_email();">인증</button>
 			</div>
 		</div>
-		<hr style="margin-top:50px;">
+		<hr style="margin-top:50px; border: 1.5px #1F695B solid;">
 		<div style="margin-top:50px;">
 			<h1>비밀번호 찾기</h1>
 			<div class="sub_Container">
@@ -30,10 +30,10 @@
 	
 	<style>
 	.Container{
-		border:1px red solid;
 		width:650px;
 		height:500px;
-		margin-left:650px;
+		margin-top:100px;
+		margin-left:500px;
 	}
 	.sub_Container{
 		margin-top:20px;

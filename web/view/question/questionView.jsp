@@ -69,8 +69,8 @@
     section#question-container{width:900px; height:800px; margin:0 auto; text-align:center;}
     section#nquestion-container h2{margin:10px 0;}
     table#tbl-question{width:900px; margin:0 auto; margin-top:100px; border-collapse:collapse; clear:both; }
-    table#tbl-question thead th {height:50px; padding: 5px 0; text-align:left; border-bottom:3px solid #036;color:#369; font-weight:bold; background:#f3f6f7; vertical-align:middle;} 
-    table#tbl-question tbody td {padding: 5px 0; text-align:left; vertical-align:middle; border-bottom:1px solid #ccc;}
+    table#tbl-question thead th {height:50px; padding: 5px 0; text-align:left; border-bottom:3px solid #8CC7BC; color:#1F695B; font-weight:bold; background:#f3f6f7; vertical-align:middle;} 
+    table#tbl-question tbody td {padding: 5px 0; text-align:left; vertical-align:middle; border-bottom:1px solid #1F695B;}
     #question-container>h2{
 	    text-align: center;
 	    font-size: 35px;
@@ -96,7 +96,7 @@
 	.comment-form textarea{
 		width:800px;
 		height:200px;
-		border:none;
+		border:1px #1F695B solid;
 	}
 </style>	
 

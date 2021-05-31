@@ -109,6 +109,20 @@
 		display:none;
 	}
 	
+	/* 레시피목록 페이지바 */
+	#pageBar{
+		display:flex;
+		justify-content:center;
+		margin-top:20px;
+	}
+	#pageBar *{
+		margin-left:15px;
+	}
+	#pageBar span.cPage{
+		color:#1F695B ;
+		font-weight:bold;
+	}
+	
 </style>
 <section>
 <%-- <a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=request.getSession().getAttribute("loginMember")%>">포인트조회</a> --%>
@@ -188,25 +202,44 @@
 		</div>
 		<a>&gt;</a>
 	</div>
-	<div id="recipe_list" class="grid">
-		<%if(recipeList.size()!=0){ 
-			for(Recipe r:recipeList) {%>
-			<div class="recipe">
-				<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
-				<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
-				<p><%=r.getRecipeTitle() %></p>
-				<p><%=r.getMemberId() %></p>
-				<span>좋아요 <%=r.getRecommendCount() %></span>
-				<span>댓글 <%=r.getCommentCount() %></span>
-				<span>조회수 <%=r.getRecipeViewCount() %></span>
-			</div>
-		<%}
-		}else{ %>
-			<p>검색 결과가 없습니다.</p>
-		<%} %>
+	<div id="recipe_list">
+		<div class="grid">
+			<%if(recipeList.size()!=0){ 
+				for(Recipe r:recipeList) {%>
+				<div class="recipe">
+					<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
+					<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
+					<p><%=r.getRecipeTitle() %></p>
+					<p><%=r.getMemberId() %></p>
+					<span>좋아요 <%=r.getRecommendCount() %></span>
+					<span>댓글 <%=r.getCommentCount() %></span>
+					<span>조회수 <%=r.getRecipeViewCount() %></span>
+				</div>
+			<%}
+			}else{ %>
+				<p>검색 결과가 없습니다.</p>
+			<%} %>
+		</div>
+		<div id="pageBar"><%=request.getAttribute("pageBar") %></div>
 	</div>
 </section>
 <script>
+ 	const pageMove=(pageNo)=>{
+		$.ajax({
+			url:"<%=request.getContextPath()%>/recipe/recipePageMove",
+			data:{
+				keyword:$("#keyword_hidden").val(),
+				category:$("#category_hidden").val(),
+				ingredient:$("#ingredient_hidden").val(),
+				order:$("#order_by").val(),
+				cPage:pageNo
+			},
+			success:data=>{
+				$("#recipe_list").html(data);
+			}
+		});
+	}
+
 	$("div.recipe").click(e=>{
 		const recipeEnrollNo=$(e.target).parent().find($("input[name=recipeEnrollNo]")).val();
 		console.log(recipeEnrollNo);
