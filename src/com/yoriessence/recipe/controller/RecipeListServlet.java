@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yoriessence.point.model.service.MemberPointService;
-import com.yoriessence.point.model.vo.MemberPoint;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
+import com.yoriessence.shopping.vo.Product;
 
 /**
  * Servlet implementation class RecipeListServlet
@@ -80,6 +79,33 @@ public class RecipeListServlet extends HttpServlet {
 		
 	
 		request.setAttribute("pageBar", pageBar);
+		
+		//관련제품 받아오기
+		cPage=1;
+		numPerpage=3;
+		String keyword="";
+		List<Product> product=new RecipeService().selectProduct(keyword, cPage, numPerpage);
+		
+		String beforeBtn="";
+		String afterBtn="";
+		
+		if(cPage!=1) {
+			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'>&lt;</button>";
+		}else {
+			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'>&lt;</button>";
+		}
+		
+		if(cPage!=3) {
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'>&gt;</button>";
+		}else {
+			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'>&gt;</button>";
+		}
+		
+		request.setAttribute("productList", product);
+		request.setAttribute("beforeBtn", beforeBtn);
+		request.setAttribute("afterBtn", afterBtn);
+		
+		
 		request.setAttribute("recipeList", list);
 		request.getRequestDispatcher("/view/recipe/recipeList.jsp").forward(request, response);
 	}

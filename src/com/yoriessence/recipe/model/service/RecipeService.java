@@ -18,6 +18,7 @@ import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
 import com.yoriessence.recipe.model.vo.RecipeRecommend;
+import com.yoriessence.shopping.vo.Product;
 
 public class RecipeService {
 	
@@ -294,6 +295,13 @@ public class RecipeService {
 		if(result>0) commit(conn);
 		else rollback(conn);
 		return result;
+	}
+	
+	public List<Product> selectProduct(String keyword, int cPage, int numPerpage){
+		Connection conn=getConnection();
+		List<Product> list=dao.selectProduct(conn, keyword, cPage, numPerpage);
+		close(conn);
+		return list;
 	}
 	
 }

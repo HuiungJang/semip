@@ -82,11 +82,10 @@ public class RecipeSearchAjaxServlet extends HttpServlet {
 //				+"/point/pointView?cPage="+pageNo+"'>다음</a>";
 			pageBar+="<a onclick='pageMove("+pageNo+")'>다음</a>";
 		}
-		
-	
+
 		request.setAttribute("pageBar", pageBar);
-		
 		request.setAttribute("recipeList", list);
+		request.setAttribute("keyword", keyword);
 		request.getRequestDispatcher("/view/recipe/recipeSearchAjax.jsp").forward(request, response);		
 	}
 

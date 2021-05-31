@@ -17,6 +17,7 @@ import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
 import com.yoriessence.recipe.model.vo.RecipeProcedure;
 import com.yoriessence.recipe.model.vo.RecipeRecommend;
+import com.yoriessence.shopping.vo.Product;
 
 public class RecipeDao {
 	
@@ -638,6 +639,36 @@ public class RecipeDao {
 		return result;
 	}
 	
+	public List<Product> selectProduct(Connection conn, String keyword, int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Product> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(prop.getProperty("selectProduct"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Product pd=new Product();
+				pd.setProductNo(rs.getInt("PRODUCTNO"));
+				pd.setStock(rs.getInt("STOCK"));
+				pd.setPrice(rs.getInt("PRICE"));
+				pd.setExplanation(rs.getString("EXPLANATION"));
+				pd.setProductName(rs.getString("PRODUCTNAME"));
+				pd.setProductImage(rs.getString("PRODUCTIMAGE"));
+				pd.setProductkategorie(rs.getString("PRODUCTKATEGORIE"));
+				pd.setProductshopify(rs.getInt("PRODUCTSHOPIFY"));
+				list.add(pd);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
 	
 
 }

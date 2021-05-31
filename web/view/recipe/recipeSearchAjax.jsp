@@ -20,7 +20,7 @@
 				<p>검색 결과가 없습니다.</p>
 			<%} %>
 		</div>
-		<div id="pageBar"><%=request.getAttribute("pageBar") %></div>
+		<div id="pageBar"><%=request.getAttribute("pageBar")!=null?request.getAttribute("pageBar"):"" %></div>
 		
 	<script>	
 			$("div.recipe").click(e=>{

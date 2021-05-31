@@ -345,7 +345,7 @@
                 <div id="write_comment">
                     <img class="profile_img" src="">
                     <input type="hidden" name="recipe_enroll_no" id="recipe_enroll_no" value="<%=recipe.getRecipeEnrollNo()%>">
-                    <input type="hidden" name="recipe_comment_writer" id="recipe_comment_writer" value="testId2"> <%-- <%=loginMember.getUserId()%> --%>
+                    <input type="hidden" name="recipe_comment_writer" id="recipe_comment_writer" value="<%=loginMember!=null?loginMember.getUserId():null%>"> <%-- <%=loginMember.getUserId()%> --%>
                     <textarea name="recipe_comment" id="recipe_comment" rows="2" cols="150"></textarea>
                     <input type="submit" name="comment_submit" id="comment_submit" value="등록">
                 </div>
@@ -420,7 +420,7 @@
     		$("#recommend_info").click(e=>{
 			    $("#recommend_check").click();
 			    let checked=$("#recommend_check").prop("checked");
-    			<%-- if(<%=!(loginMember.getUserId().equals(recipe.getMemberId()))%>){ --%>
+    			if(<%=loginMember!=null&&!(loginMember.getUserId().equals(recipe.getMemberId()))%>){
 		    			$.ajax({
 		    				url:"<%=request.getContextPath()%>/recipe/recommend",
 		    				data:{
@@ -433,9 +433,9 @@
 	    						$("#recommend_info").html(data).toggleClass("recommended");
 		    				}
 		    			});
-/*     			}else{
+     			}else{
     				alert("자신의 레시피에는 추천할 수 없습니다.");
-    			} */
+    			}
     		});
     		
     		
