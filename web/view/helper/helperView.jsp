@@ -5,7 +5,7 @@
 %>
 <%@ include file="/view/common/header.jsp"%>
 <div id="helper-container">
-	<h2>공지사항</h2>
+	<h2>도움말</h2>
         <table id="tbl-helper">
         <thead>
 	        <tr class="tr_title">
@@ -32,8 +32,8 @@
     section#helper-container{width:900px; height:600px; margin:0 auto; text-align:center;}
     section#helper-container h2{margin:10px 0;}
     table#tbl-helper{width:900px; height:600px; margin:0 auto; margin-top:100px; border-collapse:collapse; clear:both; }
-    table#tbl-helper thead th {height:50px; padding: 5px 0; text-align:left; border-bottom:3px solid #036;color:#369; font-weight:bold; background:#f3f6f7; vertical-align:middle;} 
-    table#tbl-helper tbody td {height:100px; padding: 5px 0; text-align:left; vertical-align:middle; border-bottom:1px solid #ccc;}
+    table#tbl-helper thead th {height:50px; padding: 5px 0; text-align:left; border-bottom:3px solid #8CC7BC;color:#1F695B; font-weight:bold; background:#f3f6f7; vertical-align:middle;} 
+    table#tbl-helper tbody td {height:100px; padding: 5px 0; text-align:left; vertical-align:middle; border-bottom:1px solid #1F695B;}
     #helper-container>h2{
 	    text-align: center;
 	    font-size: 35px;

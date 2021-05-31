@@ -21,7 +21,7 @@
 	margin-left: 500px;
 	width:500px;
 	height:300px;
-	border:1px black solid;
+	border:1px #1F695B solid;
 	text-align:center;
 }
 p{

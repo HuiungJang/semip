@@ -14,7 +14,7 @@
             <p>정보를 정확하게 입력해주세요.</p>
         </div>
         <br>
-        <hr style="border: 1px red solid; margin-top:20px;" >
+        <hr style="border: 1px #1F695B solid; margin-top:20px;" >
         <div class="infoinput">
         	<div class="divStyle">
             	<h4>필수정보입력</h4>
@@ -74,7 +74,7 @@
                     <span class="error_next_box"></span>
                 </div>
                 <br>
-	            <hr style="border: 1px red solid; margin-top:20px;">
+	            <hr style="border: 1px #1F695B solid; margin-top:20px;">
 	            <br>
 	         	<div>
 	         		<input type="submit" value="가입하기" style="margin-left:295px; width:100px; height:30px;">
