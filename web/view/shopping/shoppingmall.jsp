@@ -8,20 +8,20 @@
 <%@ include file="/view/shopping/shoppingall.jsp" %>
 <div class="todayProductContainer">
 	<div class="text">오늘의 추천상품</div>
-	<div>
 		<%for(Product pdt : rndPro) {%>
-		<div class="productContent">
-			<span>
-				<a href="<%=request.getContextPath()%>/shopping/shopping?productNo=<%=pdt.getProductNo()%>">
-					<input type="hidden" value="<%=pdt.getProductNo() %>">
-					<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop">
-				</a>
-			</span>
-			<span class="jsp">제품명 :<%=pdt.getProductName() %></span>
-			<span class="jsp">가격 :<%=pdt.getPrice() %></span>
+		<div>
+			<div class="productContent">
+				<span>
+					<a href="<%=request.getContextPath()%>/shopping/shopping?productNo=<%=pdt.getProductNo()%>">
+						<input type="hidden" value="<%=pdt.getProductNo() %>">
+						<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop">
+					</a>
+				</span>
+				<span class="jsp">제품명 :<%=pdt.getProductName() %></span>
+				<span class="jsp">가격 :<%=pdt.getPrice() %></span>
+			</div>
 		</div>
 		<%}%>
-	</div>
 </div>
 <div class="allProductContainer">
 	<div class="text">오늘의 추천상품</div>
@@ -38,7 +38,7 @@
 		</div>
 	<%}%>
 	<div id="pageBar">
-		<%=request.getAttribute("pageBar") %>
+		<div><%=request.getAttribute("pageBar") %></div>
 	</div>
 </div>
 	
