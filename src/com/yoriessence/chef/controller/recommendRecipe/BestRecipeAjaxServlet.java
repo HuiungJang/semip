@@ -53,14 +53,14 @@ public class BestRecipeAjaxServlet extends HttpServlet {
             pageBar+="<span></span>";
 
         }else{
-            pageBar+="<span><a href='"+request.getContextPath()+"/sortrecommend.do?cPage="+(cPage-1)+"'>이전</a></span>";
+            pageBar+="<span><a href='javascript:sortRecipe(cPage-1)'>이전</a></span>";
         }
 
         while(!(pageNo>pageEnd||pageNo>totalPage)){
             if(cPage==pageNo){
                 pageBar+="<span>"+pageNo+"</span>";
             }else{
-                pageBar+="<span><a href='"+request.getContextPath()+"/sortrecommend.do?cPage="+pageNo+"'>"+pageNo+"</a></span>";
+                pageBar+="<span><a href='javascript:sortRecipe(pageNo)'>"+pageNo+"</a></span>";
             }
             pageNo++;
         }
@@ -68,7 +68,7 @@ public class BestRecipeAjaxServlet extends HttpServlet {
         if(pageNo>totalPage){
             pageBar+="<span></span>";
         }else{
-            pageBar+="<span><a href='"+request.getContextPath()+"/sortrecommend.do?cPage="+cPage+"'>다음</a></span>";
+            pageBar+="<span><a href='javascript:sortRecipe(cPage)'>다음</a></span>";
         }
 
         List<Recipe> periodRecipe = new UserService().periodRecipe(cPage,numPerPage,sortRef);

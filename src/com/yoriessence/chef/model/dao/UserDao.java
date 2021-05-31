@@ -238,7 +238,7 @@ public class UserDao {
 
 
     // 레시피 리스트 가져오는 메소드
-    public List<Recipe> getRecipe(Connection conn, String chefName){
+    public List<Recipe> getRecipe(Connection conn, String chefName,int cPage,int numPerPage){
         PreparedStatement psmt = null;
         ResultSet rs = null;
         List<Recipe> recipeList = new ArrayList<>();
@@ -247,6 +247,8 @@ public class UserDao {
             psmt=conn.prepareStatement(pp.getProperty("getRecipe"));
 
             psmt.setString(1,chefName);
+            psmt.setInt(2,(cPage-1)*numPerPage+1);
+            psmt.setInt(3,cPage*numPerPage);
 
             rs = psmt.executeQuery();
 
