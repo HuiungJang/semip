@@ -287,23 +287,23 @@ public class UserDao {
         List<RecipeRecommend> recipeRecommend = new ArrayList<>();
 
         try {
-            psmt=conn.prepareStatement(pp.getProperty("countRecipeRecommend"));
-            psmt.setString(1,chefId);
 
-            if(sortVal.equals("추천순")){
-                psmt.setString(2,"recipe_recommend_num");
 
-            }else if(sortVal.equals("최신순")){
-                psmt.setString(2,"recipe_enroll_no");
+           if(sortVal.equals("조회순")){
+                psmt=conn.prepareStatement(pp.getProperty("sortViewCount"));
+                psmt.setString(1,chefId);
+                psmt.setInt(2,(cPage-1)*numPerPage+1);
+                psmt.setInt(3,cPage*numPerPage);
 
-            }else if(sortVal.equals("조회순")){
-                psmt.setString(2,"recipe_view_count");
-            }else{
-                psmt.setString(2,"");
-            }
+            }else {
+               psmt=conn.prepareStatement(pp.getProperty("countRecipeRecommend"));
+               psmt.setString(1,chefId);
+               psmt.setInt(2,(cPage-1)*numPerPage+1);
+               psmt.setInt(3,cPage*numPerPage);
 
-            psmt.setInt(3,(cPage-1)*numPerPage+1);
-            psmt.setInt(4,cPage*numPerPage);
+           }
+
+
 
             rs = psmt.executeQuery();
 
@@ -311,16 +311,10 @@ public class UserDao {
                 RecipeRecommend r = new RecipeRecommend();
 
                 r.setRecipeEnrollNum(rs.getInt("recipe_enroll_no"));
-                r.setMemberId(rs.getString("member_id"));
                 r.setRecipeTitle(rs.getString("recipe_title"));
                 r.setRecipeViewCount(rs.getInt("recipe_view_count"));
-                r.setRecipeRecommendNum(rs.getInt("recipe_recommend_num"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
-                r.setProfileName(rs.getString("profile_name"));
-                r.setProfileSelfIntro(rs.getString("profile_selfIntro"));
-                r.setProfileSNSUrl1(rs.getString("profile_sns_url_1"));
-                r.setProfileSNSUrl2(rs.getString("profile_sns_url_2"));
-
+                r.setMemberId(rs.getString("member_id"));
                 recipeRecommend.add(r);
             }
 
@@ -334,6 +328,59 @@ public class UserDao {
 
         return recipeRecommend;
     }
+
+    public int getRecommendNum(Connection conn, String chefId, int recipeEnrollNum){
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        int result = 0;
+
+        try{
+            psmt = conn.prepareStatement(pp.getProperty("getRecommendNum"));
+
+            psmt.setInt(1,recipeEnrollNum);
+            psmt.setString(2,chefId);
+
+            rs= psmt.executeQuery();
+
+            if(rs.next()){
+                rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
+    public int getCommentNum(Connection conn, String chefId, int recipeEnrollNum){
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        int result = 0;
+
+        try{
+            psmt = conn.prepareStatement(pp.getProperty("getCommentNum"));
+
+            psmt.setInt(1,recipeEnrollNum);
+            psmt.setString(2,chefId);
+
+            rs= psmt.executeQuery();
+
+            if(rs.next()){
+                rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(psmt);
+        }
+
+        return result;
+    }
+
 
     public List<RecipeComment> recipeCommentNum(Connection conn, String chefId){
 

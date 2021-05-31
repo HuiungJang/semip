@@ -109,6 +109,20 @@ public class UserService {
         return result;
     }
 
+    public int getRecommendNum(String chefId, int recipeEnrollNum){
+        Connection conn =getConnection();
+        int result = dao.getRecommendNum(conn,chefId,recipeEnrollNum);
+        close(conn);
+        return result;
+    }
+
+    public int getCommentNum(String chefId, int recipeEnrollNum){
+        Connection conn =getConnection();
+        int result = dao.getCommentNum(conn,chefId,recipeEnrollNum);
+        close(conn);
+        return result;
+    }
+
     public void recommendChef(String chefId,int recommendYN){
         // 셰프 추천수 증감시키는 서비스
         Connection conn =getConnection();
