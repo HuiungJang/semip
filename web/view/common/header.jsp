@@ -184,7 +184,7 @@
 			            <a><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" width="55px" height="55px"></a>
 		                <ul id="dropdown_ul2">
 		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
-		                    <li><a href="<%=request.getContextPath()%>/member/memberPwCheck?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/member/memberupdateConn?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
 		                    <li><a href="#">나의레시피</a></li>
 		                    <li><a href="#">주문정보</a></li>
 		                    <li><a href="#">나의포인트</a></li>

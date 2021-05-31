@@ -26,7 +26,7 @@
 		<h2>이메일 전송이 완료되었습니다.</h2>
 		<input type="text" id="check_key" placeholder="인증번호 입력">
 		<button type="button" onclick="fn_check_id();">인증</button>
-		<form action="<%=request.getContextPath() %>/member/memberChangPw" id="ChangPwform" method="post">
+		<form action="<%=request.getContextPath() %>/member/memberChangPw" id="ChangPwform" method="post" onsubmit="return fn_check_validate();">
 			<input type="hidden" name="userId" value="<%=userId%>">
 		</form>
 	</div>
@@ -92,7 +92,8 @@
 					input2.setAttribute("placeholder","새 비밀번호 확인");
 					input2.setAttribute("id","pwck");
 					input2.style.marginLeft="20px";
-					var button = document.createElement("button");
+					var button = document.createElement("input");
+					button.setAttribute("type","submit");
 					button.innerHTML="변경하기";
 					button.style.marginLeft="15px";
 					form.append(h1);
@@ -101,7 +102,6 @@
 					form.append(button);
 					alert("인증되었습니다.");
 				}
-				
 				
 				$(function(){
 					$("#pwck").blur((e)=>{
@@ -113,6 +113,25 @@
 						}
 					});
 				});
+			}
+		}
+		const fn_check_validate=()=>{
+			const pswd1=$("#pw").val();
+			console.log(pswd1);
+			const num = pswd1.search(/[0-9]/g);
+			const eng = pswd1.search(/[a-z]/ig);
+			if(pswd1.length < 8 || pswd1.length > 15){
+				console.log("1");
+				alert("비밀번호는 8자리 ~ 15자리 이내로 입력해주세요.");
+				return false;
+			}else if(pswd1.search(/\s/) != -1){
+				console.log("2");
+			 	alert("비밀번호는 공백 없이 입력해주세요.");
+			  	return false;
+			}else if(num < 0 || eng < 0){
+				 console.log("3");
+			  	alert("비밀번호는 영문,숫자를 혼합하여 입력해주세요.");
+			  	return false;
 			}
 		}
 		<% }else if(userName==null&&userId==null){%>
