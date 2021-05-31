@@ -3,9 +3,9 @@
 <%
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 %>
-
-		<%if(recipeList.size()!=0){ 
-			for(Recipe r:recipeList) {%>
+		<div class="grid">
+			<%if(recipeList.size()!=0){ 
+				for(Recipe r:recipeList) {%>
 				<div class="recipe">
 					<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
 					<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
@@ -16,9 +16,12 @@
 					<span>조회수 <%=r.getRecipeViewCount() %></span>
 				</div>
 			<%}
-		}else{ %>
-			<p>검색 결과가 없습니다.</p>
-		<%} %>
+			}else{ %>
+				<p>검색 결과가 없습니다.</p>
+			<%} %>
+		</div>
+		<div id="pageBar"><%=request.getAttribute("pageBar") %></div>
+		
 	<script>	
 			$("div.recipe").click(e=>{
 		const recipeEnrollNo=$(e.target).parent().find($("input[name=recipeEnrollNo]")).val();
