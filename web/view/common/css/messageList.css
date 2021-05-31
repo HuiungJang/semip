@@ -46,7 +46,7 @@
     display: grid;
     grid-template-columns: 120px 346px;
 }
-#container .userInfo img{
+#container .userInfo>div>a img{
     height: 100px;
     width: 100px;
     margin-top: 10px;

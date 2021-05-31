@@ -2,6 +2,7 @@ package com.yoriessence.message.controller;
 
 import com.yoriessence.chef.model.service.UserService;
 import com.yoriessence.chef.model.vo.Profile;
+import com.yoriessence.chef.model.vo.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,7 +18,10 @@ public class MoveMessageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String memberId= request.getParameter("memberId");
         String targetId=request.getParameter("targetId");
-        List<Profile> profile = new UserService().chefProfile(memberId);
+
+        User user = new UserService().userInfo(memberId);
+
+        List<Profile> profile = new UserService().chefProfile(user.getMemberNickName());
 
         request.setAttribute("profile",profile);
         request.setAttribute("memberId",memberId);

@@ -174,7 +174,7 @@ public class UserDao {
 
             if(rs.next()){
                 p = new Profile();
-
+                p.setMemberNickName(rs.getString("member_nickname"));
                 p.setMemberId(rs.getString("memberid"));
                 p.setProfileName(rs.getString("profile_name"));
                 p.setSelfIntro(rs.getString("profile_selfintro"));
