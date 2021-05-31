@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yoriessence.point.model.service.MemberPointService;
-import com.yoriessence.point.model.vo.MemberPoint;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 
 /**
- * Servlet implementation class RecipeListServlet
+ * Servlet implementation class RecipePageMoveServlet
  */
-@WebServlet("/recipe/recipeList")
-public class RecipeListServlet extends HttpServlet {
+@WebServlet("/recipe/recipePageMove")
+public class RecipePageMoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecipeListServlet() {
+    public RecipePageMoveServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +31,14 @@ public class RecipeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RecipeService service=new RecipeService();
+		String keyword=request.getParameter("keyword");
+		String category=request.getParameter("category");
+		String ingredient=request.getParameter("ingredient");
+		String order=request.getParameter("order");
 		
+		System.out.println(keyword+"/"+category+"/"+ingredient+"/"+order);
+
 		int cPage;
 		int numPerpage=15;
 		try {
@@ -42,9 +47,9 @@ public class RecipeListServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		List<Recipe> list=new RecipeService().selectRecipeList(cPage, numPerpage);
+		List<Recipe> list=service.searchRecipe(keyword, category, ingredient, order, cPage, numPerpage);
 		
-		int totalData=new RecipeService().selectRecipeCount();
+		int totalData=new RecipeService().selectRecipeCount(keyword, category, ingredient);
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		int pageBarSize=5;
@@ -80,8 +85,9 @@ public class RecipeListServlet extends HttpServlet {
 		
 	
 		request.setAttribute("pageBar", pageBar);
+		
 		request.setAttribute("recipeList", list);
-		request.getRequestDispatcher("/view/recipe/recipeList.jsp").forward(request, response);
+		request.getRequestDispatcher("/view/recipe/recipeSearchAjax.jsp").forward(request, response);		
 	}
 
 	/**

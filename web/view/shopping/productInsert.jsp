@@ -4,7 +4,7 @@
 <style>
 	.start{
 		font-size:38px;
-		margin-left:700px;
+		margin-left:500px;
 	}
 	div{
 		margin-bottom:50px;

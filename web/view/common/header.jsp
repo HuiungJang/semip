@@ -35,13 +35,10 @@
     $.ajax({
       url: '<%=request.getContextPath()%>/mainpage.do',
       success: data => {
-
         $("#recommend_recipe *").remove();
         $("#topChef *").remove();
         $("#recipe *").remove();
-
         const imgtag = ' <div class="recipe_icon"><img src="<%=request.getContextPath()%>/img/mainImg/recipe_icon.png" width="400px"></div>';
-
         $("#recommend_recipe").append(imgtag);
         $(data.bestThreeRecipe).each((i,v)=>{
           let val='';
@@ -63,14 +60,10 @@
           $("#recommend_recipe").append(val);
         });
         // 레시피 좋아요순 3개 끝
-
-
         // 셰프 좋아요순 5명
         const $span = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">셰프 TOP 5</span>';
         $("#topChef").append($span);
-
         $(data.bestFiveChef).each((i,v)=>{
-
             let val2='';
             val2 +='<div class="chefData">';
             val2 +='<a href="<%=request.getContextPath()%>/searchchef.do?chefsearch='+data.bestFiveChef[i].memberNickName+'">';
@@ -88,37 +81,29 @@
            $("#topChef").append(val2);
         });
         // 셰프 좋아요순 5명 끝
-
         // 레시피 3개
         const $span2 = '<span style="font-size: 40px; font-weight: bolder; border-bottom: 1px #1f695b solid">최근 레시피</span>';
         $("#recipe").append($span2);
-
         $(data.threeRecipe).each((i,v)=>{
             let val3=''
-
             val3 +=  ' <div class="recipeData">';
-
             if(data.threeRecipe[i].representPicture !== null) {
               val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
             }else{
               val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="250px" height="250px"></a>';
             }
-
             val3 +=  '<div>';
             val3 +=  '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><span class="recipeTitle">'+data.threeRecipe[i].recipeTitle+'</span></a><br>';
-
             if(data.threeRecipe[i].recipeIntro!== null){
                 val3 +=  '<span class="recipeInfo">'+data.threeRecipe[i].recipeIntro+'</span><br>';
             }else{
               val3 +=  '<span class="recipeInfo">소개가 없습니다.</span><br>';
             }
-
             val3 +=  '</div>';
             val3 +=  '</div>';
           $("#recipe").append(val3);
         });
         // 레시피 3개 끝
-
         // dm button
         $(function(){
           $(".sendDM").click((e)=>{
@@ -377,53 +362,6 @@
       }
       function onSignInFailure(t){
         console.log(t);
-      }
-      //웹소켓서버에 연결하기
-      //WebSocket객체를 생성함
-      const socket=new WebSocket("ws://localhost:9090/<%=request.getContextPath()%>/chatting");
-      //http프로토콜로 통신하는 주소 ws:주소
-      //https프로토콜이용 : wss:주소
-      //socket설정
-      //접속후 실행되는 이벤트 핸들러 등록
-      socket.onopen=e=>{
-        console.log("웹소켓서버에 접속 성공!");
-        console.log(e);
-      }
-      //웹소켓서버에서 sendText, sendObject매소드를 실행하면 실행되는 함수
-      socket.onmessage=e=>{
-        console.log("메세지수신");
-        //수신된데이터를 받으려면 이벤트객체의 data속성을 이용함
-        console.log(e);
-        console.log(e.data);
-        //Object형태의 String 데이터를 객체로 변환해주기
-        console.log(JSON.parse(e.data));
-        const msg=JSON.parse(e.data);
-        //let msg=e.data.split(",");
-        //0 : 보낸사람
-        //1 : 메세지
-        if(msg["sender"]==$("#sender").val()){
-          //$("#msgContainer").append($("<p>").text("<"+msg[0]+"> "+msg[2]).css("text-align","left"));
-          $("#msgContainer").append($("<p>").text("<"+msg["sender"]+"> "+msg["msg"]).css("text-align","left"));
-        }else{
-          //$("#msgContainer").append($("<p>").text("<"+msg[0]+"> "+msg[2]).css("text-align","right"));
-          $("#msgContainer").append($("<p>").text("<"+msg["sender"]+"> "+msg["msg"]).css("text-align","right"));
-        }
-        //메세지처리에 대한 로직을 여기에 구현을 함.
-      }
-      const sendMsg=()=>{
-        //웹소켓서버에 메세지를 전송하는 함수
-        //전송할 메세지 전처리
-        //전처리한 메세지를 전송하는방법 : socket.send("데이터전송");
-        //socket.send($("#sender").val()+","+$("#receiver").val()+","+$("#msg").val());
-        msg=new Message($("#sender").val(),$("#receiver").val(),$("#msg").val());
-        //javascript 객체를 스트링으로 변환해서 전송
-        //JSON.stringify(object)함수를 이용
-        socket.send(JSON.stringify(msg));
-      }
-      function Message(sender,reciver,msg){
-        this.sender=sender;
-        this.reciver=reciver;
-        this.msg=msg;
       }
     </script>
     <%--        header 끝 section 시작--%>

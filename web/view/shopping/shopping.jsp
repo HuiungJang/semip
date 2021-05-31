@@ -31,7 +31,7 @@
             /* border: 1px red solid; */
             height:130px;
             width:1600px;
-            margin:180px 100px 100px 100px;
+            margin:180px 100px 20px 0px;
             font-size:30px;
             text-align:center;
         }
@@ -44,11 +44,11 @@
             width:200px;
         }
         .button{
-        	margin-left:1550px;
+        	margin-left:1450px;
             font-size:38px;
         }
         .gogo{
-        	margin-left:1350px;
+        	margin-left:1250px;
         	font-size:38px;
         }
 </style> 
@@ -91,7 +91,7 @@
 	             	<input type="hidden" name="proprice<%=j%>" value="<%=sc.get(j).getProductprice()*sc.get(j).getProductnumber() %>">
 	             	<input type="hidden" name="prono<%=j%>" value="<%=sc.get(j).getProductno() %>">
 	        		<%} %> 
-	        		<input type="hidden" name="sc" value="<%=sc.size() %>">;
+	        		<input type="hidden" name="sc" value="<%=sc.size() %>">
 	        		<div class="gogo">총 주문금액 : <%=i %></div><br>
 		        	<button type="button" onclick="test();" class="button">주문하기</button>
 		</form>	        	
@@ -156,14 +156,15 @@
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        $("#order").submit();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
-		        $("#order").submit();
 		    }
 		    alert(msg);
 		});
 	}
+	
 	</script>
 
 <%@ include file="/view/common/footer.jsp"%>

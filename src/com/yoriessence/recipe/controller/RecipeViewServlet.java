@@ -1,6 +1,7 @@
 package com.yoriessence.recipe.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,11 @@ public class RecipeViewServlet extends HttpServlet {
 		
 		//레시피에 등록된 댓글 가져오기
 		List<RecipeComment> comments=rs.selectComment(recipeEnrollNo);
+		
+		//댓글 작성자 가져오기
+		for(RecipeComment c:comments) {
+			c.setWriterProfile(rs.selectMemberProfile(c.getRecipeCommentWriter()));
+		}
 		
 //		//레시피의 과정 사진 가져오기
 //		List<RecipePicture> pictures=rs.selectProcedurePicture(recipeEnrollNo);
