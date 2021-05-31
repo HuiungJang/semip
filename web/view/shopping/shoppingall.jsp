@@ -1,13 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp"%>
-<div>
-	<form action="<%=request.getContextPath() %>/shopping/search">
-		<input type="text" name="search" class="search" size="38" placeholder="검색할 상품을 입력하세요">
-		<button type="submit" class="search2">검색</button>
-	</form>
-	<table id="tr">
-		<tr>
-<link  type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/view/shopping/shoppingcss/css.css" />
+<link  type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/view/shopping/css/essenceMall.css" />
 <div id="mallContainer">
 	<div class="searchProduct">
 		<div>
@@ -51,6 +44,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 
 

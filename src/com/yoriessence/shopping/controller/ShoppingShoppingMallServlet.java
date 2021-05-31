@@ -73,17 +73,9 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 			if(cPage==pageNo) {
 				pageBar+="<span style='background-color:#8CC7BC;'>"+pageNo+"</span>";
 			}else {
-<<<<<<< HEAD
-				pageBar+="<span href='"+request.getContextPath()
-=======
 				pageBar+="<span><a href='"+request.getContextPath()
->>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 				+"/shopping/mall?cPage="+pageNo
-<<<<<<< HEAD
-				+"&numPerpage="+numPerpage+"'>"+pageNo+"</span>";	
-=======
 				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a></span>";
->>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 			}
 			pageNo++;
 		}
@@ -91,11 +83,7 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-<<<<<<< HEAD
-			pageBar+="<span href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</span>";
-=======
 			pageBar+="<span><a href='"+request.getContextPath()+"/shopping/mall?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</a></span>";
->>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 		}
 		
 		

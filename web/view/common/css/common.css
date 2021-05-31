@@ -26,12 +26,8 @@
 }
 /* 헤더 메뉴부분 */
 .header .menu{
-<<<<<<< HEAD
-	margin-left: 130px;
-=======
 	margin-left: 50px;
 	margin-top: 40px;
->>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 }
 .header .menu>span a{
 	font-size:40px;
