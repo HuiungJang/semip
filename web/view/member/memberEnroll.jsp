@@ -36,7 +36,7 @@
                     <span class="box int_pass">
                         <input type="password" id="pswd1" name="password" class="int" maxlength="20">
                         <span id="alertTxt">사용불가</span>
-                        <img src="jpg/m_icon_check_disable.png" id="pswd1_img1" class="pswdImg">
+                        <img src="<%=request.getContextPath()%>/img/icon/icon_check_disable.png" id="pswd1_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>
@@ -46,7 +46,7 @@
                      <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
                     <span class="box int_pass_check">
                         <input type="password" id="pswd2" name="password2" class="int" maxlength="20">
-                        <img src="jpg/m_icon_pass.png" id="pswd2_img1" class="pswdImg">
+                        <img src="<%=request.getContextPath()%>/img/icon/icon_pass.png" id="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
                 </div>

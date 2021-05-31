@@ -179,6 +179,9 @@
             <span>
                 <a href="<%=request.getContextPath()%>/recipe/recipeList">레시피</a>
             </span>
+            <span>
+            	<a href="<%=request.getContextPath()%>/shopping/mall">요리에센스스토어</a>
+            </span>
         </div>
 
         <div class="controlIcon">
@@ -188,7 +191,7 @@
 	            </span>
 	            <ul id="dropdown_ul">
 	        			<li style="float:left;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
-	        			<li style="float:left; margin-left:50px"><a href=""><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left; margin-left:50px"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
 	        			<li style="float:left; margin-left:110px">
 		            	<%if(loginMember==null){ %>
 	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
@@ -214,7 +217,7 @@
                     <h1 class="loginfont">L O G I N</h1>
                     <form name="formLogin" action="<%=request.getContextPath()%>/member/login.do" method="POST" class="loginform">
                         <div class="input-container">
-                            <input type="text" name="userId" id="login_id" class="input-default" placeholder="아이디" title="아이디 입력">
+                            <input type="text" name="userId" id="login_id" class="input-default" placeholder="아이디" title="아이디 입력" value="<%=saveId!=null?saveId:""%>">
                         </div>
                         <div class="alert-container">
                         </div>
@@ -233,7 +236,7 @@
                         </div>
                         <div class="IdCheck">
 	                <span>
-	                    <input type="checkbox">
+	                    <input type="checkbox" name="saveId" <%=saveId!=null?"checked":"" %>>
 	                    <label for="">아이디 저장</label>
 	                </span>
                         </div>
