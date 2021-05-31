@@ -25,11 +25,11 @@
 <section>
     <div id="chef_Profile">
         <div class="chefContainer">
-            <%if(recipeRecommend != null){%>
+            <%if(chefProfile != null){%>
                 <span id="picContainer">
 
-                    <%if(recipeRecommend.get(0).getRepresentPicture() != null){%>
-                        <img src="<%=request.getContextPath()%>/upload/profile/<%=recipeRecommend.get(0).getRepresentPicture()%>" height="200px" width="200px" style="border-radius: 200px">
+                    <%if(chefProfile.get(0).getProfilePic() != null){%>
+                        <img src="<%=request.getContextPath()%>/upload/profile/<%=chefProfile.get(0).getProfilePic()%>" height="200px" width="200px" style="border-radius: 200px">
                     <%}else{%>
                         <img src="<%=request.getContextPath()%>/img/icon/non_profile.png" height="200px" width="200px" style="border-radius: 200px">
                     <%}%>
@@ -39,40 +39,46 @@
                 <img class="recommendStar" src="" width="35px" height="35px">
                 <span id="chef_content">
                     <img src="<%=request.getContextPath()%>/img/icon/chef_cefti.png" width="50px" height="50px">
-                    <span id="chefTitle"><%=recipeRecommend.get(0).getProfileName()%></span>
+                    <span id="chefTitle"><%=chefProfile.get(0).getProfileName()%></span>
                     <span><img src="<%=request.getContextPath()%>/img/icon/icon_setting.png" width="40px" height="40px"></span>
                     <br><br><br>
                     <span class="text">
-                        <p><a><%=recipeRecommend.get(0).getProfileSelfIntro()%></a></p>
+                        <p><a><%=chefProfile.get(0).getSelfIntro()%></a></p>
                         <br>
 
-                        <%if(recipeRecommend.get(0).getProfileSNSUrl1() == null){%>
+                        <%if(chefProfile.get(0).getProfileSnsUrl1() == null){%>
                             <span><a href=""><img class="snsIcon1" src=""></a></span>
                         <%}else{%>
-                            <span><a href="http://www.<%=recipeRecommend.get(0).getProfileSNSUrl1()%>"><img class="snsIcon1" src=""></a></span>
+                            <span><a href="https://<%=chefProfile.get(0).getProfileSnsUrl1()%>"><img class="snsIcon1" src=""></a></span>
                         <%}%>
 
-                        <%if(recipeRecommend.get(0).getProfileSNSUrl2() == null){%>
+                        <%if(chefProfile.get(0).getProfileSnsUrl2() == null){%>
                             <span><a href=""><img class="snsIcon2" src=""></a></span>
                         <%}else{%>
-                            <span><a href="http://www.<%=recipeRecommend.get(0).getProfileSNSUrl2()%>"><img class="snsIcon2" src=""></a></span>
+                            <span><a href="https://<%=chefProfile.get(0).getProfileSnsUrl2()%>"><img class="snsIcon2" src=""></a></span>
                         <%}%>
                     </span>
                 </span>
                 <script>
-                  $("#sendDM").click(e=>{
-                    let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=recipeRecommend.get(0).getMemberId()%>';
-                    let option ="width=520,height=770"
-                    window.open(url,'_self',option);
-                  });
+                    $("#sendDM").click(e=>{
+                      <%if(loginMember !=null){%>
+                          let url='<%=request.getContextPath()%>/messagelist?memberId=<%=loginMember.getUserId()%>&targetId=<%=chefProfile.get(0).getMemberId()%>';
+                          let option ="width=520,height=770"
+                          window.open(url,'_self',option);
+
+                      <%}else{%>
+                            if(confirm("로그인이 필요합니다. 로그인하시겠습니까?")){
+                            trigger.click();
+                            }
+                      <%}%>
+                    });
+
                 </script>
             <%}%>
         </div>
     </div>
     <nav id="sort">
         <a>최신순</a>
-        |
-        <a>추천순</a>
         |
         <a>조회순</a>
     </nav>
@@ -82,23 +88,28 @@
         <% for(int i=0; i<chefRecipe.size(); i++){%>
             <div class="recipe">
                 <%if(chefRecipe.get(i).getRepresentPicture() != null){%>
-                    <a href=""><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}else{%>
-                    <a href=""><img src="" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}%>
                 <div class="recipe_info">
-                    <p><a href=""><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
+                    <p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
 <%--                    글 내용으로--%>
                     <p><a href=""><%=chefRecipe.get(i).getMemberId()%></a></p>
 <%--                    프로필로--%>
                     <span>좋아요
+
+<%--                      좋아요 로직   수정해야함--%>
+
                     <%try{%>
                         <%=recipeRecommend.get(i).getRecipeRecommendNum()%>
-                    <%}catch (NullPointerException e){%>
+                    <%}catch (IndexOutOfBoundsException e){%>
                         0
                     <%}%>
+
+
                     </span>
 
                     <span> 댓글
@@ -115,8 +126,9 @@
         <%}%>
     <%}%>
     </div>
-
-
+    <div id="pageBar">
+        <%=request.getAttribute("pageBar")%>
+    </div>
 </section>
 <script>
   'use strict;'
@@ -227,62 +239,78 @@
     }
   };
 
-  $("#sort a").click((e)=>{
-   const sortVal = $(e.target).text();
-   console.log(sortVal);
-   console.log("<%=chefProfile.get(0).getMemberId()%>");
-   $.ajax({
-     url: "<%=request.getContextPath()%>/searchchefajax.do",
-     data:{
-       "sortVal":sortVal,
-       "chefsearch":"<%=userInfo.getMemberNickName()%>"
-     },
-     type:"get",
+  let sortVal = '';
 
-     success:data=>{
-       $("#recipe_list *").remove();
+  $("#sort>a").click((e)=>{
 
-       let val='';
-       $(data).each((i,v)=>{
-         console.log(v);
+    sortVal=$(e.target).text();
 
-         if(v.recommendsNum != null){
-           val+='<div class="recipe">';
-           if(v.recommendsNum[i].representPicture !== undefined){
-             val+='<a href=""><img src="'+v.recommendsNum[i].representPicture+'" height="200px" width="200px"></a>';
-           }else{
-             val+='<a href=""><img src="" height="200px" width="200px"></a>';
-           }
-            val+='<div class="recipe_info">';
-            val+='<p><a href="">'+decodeURI(v.recommendsNum[i].recipeTitle)+'</a></p>';
-            val+='<p><a href="">'+v.recommendsNum[i].memberId+'</a></p>';
-            val += '<span>좋아요 ' + v.recommendsNum[i].recipeRecommendNum + ' </span>';
-
-           try{
-             val += '<span>댓글 '+v.commentsNum[i].countRecipeComment+' </span>';
-           }catch (e) {
-             val += '<span>댓글 0 </span>';
-           }
-
-            val+='<span>조회수 '+v.recommendsNum[i].recipeViewCount+' </span>';
-            val+='</div>';
-            val+='</div>';
-
-           $("#recipe_list").append(val);
-         }
-       });
-     },
-
-     error:(e,m,i)=>{
-      console.log(e);
-      console.log(m);
-      console.log(i);
-    }
-   });
-
+    sortAjax(<%=request.getParameter("cPage")%>,"<%=userInfo.getMemberNickName()%>",sortVal);
   });
 
+  function sortAjax(cPage,chefNick,sortVal){
 
+    $.ajax({
+      url: "<%=request.getContextPath()%>/searchchefajax.do",
+      data:{
+        "sortVal":sortVal,
+        "cPage":cPage,
+        "chefsearch":chefNick
+      },
+      success:data=>{
+        $("#recipe_list *").remove();
+
+        let val='';
+
+        $(data.recipeInfo).each((i,v)=>{
+          // console.log(v);
+          if(v != null) {
+            val = '<div class="recipe">';
+
+            if (v.representPicture !== undefined) {
+              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px"></a>';
+            } else {
+              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/recipe/non_recipe.png" height="200px" width="200px"></a>';
+            }
+
+            val += '<div class="recipe_info">';
+            val += '<p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'">' + decodeURI(v.recipeTitle) + '</a></p>';
+            val += '<p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNum+'">' + v.memberId + '</a></p>';
+
+            for (let j in data.countRecommend) {
+              if (v.recipeEnrollNum === j) {
+                val += '<span>좋아요 ' + data.countRecommend[j] + ' </span>';
+              }
+            }
+            val += '<span>좋아요 0 </span>';
+
+            for(let j in data.countComment){
+              if (v.recipeEnrollNum === j) {
+                val += '<span>댓글 '+data.countComment[j]+' </span>';
+              }
+            }
+            val += '<span>댓글 0 </span>';
+
+
+            val+='<span>조회수 '+v.recipeViewCount+' </span>';
+            val+='</div>';
+            val+='</div>';
+
+            $("#recipe_list").append(val);
+          }
+        });
+
+        $("#pageBar *").remove();
+        $("#pageBar").html(data.pageBar);
+      },
+
+      error:(e,m,i)=>{
+        console.log(e);
+        console.log(m);
+        console.log(i);
+      }
+    });
+  }
 
   function chefCertifiedImg(){
     if(<%= !(userInfo.getMemberGrade().equals("cf")) %>){

@@ -73,14 +73,14 @@ public class SearchChefServlet extends HttpServlet {
                 pageBar+="<span></span>";
 
             }else{
-                pageBar+="<span><a href='"+request.getContextPath()+"/rankchef.do?cPage="+(cPage-1)+"'>이전</a></span>";
+                pageBar+="<span><a href='"+request.getContextPath()+"/searchchef.do?cPage="+(cPage-1)+"&chefsearch="+chefName+"'>이전</a></span>";
             }
 
             while(!(pageNo>pageEnd||pageNo>totalPage)){
                 if(cPage==pageNo){
-                    pageBar+="<span>"+pageNo+"</span>";
+                    pageBar+="<span style='color:#1f695b'>"+pageNo+"</span>";
                 }else{
-                    pageBar+="<span><a href='"+request.getContextPath()+"/rankchef.do?cPage="+pageNo+"'>"+pageNo+"</a></span>";
+                    pageBar+="<span><a href='"+request.getContextPath()+"/searchchef.do?cPage="+pageNo+"&chefsearch="+chefName+"'>"+pageNo+"</a></span>";
                 }
                 pageNo++;
             }
@@ -88,7 +88,7 @@ public class SearchChefServlet extends HttpServlet {
             if(pageNo>totalPage){
                 pageBar+="<span></span>";
             }else{
-                pageBar+="<span><a href='"+request.getContextPath()+"/chef/rankchef.do?cPage="+cPage+"'>다음</a></span>";
+                pageBar+="<span><a href='"+request.getContextPath()+"/searchchef.do?cPage="+cPage+"&chefsearch="+chefName+"'>다음</a></span>";
             }
             request.setAttribute("pageBar",pageBar);
 
@@ -122,7 +122,7 @@ public class SearchChefServlet extends HttpServlet {
 
 
 
-            List<Recipe> recipes = new UserService().getRecipe(chefName);
+            List<Recipe> recipes = new UserService().getRecipe(chefName,cPage,numPerPage);
             // 그 셰프가 올린 레시피를 가져옴
             request.setAttribute("recipe",recipes);
 

@@ -239,6 +239,21 @@
 		}
 		const pswd1=$("#pswd1").val();
 		const pswd2=$("#pswd2").val();
+		const num = pswd1.search(/[0-9]/g);
+		const eng = pswd1.search(/[a-z]/ig);
+		if(pswd1.length < 8 || pswd1.length > 15){
+			console.log("1");
+			alert("비밀번호는 8자리 ~ 15자리 이내로 입력해주세요.");
+			return false;
+		}else if(pswd1.search(/\s/) != -1){
+			console.log("2");
+		 	alert("비밀번호는 공백 없이 입력해주세요.");
+		  	return false;
+		}else if(num < 0 || eng < 0){
+			 console.log("3");
+		  	alert("비밀번호는 영문,숫자를 혼합하여 입력해주세요.");
+		  	return false;
+		}
 		if(pswd1==""||pswd2==""){
 			alert("비밀번호를 입력해야합니다.")
 			return false;
