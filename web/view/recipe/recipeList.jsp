@@ -130,8 +130,6 @@
 </style>
 <section>
 <%-- <a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=request.getSession().getAttribute("loginMember")%>">포인트조회</a> --%>
-<a href="<%=request.getContextPath()%>/point/pointView">포인트조회</a>
-<a href="<%=request.getContextPath()%>/recipe/recipeForm">글쓰기</a>
 	<form action="<%=request.getContextPath() %>/recipe/recipeSearch" method="post">
 		<div class="search_row">
 			<!-- <input type="hidden" name="keyword_hidden" id="keyword_hidden" value=""> -->
