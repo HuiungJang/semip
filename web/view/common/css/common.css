@@ -26,7 +26,8 @@
 }
 /* 헤더 메뉴부분 */
 .header .menu{
-	margin-left: 200px;
+	margin-left: 50px;
+	margin-top: 40px;
 }
 .header .menu>span a{
 	font-size:40px;
@@ -39,8 +40,8 @@
 /* 헤더 메뉴 아이콘*/
 .header .controlIcon{
 	width:300px;
-	/* height:350px; */
 	z-index:2;
+	margin-top:40px;
 }
 .header .controlIcon>span>a>img{
 	padding-left: 20px;
@@ -263,6 +264,9 @@
 
 .main-content #recommend_recipe .recipeData div{
 	display: inline-block;
+}
+.main-content #recommend_recipe .recipeData>a>img{
+	margin-top:45px;
 }
 .main-content #recommend_recipe .recipeData div span{
 	font-size:25px;
