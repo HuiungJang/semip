@@ -130,6 +130,10 @@
  		width:80px;
  		height:30px;
  	}
+ 	
+ 	img{
+ 		object-fit: cover;
+ 	}
 
 </style>
 

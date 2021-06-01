@@ -17,7 +17,7 @@
 				</div>
 			<%}
 			}else{ %>
-				<p>검색 결과가 없습니다.</p>
+				<div></div><div class="no_data">검색 결과가 없습니다.</div><div></div>
 			<%} %>
 		</div>
 		<div id="pageBar"><%=request.getAttribute("pageBar")!=null?request.getAttribute("pageBar"):"" %></div>

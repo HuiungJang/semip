@@ -87,6 +87,11 @@ public class RecipeViewServlet extends HttpServlet {
 		
 		//레시피에 등록된 댓글 가져오기
 		List<RecipeComment> comments=rs.selectComment(recipeEnrollNo);
+		//댓글 작성자의 프로필 사진 가져오기
+		for(RecipeComment rc:comments) {
+			String tempNick=new RecipeService().memberNickname(r.getMemberId());
+			rc.setWriterProfile(new UserService().chefProfile(nickname).get(0).getProfilePic()); 
+		}
 		
 		//댓글 작성자 가져오기
 		for(RecipeComment c:comments) {
