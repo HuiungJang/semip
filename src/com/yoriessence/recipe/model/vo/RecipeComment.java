@@ -14,13 +14,14 @@ public class RecipeComment {
 	private Date commentEnrollDate;
 	private String recipeCommentWriter;
 	private String writerProfile;
+	private String nickname;
 	
 	public RecipeComment() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public RecipeComment(int recipeCommentNo, int recipeEnrollNo, String recipeComment, Date commentEnrollDate,
-			String recipeCommentWriter, String writerProfile) {
+			String recipeCommentWriter, String writerProfile, String nickname) {
 		super();
 		this.recipeCommentNo = recipeCommentNo;
 		this.recipeEnrollNo = recipeEnrollNo;
@@ -28,6 +29,7 @@ public class RecipeComment {
 		this.commentEnrollDate = commentEnrollDate;
 		this.recipeCommentWriter = recipeCommentWriter;
 		this.writerProfile = writerProfile;
+		this.nickname = nickname;
 	}
 
 	public int getRecipeCommentNo() {
@@ -76,6 +78,16 @@ public class RecipeComment {
 
 	public void setWriterProfile(String writerProfile) {
 		this.writerProfile = writerProfile;
+	}
+
+	
+	
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	@Override

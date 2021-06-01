@@ -236,6 +236,9 @@
     	display:flex;
     }
     
+    img{
+    	object-fit: cover;
+    }
 
     
 </style>

@@ -127,7 +127,8 @@
 			<div id="basic_info" class="info">
 				<input type="file" style="display:none" name="represent_picture" id="represent_picture"/>
 				<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" style="background-color:#DCDCDC" id="thumbnail_preview"/>
-				<input type="hidden" name="member_id" id="member_id" value="<%=loginMember.getUserId()%>"/>
+				<input type="hidden" name="member_id" id="member_id" value="<%=loginMember.getUserId()%>"/> 
+				<!-- <input type="hidden" name="member_id" id="member_id" value="gbh1234"/> -->
 				<div class="input_container">
 					<p class="input_title">레시피 제목</p>
 					<div class="input"><input type="text" name="recipe_title" id="recipe_title" placeholder="레시피 제목을 입력하세요." required/></div>
