@@ -15,6 +15,9 @@
 #managerPage{
 	display: none;
 }
+#managerPage2{
+	display: none;
+}
 .header {
 	display: grid;
 	grid-template-columns: 300px 900px 300px;
@@ -30,7 +33,11 @@
 	margin-top: 40px;
 }
 .header .menu>span a{
+<<<<<<< HEAD
+	font-size:30px;
+=======
 	font-size:35px;
+>>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 	padding-left: 30px;
 }
 .header .menu>span a:hover {
