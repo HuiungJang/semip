@@ -88,9 +88,9 @@
             let val3=''
             val3 +=  ' <div class="recipeData">';
             if(data.threeRecipe[i].representPicture !== null) {
-              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
+              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/upload/recipe/'+data.threeRecipe[i].representPicture +'"width="250px" height="250px"></a>';
             }else{
-              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/icon/non_profile.png" width="250px" height="250px"></a>';
+              val3 += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" width="250px" height="250px"></a>';
             }
             val3 +=  '<div>';
             val3 +=  '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.threeRecipe[i].recipeEnrollNum+'"><span class="recipeTitle">'+data.threeRecipe[i].recipeTitle+'</span></a><br>';
