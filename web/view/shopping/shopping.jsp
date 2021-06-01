@@ -3,7 +3,9 @@
 <%
 	int i=0;
 	List<ShoppingCart> sc=(List<ShoppingCart>)request.getAttribute("list");
-	
+	for(ShoppingCart list : sc) {
+		i+=list.getProductprice()*list.getProductnumber()+list.getProductprice();
+	}
 %>
 <%@ include file="/view/common/header.jsp"%>
    <style>
