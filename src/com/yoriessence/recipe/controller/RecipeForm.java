@@ -26,7 +26,13 @@ public class RecipeForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/view/recipe/recipeForm.jsp").forward(request, response);
+		if(request.getSession().getAttribute("loginMember")==null) {
+			request.setAttribute("msg", "로그인 후 이용해주세요.");
+			request.setAttribute("loc", "/recipe/recipeList");
+			request.getRequestDispatcher("/view/common/msg.jsp").forward(request, response);;
+		}else {
+			request.getRequestDispatcher("/view/recipe/recipeForm.jsp").forward(request, response);
+		}
 	}
 
 	/**

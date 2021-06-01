@@ -32,7 +32,7 @@ public class RecipeSearchAjaxServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RecipeService service=new RecipeService();
-		String keyword=request.getParameter("keyword");
+		String keyword=request.getParameter("keyword")!=null?request.getParameter("keyword"):"";
 		String category=request.getParameter("category");
 		String ingredient=request.getParameter("ingredient");
 		String order=request.getParameter("order");

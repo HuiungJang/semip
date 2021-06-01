@@ -1,4 +1,4 @@
-package com.yoriessence.recipe.model.vo;
+package com.yoriessence.recipe.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,11 +52,11 @@ public class ProductPageMoveServlet extends HttpServlet implements Servlet {
 		}else {
 			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'><i class='fas fa-chevron-left'></i></button>";
 		}
-		
+
 		if(cPage!=3) {
-			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
-		}else {
 			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'><i class='fas fa-chevron-right'></i></button>";
+		}else {
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
 		}
 		
 

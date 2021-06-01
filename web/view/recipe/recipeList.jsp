@@ -128,6 +128,19 @@
 		font-weight:bold;
 	}
 	
+	/* 데이터 없을 때 출력 */
+	.no_data{
+		display:flex; justify-content:center;
+		/* margin:10px; */
+	}
+	#mealkit_list .no_data{
+		margin:30px;
+	}
+	
+	img{
+		object-fit: cover;
+	}
+	
 </style>
 <section>
 <%-- <a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=request.getSession().getAttribute("loginMember")%>">포인트조회</a> --%>
@@ -181,9 +194,9 @@
 		</div>
 	</form>
 	<div id="mealkit_list">
-		<%=request.getAttribute("beforeBtn") %>
-		<%if(productList.size()!=0){ 
-			for(Product p:productList) {%>
+		<%if(productList.size()!=0){ %>
+			<%=request.getAttribute("beforeBtn")%>
+			<%for(Product p:productList) {%>
 			<div class="mealkit" onclick="location.replace('<%=request.getContextPath()%>/shopping/shopping?productNo=<%=p.getProductNo() %>')">
 				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"/img/recipe/no_image.png" %>" height="200px" width="200px">
 				<div class="mealkit_info">
@@ -191,8 +204,11 @@
 					<span>가격 <%=p.getPrice() %></span><span>장바구니</span>
 				</div>
 			</div>
-		<%}} %>
-		<%=request.getAttribute("afterBtn") %>
+			<%} %>
+			<%=request.getAttribute("afterBtn") %>
+		<%}else{%>
+			<div></div><div class="no_data">관련 상품이 없습니다.</div><div></div>
+		<%}%>
 	</div>
 	<div id="recipe_list">
 		<div class="grid">
@@ -209,7 +225,7 @@
 				</div>
 			<%}
 			}else{ %>
-				<p>검색 결과가 없습니다.</p>
+				<div></div><div class="no_data">검색 결과가 없습니다.</div><div></div>
 			<%} %>
 		</div>
 		<div id="pageBar"><%=request.getAttribute("pageBar")!=null?request.getAttribute("pageBar"):"" %></div>

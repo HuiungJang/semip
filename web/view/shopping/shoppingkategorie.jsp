@@ -27,6 +27,9 @@
 				</div>
 			<%}%>
 		</div>
+		<div id="pageBar">
+			<div><%=request.getAttribute("pageBar") %></div>
+		</div>
 	</div>
 
 <%@ include file="/view/common/footer.jsp"%>

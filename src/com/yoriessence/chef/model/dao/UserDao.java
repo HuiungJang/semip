@@ -198,6 +198,44 @@ public class UserDao {
         return chefProfile;
     }
 
+    public List<Profile> reGetProfile(Connection conn, String chefName){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Profile> chefProfile = new ArrayList<>();
+        Profile p = null;
+        try{
+            pstmt = conn.prepareStatement(pp.getProperty("reGetProfile"));
+
+            pstmt.setString(1,chefName);
+
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                p = new Profile();
+                p.setMemberNickName(rs.getString("member_nickname"));
+                p.setMemberId(rs.getString("memberid"));
+                p.setProfileName(rs.getString("profile_name"));
+                p.setSelfIntro(rs.getString("profile_selfintro"));
+                p.setProfilePic(rs.getString("profile_pic"));
+                p.setProfileSnsUrl1(rs.getString("profile_SNS_URL_1"));
+                p.setProfileSnsUrl2(rs.getString("profile_SNS_URL_2"));
+
+                chefProfile.add(p);
+            }else{
+                chefProfile=null;
+                // 조회 결과가 없다면
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return chefProfile;
+    }
+
     public List<RecipeRecommend> chefProfile2(Connection conn, String chefName){
         PreparedStatement pstmt = null;
         ResultSet rs = null;

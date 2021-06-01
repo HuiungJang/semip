@@ -71,6 +71,16 @@ public class UserService {
 
         return chefProfile;
     };
+
+    public List<Profile> reGetProfile(String chefName){
+        // 셰프 프로필 가져오는 서비스
+        Connection conn = getConnection();
+        List<Profile> chefProfile = dao.reGetProfile(conn,chefName);
+        close(conn);
+
+        return chefProfile;
+    };
+
     public List<RecipeRecommend> chefProfile2(String chefName){
         // 셰프 프로필 가져오는 서비스
         Connection conn = getConnection();

@@ -96,9 +96,9 @@ public class RecipeListServlet extends HttpServlet {
 		}
 		
 		if(cPage!=3) {
-			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
-		}else {
 			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'><i class='fas fa-chevron-right'></i></button>";
+		}else {
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
 		}
 		
 		request.setAttribute("productList", product);

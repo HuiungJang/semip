@@ -1,11 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, com.yoriessence.shopping.vo.ShoppingCart" %>
+<%@ page import="java.util.List, com.yoriessence.shopping.vo.ShoppingCart, java.util.ArrayList" %>
 <%
 	int i=0;
 	List<ShoppingCart> sc=(List<ShoppingCart>)request.getAttribute("list");
-	for(ShoppingCart list : sc) {
-		i+=list.getProductprice()*list.getProductnumber()+list.getProductprice();
-	}
 	
 %>
 <%@ include file="/view/common/header.jsp"%>
@@ -133,15 +130,14 @@
 				'phone':휴대폰소액결제
 			*/
 		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    
-		    name : '주문명: ',
+		    name : '',
 		    /* 결제창에서 보여질 이름 */
 		    amount : <%=i%>,
 		    /* 가격 */
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
+		    buyer_email : '<%=loginMember.getEmail()%>',
+		    buyer_name : '<%=loginMember.getUserName()%>',
+		    buyer_tel : '<%=loginMember.getPhone()%>',
+		    buyer_addr : '<%=loginMember.getAddress()%>',
 		    buyer_postcode : '123-456',
 		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
 		    /*
@@ -152,9 +148,9 @@
 		}, function(rsp) {
 		    if ( rsp.success ) {
 		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '고유ID : ' + <%=loginMember.getUserId()%>;
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '결제 금액 : ' + <%=i%>;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
 		        $("#order").submit();
 		    } else {
