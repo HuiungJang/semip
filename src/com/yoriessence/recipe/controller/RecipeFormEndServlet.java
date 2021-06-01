@@ -102,8 +102,7 @@ public class RecipeFormEndServlet extends HttpServlet {
 		
 		for(int i=0;i<procedure.size();i++) {
 			if(procedure.get(i)!=null) {
-				result=new RecipeService().insertProcedure(procedure.get(i));
-				if(result<0) break;
+				new RecipeService().insertProcedure(procedure.get(i));
 			}
 		}
 		

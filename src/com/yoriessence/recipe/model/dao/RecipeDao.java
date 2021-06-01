@@ -101,10 +101,10 @@ public class RecipeDao {
 				r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
 				r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
 				r.setRecipeDifficult(rs.getString("recipe_difficult"));
-				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
 				r.setMainIngredient(rs.getString("main_ingredient"));
+				r.setRecipeTip(rs.getString("recipe_tip"));
 				list.add(r);
 			}
 		}catch(SQLException e) {
@@ -188,10 +188,10 @@ public class RecipeDao {
 				r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
 				r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
 				r.setRecipeDifficult(rs.getString("recipe_difficult"));
-				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
 				r.setMainIngredient(rs.getString("main_ingredient"));
+				r.setRecipeTip(rs.getString("recipe_tip"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -426,8 +426,8 @@ public class RecipeDao {
 			pstmt.setInt(7, r.getRecipeInfoHowmany());
 			pstmt.setInt(8, r.getRecipeInfoTime());
 			pstmt.setString(9, r.getRecipeDifficult());
-			pstmt.setString(10, r.getRecipeTip());
-			pstmt.setString(11, r.getMainIngredient());
+			pstmt.setString(10, r.getMainIngredient());
+			pstmt.setString(11, r.getRecipeTip());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

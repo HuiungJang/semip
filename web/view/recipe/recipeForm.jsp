@@ -131,11 +131,11 @@
 				<!-- <input type="hidden" name="member_id" id="member_id" value="gbh1234"/> -->
 				<div class="input_container">
 					<p class="input_title">레시피 제목</p>
-					<div class="input"><input type="text" name="recipe_title" id="recipe_title" placeholder="레시피 제목을 입력하세요." required/></div>
+					<div class="input"><input type="text" name="recipe_title" id="recipe_title" placeholder="레시피 제목을 입력하세요." required maxlength="300"/></div>
 				</div>
 				<div class="input_container">
 					<p class="input_title">레시피 소개</p>
-					<div class="input"><textarea name="recipe_intro" id="recipe_intro"></textarea></div>
+					<div class="input"><textarea name="recipe_intro" id="recipe_intro" maxlength="666"></textarea></div>
 				</div>
 				<div class="input_container">
 					<p class="input_title">동영상</p>
