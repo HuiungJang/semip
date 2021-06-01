@@ -41,7 +41,7 @@ public class RecipeFormEndServlet extends HttpServlet {
 		//값 받아오기
 		String path=request.getServletContext().getRealPath("/upload/recipe/");
 		int maxSize=1024*1024*10;
-		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
+		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "utf-8", new MyRename());
 	
 		//dao로 저장
 		Recipe r=new Recipe();

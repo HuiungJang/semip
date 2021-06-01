@@ -35,7 +35,7 @@ public class ProcedureImgUploadServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path=getServletContext().getRealPath("/upload/recipe/procedure/");
-		MultipartRequest mr=new MultipartRequest(request,path,1024*1024*10, "utf-8", new DefaultFileRenamePolicy());
+		MultipartRequest mr=new MultipartRequest(request,path,1024*1024*10, "utf-8", new MyRename());
 		Enumeration e=mr.getFileNames();
 //		List<String filenames=new ArrayList();
 		String filenames="";

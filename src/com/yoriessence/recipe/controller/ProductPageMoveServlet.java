@@ -32,7 +32,7 @@ public class ProductPageMoveServlet extends HttpServlet implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("keyword");
+		String keyword=request.getParameter("keyword")!=null?request.getParameter("keyword"):"";
 		int cPage=0;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
