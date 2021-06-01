@@ -4,7 +4,7 @@
 	int i=0;
 	List<ShoppingCart> sc=(List<ShoppingCart>)request.getAttribute("list");
 	for(ShoppingCart list : sc) {
-		i+=list.getProductprice()*list.getProductnumber()+list.getProductprice();
+		i+=list.getProductprice()*list.getProductnumber()+list.getProductshopify();
 	}
 %>
 <%@ include file="/view/common/header.jsp"%>
@@ -132,7 +132,7 @@
 				'phone':휴대폰소액결제
 			*/
 		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '',
+		    name : '상품',
 		    /* 결제창에서 보여질 이름 */
 		    amount : <%=i%>,
 		    /* 가격 */
