@@ -92,6 +92,9 @@
     #recipe_info{
         text-align:center;
     }
+    #recipe_info>*{
+    	margin-bottom:20px;
+    }
     
     /* 요리정보 출력 */
 	#cooking_info>div{
@@ -111,7 +114,9 @@
     	display:block;
     	font-size:50px;
     	font-weight:bold;
-    	margin-bottom:20px;
+    	margin-bottom:40px;
+    	width:700px;
+    	margin:0 auto;
     }
     
     #recipe_intro{
@@ -165,7 +170,7 @@
 	}
 	
 	.ingredient_li{
-		display:flex;
+		display:flex; margin-bottom:10px;
 	}
 	
 	.ingredient_name{
@@ -327,7 +332,7 @@
                    	<%} %>
                     <p id="recipe_title"><%=recipe.getRecipeTitle() %></p>
                     <%if(recipe.getRecipeIntro()!=null){%>
-                    	<p id="recipe_intro"></p>
+                    	<p id="recipe_intro"><%=recipe.getRecipeIntro() %></p>
                     <%} %>
                     <%if(recipe.getRecipeVideoAddress()!=null) {%>
                     	<p><%=recipe.getRecipeVideoAddress() %></p>
@@ -493,7 +498,7 @@
     		            <%for(Cookie c : cookies){%>
     		                  // 로그인을 했다면 쿠키확인
 
-    		                 <%if(!c.getName().equals("checkRecommend"+chefProfile.get(0).getMemberId() )){%>
+    		                 <%if(c!=null&&c.getName()!=null&&!c.getName().equals("checkRecommend"+chefProfile.get(0).getMemberId() )){%>
     		                    // 쿠키값이 없다면
     		                    $.ajax({
     		                      url:"<%=request.getContextPath()%>/recommendChef.do",

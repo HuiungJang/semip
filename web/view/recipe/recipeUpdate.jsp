@@ -502,6 +502,7 @@
 			//복사된 태그들의 값 비워주기
 			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/no_image.png");
 			div.find("textarea").val("");
+			div.find("input[type=file]").val("");
 			//첨부파일 태그 추가하면서 이름을 1씩 증가시키고, hidden태그로 숫자 셈
 			$("div.step_container").append(div);
 			fn_procedure_update();
