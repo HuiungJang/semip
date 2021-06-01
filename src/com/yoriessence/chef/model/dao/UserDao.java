@@ -78,14 +78,9 @@ public class UserDao {
 
             while(rs.next()){
                 User u = new User();
-                u.setMemberId(rs.getString("member_id"));
+                u.setMemberId(rs.getString("memberid"));
                 u.setMemberName(rs.getString("member_name"));
-                u.setMemberEmail(rs.getString("member_email"));
                 u.setMemberNickName(rs.getString("member_nickname"));
-                u.setMemberAddress(rs.getString("member_address"));
-                u.setMemberGrade(rs.getString("member_grade"));
-                u.setMemberPhone(rs.getString("member_phone"));
-                u.setMemberPoint(rs.getInt("member_point"));
                 u.setRecommendCount(rs.getInt("recommend_count"));
 
                 result.add(u);
@@ -294,7 +289,7 @@ public class UserDao {
                 Recipe r = new Recipe();
                 r.setRecipeEnrollNo(rs.getInt("Recipe_enroll_no"));
                 r.setMemberId(rs.getString("member_id"));
-                r.setRecipeTitle(rs.getString("recipe_intro"));
+                r.setRecipeTitle(rs.getString("recipe_title"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
                 r.setRecipeVideoAddress(rs.getString("recipe_video_address"));
                 r.setRecipeCategory(rs.getString("recipe_category"));
