@@ -32,10 +32,60 @@ public class ShoppingKategorie extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int cPage=1;
+		try {
+			cPage=Integer.parseInt(request.getParameter("cPage"));
+		}catch(NumberFormatException e) {
+			cPage=1;
+		}
+		
+		int numPerpage=15;
+		try {
+			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
+		}catch(NumberFormatException e) {
+			numPerpage=15;
+		}
+		
 		String kategori=request.getParameter("kategori");
 		
-		List<Product> list=new ShoppingCartService().Shoppingkategori(kategori);
+		List<Product> list=new ShoppingCartService().Shoppingkategori(cPage,numPerpage,kategori);
 		
+		int totalData=new ShoppingCartService().selectProductCount();
+		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
+		System.out.println(totalData);
+		System.out.println(totalPage);
+		int pageBarSize=4;
+		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
+		int pageEnd=pageNo+pageBarSize-1;
+		
+		String pageBar="";
+		
+		if(pageNo==1) {
+			pageBar+="<span>[이전]</span>";
+		}else {
+			pageBar+="<span><a href='"+request.getContextPath()
+			+"/ShoppingKategorie?cPage="+(pageNo-1)
+			+"&numPerpage="+numPerpage+"'>[이전]</a></span>";
+		}
+		
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(cPage==pageNo) {
+				pageBar+="<span style='background-color:#8CC7BC;'>"+pageNo+"</span>";
+			}else {
+				pageBar+="<span><a href='"+request.getContextPath()
+				+"/ShoppingKategorie?cPage="+pageNo
+				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a></span>";
+			}
+			pageNo++;
+		}
+		
+		if(pageNo>totalPage) {
+			pageBar+="<span>[다음]</span>";
+		}else {
+			pageBar+="<span><a href='"+request.getContextPath()+"/ShoppingKategorie?cPage="+pageNo+"&numPerpage="+numPerpage+"'>[다음]</a></span>";
+		}
+		
+		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("kategori", list);
 		
 		request.getRequestDispatcher("view/shopping/shoppingkategorie.jsp").forward(request, response);

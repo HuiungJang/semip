@@ -142,6 +142,16 @@
         });
       <%}%>
   })
+  $(function(){
+      <%if(loginMember.getUserId().equals("ADMIN")){%>
+        $("#managerPage2").css("display","inline-block");
+        $("#managerPage2").click(e=>{
+        if(confirm("상품등록 페이지로 이동하시겠습니까?")){
+          location.assign("<%=request.getContextPath()%>/ProductServlet");
+        }
+        });
+      <%}%>
+  })
   <%}%>
 </script>
 <body>
@@ -174,9 +184,14 @@
 	            <span id="managerPage">
 	                <button>관리자페이지</button>
 	            </span>
+	            <span id="managerPage2">
+	                <button>상품등록페이지</button>
+	            </span>
 	            <ul id="dropdown_ul">
 	        			<li style="float:left; margin-left:-40px;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
-	        			<li style="float:left; margin-left:27px"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<% if(loginMember!=null){%>
+	        			<li style="float:left; margin-left:27px"><a href="<%=request.getContextPath()%>/shopping/cart?userId=<%=loginMember.getUserId()%>"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<%} %>
 	        			<li style="float:left; margin-left:100px">
 		            	<%if(loginMember==null){ %>
 	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
@@ -186,7 +201,7 @@
 		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getUserId()%>">프로필</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/member/memberupdateConn?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
 		                    <li><a href="#">나의레시피</a></li>
-		                    <li><a href="#">주문정보</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/ShoppingListEndServlet?memberId=<%=loginMember.getUserId()%>">주문정보</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/recipe/recipeForm">레시피작성</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=loginMember.getUserId()%>">나의포인트</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/notice/noticeList">고객센터</a></li>

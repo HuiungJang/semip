@@ -24,7 +24,7 @@
 		<%}%>
 </div>
 <div class="allProductContainer">
-	<div class="text">오늘의 추천상품</div>
+	<div class="text">전체상품</div>
 	<%for(Product pdt : pd) {%>
 		<div>
 			<span>

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.yoriessence.shopping.vo.Product" %>
 <%
@@ -69,6 +68,7 @@
 					<li>
 						상품명 :<%=pd.getProductName() %>
 						<input type="hidden" name="productno" value=<%=pd.getProductNo() %>>
+						<input type="hidden" name="userid" value=<%=loginMember.getUserId()%>>
 						<input type="hidden" name="productname" value=<%=pd.getProductName() %>>
 					</li>
 					<li>
@@ -80,7 +80,7 @@
 						<input type="hidden" name="productprice" value=<%=pd.getPrice() %>>
 					</li>
 					<li>수량 :
-						<input type="number" id="su" name="su" max=<%=pd.getStock() %> min=1 value=0>
+						<input type="number" id="su" name="su" max=<%=pd.getStock() %> min=1 value=1>
 					</li>
 					<li>
 						배송비 :<%=pd.getProductshopify() %>
@@ -126,15 +126,15 @@
 				'phone':휴대폰소액결제
 			*/
 		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:<%=pd.getProductName()%>',
+		    name : '<%=pd.getProductName()%>',
 		    /* 결제창에서 보여질 이름 */
 		    amount : (<%=pd.getPrice()%>*su)+<%=pd.getProductshopify()%>,
 		    /* 가격 */
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
-		    buyer_postcode : '123-456',
+		    buyer_email : '<%=loginMember.getEmail()%>',
+		    buyer_name : '<%=loginMember.getUserName()%>',
+		    buyer_tel : '<%=loginMember.getPhone()%>',
+		    buyer_addr : '<%=loginMember.getAddress()%>',
+		    buyer_postcode : '<%=pd.getProductNo()%>',
 		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
 		    /*
 		    	모바일 결제시,
@@ -144,9 +144,9 @@
 		}, function(rsp) {
 		    if ( rsp.success ) {
 		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '고유ID : ' + <%=loginMember.getUserId()%>;
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '결제 금액 : ' + <%=pd.getPrice()%>;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
 		    } else {
 		        var msg = '결제에 실패하였습니다.';

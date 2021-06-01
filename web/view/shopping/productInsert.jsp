@@ -18,7 +18,7 @@
 	p{
 		margin-bottom:10px;
 	}
-	button{
+	#button{
 		
 		font-size:38px;
 		margin-left:100px;
@@ -67,8 +67,8 @@
 					<div><input type="number" min="0" name="productshopify" placeholder="배송비" value="0" required></div>
 				</div>
 			</div>
-			<button onclick="">등록</button>
-			<button onclick="back(event)">취소</button>
+			<button id="button" onclick="">등록</button>
+			<button id="button" onclick="back(event)">취소</button>
 		</form>
 	</div>
 	
