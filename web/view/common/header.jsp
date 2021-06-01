@@ -111,7 +111,7 @@
             let option = "width=550,height=650,resizable=no"
             console.log(id);
             <%if(loginMember != null){%>
-                let url="<%=request.getContextPath()%>/message?memberId=<%=loginMember.getUserId()%>&targetId="+id;
+                let url="<%=request.getContextPath()%>/message?memberId=<%=loginMember.getNickName()%>&targetId="+id;
                 window.open(url,"_blank",option);
             <%}else{%>
                 if(confirm('로그인이 필요합니다. 로그인 하시겠습니까?')){

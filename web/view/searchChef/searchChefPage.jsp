@@ -322,7 +322,7 @@
            && (loginMember.getUserId().equals(chefProfile.get(0).getMemberId())
                                  || loginMember.getUserId().equals("admin"))){%>
       // 로그인했고 작성자이거나 관리자이면
-        location.replace('<%=request.getContextPath()%>/movereviseprofile?chefId=<%=chefProfile.get(0).getMemberId()%>');
+        location.replace('<%=request.getContextPath()%>/movereviseprofile?chefId=<%=chefProfile.get(0).getMemberNickName()%>');
     <%}else{%>
         alert("본인만 수정가능합니다");
     <%}%>
