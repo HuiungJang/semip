@@ -805,19 +805,11 @@ public class UserDao {
             while(rs.next()) {
                 Recipe r=new Recipe();
                 r.setRecipeEnrollNo(rs.getInt("recipe_enroll_no"));
-                r.setMemberId(rs.getString("member_id"));
+                r.setMemberId(rs.getString("memberid"));
                 r.setRecipeTitle(rs.getString("recipe_title"));
-                r.setRecipeIntro(rs.getString("recipe_intro"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
-                r.setRecipeVideoAddress(rs.getString("recipe_video_address"));
-                r.setRecipeCategory(rs.getString("recipe_category"));
-                r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
-                r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
-                r.setRecipeDifficult(rs.getString("recipe_difficult"));
-                r.setRecipeProcedure(rs.getString("recipe_procedure"));
-                r.setRecipeTip(rs.getString("recipe_tip"));
                 r.setRecipeViewCount(rs.getInt("recipe_view_count"));
-
+                r.setRecommendCount(rs.getInt("recommend_count"));
                 list.add(r);
             }
         }catch(SQLException e) {
