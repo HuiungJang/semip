@@ -90,15 +90,15 @@ public class RecipeListServlet extends HttpServlet {
 		String afterBtn="";
 		
 		if(cPage!=1) {
-			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'>&lt;</button>";
+			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'><i class='fas fa-chevron-left'></i></button>";
 		}else {
-			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'>&lt;</button>";
+			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'><i class='fas fa-chevron-left'></i></button>";
 		}
 		
 		if(cPage!=3) {
-			afterBtn="<button id='product_before' onclick='productPageMove(1)'>&gt;</button>";
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
 		}else {
-			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'>&gt;</button>";
+			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'><i class='fas fa-chevron-right'></i></button>";
 		}
 		
 		request.setAttribute("productList", product);

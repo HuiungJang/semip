@@ -5,6 +5,7 @@
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 	List<Product> productList=(List<Product>)request.getAttribute("productList");
 %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	section{
