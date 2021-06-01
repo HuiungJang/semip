@@ -19,7 +19,7 @@
          	<h4>필수정보입력</h4>
      	</div>
          <%if(m.getSnsconn()!=null&&m.getSnsconn().equals("kakao")){ %>
-         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakoenroll_validate();">
+         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakaoenroll_validate();">
              <!--Id-->
               <div>
               	<input type="hidden" id="snsconn" name="snsconn" value="kakao">
@@ -61,7 +61,7 @@
                  </div>
              </div>
      	<%}else{ %>
-        <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
+     	<form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
      		<!--Id-->
              <div class="divStyle">
                  <div>
@@ -141,7 +141,7 @@
              <div class="divStyle">
                  <h3 class="join_title"><label for="nickname">주소</label></h3>
                   <div class="div_input_address">
-                     <input type="text" id="mainaddress" name="address" class="address" maxlength="20" placeholder="우편번호 / 주소 / 상세주소">
+                     <input type="text" id="mainaddress" name="address" class="address" maxlength="50" value="<%=m.getAddress()%>">
                      <button type="button" onclick="findAddr();" class="div_input_addr_button">우편번호 찾기</button>
                  </div>
                  <span class="error_next_box"></span>
@@ -332,6 +332,7 @@
 			alert("개인정보 수집 및 이용양관에 동의하셔야 합니다.")
 			return false;
 		}
+	}
 </script>
 </section>
 <%@ include file="/view/common/footer.jsp"%>
