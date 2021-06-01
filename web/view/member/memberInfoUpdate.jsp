@@ -18,8 +18,8 @@
      	<div class="divStyle">
          	<h4>필수정보입력</h4>
      	</div>
-         <%if(m.getSnsconn()!=null&&m.getSnsconn().equals("kakao")){ %>
          <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakoenroll_validate();">
+         <%if(m.getSnsconn()!=null&&m.getSnsconn().equals("kakao")){ %>
              <!--Id-->
               <div>
               	<input type="hidden" id="snsconn" name="snsconn" value="kakao">
@@ -61,7 +61,6 @@
                  </div>
              </div>
      	<%}else{ %>
-     	<form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
      		<!--Id-->
              <div class="divStyle">
                  <div>

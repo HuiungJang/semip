@@ -1,4 +1,3 @@
-
 <%@ page import="com.yoriessence.member.vo.Member" %><%--
   Created by IntelliJ IDEA.
   User: jang
@@ -23,7 +22,7 @@
 <html>
 <head>
     <title>요리에센스</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js></script>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <meta name ="google-signin-client_id" content="393793381722-emq1t5c5as3afleds82jf0u633h15l39.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
