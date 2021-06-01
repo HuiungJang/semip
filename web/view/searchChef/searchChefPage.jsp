@@ -94,7 +94,11 @@
 <%--                글 내용으로--%>
                 <%}%>
                 <div class="recipe_info">
-                    <p><a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><%=chefRecipe.get(i).getRecipeTitle()%></a></p>
+                    <p>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>">
+                            <%=chefRecipe.get(i).getRecipeTitle()%>
+                        </a>
+                    </p>
 <%--                    글 내용으로--%>
                     <p><a href=""><%=chefRecipe.get(i).getMemberId()%></a></p>
 <%--                    프로필로--%>
@@ -113,7 +117,7 @@
 
                     <span> 댓글
                     <%try{%>
-                        <%=countComment.get(i)%>
+                        <%=countComment.get(i).getCountRecipeComment()%>
                     <%}catch (IndexOutOfBoundsException e){%>
                         0
                     <%}%>

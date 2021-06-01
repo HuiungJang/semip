@@ -289,7 +289,7 @@ public class UserDao {
                 Recipe r = new Recipe();
                 r.setRecipeEnrollNo(rs.getInt("Recipe_enroll_no"));
                 r.setMemberId(rs.getString("member_id"));
-                r.setRecipeTitle(rs.getString("recipe_intro"));
+                r.setRecipeTitle(rs.getString("recipe_title"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
                 r.setRecipeVideoAddress(rs.getString("recipe_video_address"));
                 r.setRecipeCategory(rs.getString("recipe_category"));
