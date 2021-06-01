@@ -19,7 +19,7 @@
          	<h4>필수정보입력</h4>
      	</div>
          <%if(m.getSnsconn()!=null&&m.getSnsconn().equals("kakao")){ %>
-         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakoenroll_validate();">
+         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakaoenroll_validate();">
              <!--Id-->
               <div>
               	<input type="hidden" id="snsconn" name="snsconn" value="kakao">
@@ -61,7 +61,7 @@
                  </div>
              </div>
      	<%}else{ %>
-        <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
+     	<form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
      		<!--Id-->
              <div class="divStyle">
                  <div>
@@ -332,6 +332,7 @@
 			alert("개인정보 수집 및 이용양관에 동의하셔야 합니다.")
 			return false;
 		}
+	}
 </script>
 </section>
 <%@ include file="/view/common/footer.jsp"%>
