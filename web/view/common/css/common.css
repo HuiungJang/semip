@@ -15,6 +15,9 @@
 #managerPage{
 	display: none;
 }
+#managerPage2{
+	display: none;
+}
 .header {
 	display: grid;
 	grid-template-columns: 300px 900px 300px;

@@ -19,7 +19,6 @@
     List<RecipeComment> countComment = (List<RecipeComment>)request.getAttribute("countComment");
     List<RecipeRecommend> recipeRecommend = (List<RecipeRecommend>)request.getAttribute("recipeRecommends");
 
-    System.out.println(recipeRecommend.get(0).getProfileName());
     User userInfo = (User)request.getAttribute("userInfo");
 %>
 <section>

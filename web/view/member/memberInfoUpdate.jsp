@@ -61,7 +61,7 @@
                  </div>
              </div>
      	<%}else{ %>
-     	<form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
+        <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
      		<!--Id-->
              <div class="divStyle">
                  <div>
