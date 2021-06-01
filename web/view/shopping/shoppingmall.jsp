@@ -25,11 +25,7 @@
 		<%}%>
 </div>
 <div class="allProductContainer">
-<<<<<<< HEAD
-	<div class="text">전체상품</div>
-=======
 	<div class="text">전체상품조회</div>
->>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 	<%for(Product pdt : pd) {%>
 		<div class="totalProductContainer">
 			<span>

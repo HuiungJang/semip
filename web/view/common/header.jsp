@@ -45,7 +45,7 @@
           val +='<div class="recipeData">';
           val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.bestThreeRecipe[i].recipeEnrollNum+'">';
           if(data.bestThreeRecipe[i].representPicture !== null) {
-            val += '<img src="<%=request.getContextPath()%>/upload/recipe'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
+            val += '<img src="<%=request.getContextPath()%>/upload/recipe/'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
           }else{
             val += '<img src="<%=request.getContextPath()%>/img/recipe/non_recipe_pic.png" width="250px" height="250px">';
           }
