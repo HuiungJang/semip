@@ -59,7 +59,6 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		r.setRecipeDifficult(mr.getParameter("recipe_difficult"));
 		r.setRecipeProcedure("테스트");
 		r.setRecipeTip(mr.getParameter("recipe_tip"));
-		r.setRecipeTag(mr.getParameter("recipe_tag"));
 		r.setMainIngredient(mr.getParameter("main_ingredient"));
 		
 		//재료 parsing

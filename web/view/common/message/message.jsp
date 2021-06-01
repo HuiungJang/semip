@@ -34,8 +34,6 @@
         $(data.message).each((i, v) => {
           let val = '';
 
-          console.log(v);
-
           if (v.memberId === memberId) {
             val += '<div class="me"><span>' + v.sendMessage + '</span></div>';
           } else if (v.memberId === targetId) {
@@ -60,11 +58,11 @@
     <div id="messageContainer">
         <div id="messageTop">
             <div class="messageProfile">
-                <a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=targetId%>">
+                <a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=profile.get(0).getMemberNickName()%>">
                     <%if(profile.get(0).getProfilePic() != null ){%>
                         <img src="<%=request.getContextPath()%>/upload/profile/<%=profile.get(0).getProfilePic()%>>">
                     <%}else{%>
-                        <img src="<%=request.getContextPath()%>/img/icon/non_profile.png>">
+                        <img src="<%=request.getContextPath()%>/img/icon/non_profile.png">
                     <%}%>
                 </a>
             </div>

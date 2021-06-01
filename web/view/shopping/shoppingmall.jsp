@@ -14,26 +14,32 @@
 				<span>
 					<a href="<%=request.getContextPath()%>/shopping/shopping?productNo=<%=pdt.getProductNo()%>">
 						<input type="hidden" value="<%=pdt.getProductNo() %>">
-						<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop">
+						<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop"
+						style="width: 250px; height:250px;">
 					</a>
 				</span>
-				<span class="jsp">제품명 :<%=pdt.getProductName() %></span>
+				<span class="jsp">제품명 :<%=pdt.getProductName() %></span><br>
 				<span class="jsp">가격 :<%=pdt.getPrice() %></span>
 			</div>
 		</div>
 		<%}%>
 </div>
 <div class="allProductContainer">
+<<<<<<< HEAD
 	<div class="text">전체상품</div>
+=======
+	<div class="text">전체상품조회</div>
+>>>>>>> branch 'master' of https://github.com/HuiungJang/semip.git
 	<%for(Product pdt : pd) {%>
-		<div>
+		<div class="totalProductContainer">
 			<span>
 				<a href="<%=request.getContextPath()%>/shopping/shopping?productNo=<%=pdt.getProductNo()%>">
 						<input type="hidden" value="<%=pdt.getProductNo() %>">
-						<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop">
+						<img src="<%=request.getContextPath() %>/image/<%=pdt.getProductImage() %>" alt="" class="shop"
+							 style="width: 250px; height:250px;">
 				</a>
 			</span>
-			<span>제품명 :<%=pdt.getProductName() %></span>
+			<span>제품명 :<%=pdt.getProductName() %></span><br>
 			<span>가격 :<%=pdt.getPrice() %></span>
 		</div>
 	<%}%>

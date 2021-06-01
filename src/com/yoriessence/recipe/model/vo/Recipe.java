@@ -20,7 +20,6 @@ public class Recipe implements Serializable {
 	private String recipeDifficult;
 	private String recipeProcedure;
 	private String recipeTip;
-	private String recipeTag;
 	private int recipeViewCount;
 	private Date recipeEnrollDate;
 	private String mainIngredient;
@@ -31,10 +30,13 @@ public class Recipe implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
+
 	public Recipe(int recipeEnrollNo, String memberId, String recipeTitle, String recipeIntro, String representPicture,
 			String recipeVideoAddress, String recipeCategory, int recipeInfoHowmany, int recipeInfoTime,
-			String recipeDifficult, String recipeProcedure, String recipeTip, String recipeTag, int recipeViewCount,
-			Date recipeEnrollDate, String mainIngredient, int recommendCount) {
+			String recipeDifficult, String recipeProcedure, String recipeTip, int recipeViewCount,
+			Date recipeEnrollDate, String mainIngredient, int recommendCount, int commentCount) {
 		super();
 		this.recipeEnrollNo = recipeEnrollNo;
 		this.memberId = memberId;
@@ -48,143 +50,232 @@ public class Recipe implements Serializable {
 		this.recipeDifficult = recipeDifficult;
 		this.recipeProcedure = recipeProcedure;
 		this.recipeTip = recipeTip;
-		this.recipeTag = recipeTag;
 		this.recipeViewCount = recipeViewCount;
 		this.recipeEnrollDate = recipeEnrollDate;
 		this.mainIngredient = mainIngredient;
+		this.recommendCount = recommendCount;
+		this.commentCount = commentCount;
 	}
+
+
+
 
 	public int getRecipeEnrollNo() {
 		return recipeEnrollNo;
 	}
 
+
+
+
 	public void setRecipeEnrollNo(int recipeEnrollNo) {
 		this.recipeEnrollNo = recipeEnrollNo;
 	}
+
+
+
 
 	public String getMemberId() {
 		return memberId;
 	}
 
+
+
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+
+
+
 
 	public String getRecipeTitle() {
 		return recipeTitle;
 	}
 
+
+
+
 	public void setRecipeTitle(String recipeTitle) {
 		this.recipeTitle = recipeTitle;
 	}
+
+
+
 
 	public String getRecipeIntro() {
 		return recipeIntro;
 	}
 
+
+
+
 	public void setRecipeIntro(String recipeIntro) {
 		this.recipeIntro = recipeIntro;
 	}
+
+
+
 
 	public String getRepresentPicture() {
 		return representPicture;
 	}
 
+
+
+
 	public void setRepresentPicture(String representPicture) {
 		this.representPicture = representPicture;
 	}
+
+
+
 
 	public String getRecipeVideoAddress() {
 		return recipeVideoAddress;
 	}
 
+
+
+
 	public void setRecipeVideoAddress(String recipeVideoAddress) {
 		this.recipeVideoAddress = recipeVideoAddress;
 	}
+
+
+
 
 	public String getRecipeCategory() {
 		return recipeCategory;
 	}
 
+
+
+
 	public void setRecipeCategory(String recipeCategory) {
 		this.recipeCategory = recipeCategory;
 	}
+
+
+
 
 	public int getRecipeInfoHowmany() {
 		return recipeInfoHowmany;
 	}
 
+
+
+
 	public void setRecipeInfoHowmany(int recipeInfoHowmany) {
 		this.recipeInfoHowmany = recipeInfoHowmany;
 	}
+
+
+
 
 	public int getRecipeInfoTime() {
 		return recipeInfoTime;
 	}
 
+
+
+
 	public void setRecipeInfoTime(int recipeInfoTime) {
 		this.recipeInfoTime = recipeInfoTime;
 	}
+
+
+
 
 	public String getRecipeDifficult() {
 		return recipeDifficult;
 	}
 
+
+
+
 	public void setRecipeDifficult(String recipeDifficult) {
 		this.recipeDifficult = recipeDifficult;
 	}
+
+
+
 
 	public String getRecipeProcedure() {
 		return recipeProcedure;
 	}
 
+
+
+
 	public void setRecipeProcedure(String recipeProcedure) {
 		this.recipeProcedure = recipeProcedure;
 	}
+
+
+
 
 	public String getRecipeTip() {
 		return recipeTip;
 	}
 
+
+
+
 	public void setRecipeTip(String recipeTip) {
 		this.recipeTip = recipeTip;
 	}
 
-	public String getRecipeTag() {
-		return recipeTag;
-	}
 
-	public void setRecipeTag(String recipeTag) {
-		this.recipeTag = recipeTag;
-	}
+
 
 	public int getRecipeViewCount() {
 		return recipeViewCount;
 	}
 
+
+
+
 	public void setRecipeViewCount(int recipeViewCount) {
 		this.recipeViewCount = recipeViewCount;
 	}
+
+
+
 
 	public Date getRecipeEnrollDate() {
 		return recipeEnrollDate;
 	}
 
+
+
+
 	public void setRecipeEnrollDate(Date recipeEnrollDate) {
 		this.recipeEnrollDate = recipeEnrollDate;
 	}
+
+
+
 
 	public String getMainIngredient() {
 		return mainIngredient;
 	}
 
+
+
+
 	public void setMainIngredient(String mainIngredient) {
 		this.mainIngredient = mainIngredient;
 	}
 
+
+
+
 	public int getRecommendCount() {
 		return recommendCount;
 	}
+
+
+
 
 	public void setRecommendCount(int recommendCount) {
 		this.recommendCount = recommendCount;
@@ -197,25 +288,18 @@ public class Recipe implements Serializable {
 		return commentCount;
 	}
 
+
+
+
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
 
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	
-
-
-	@Override
-	public String toString() {
-		return "Recipe [recipeEnrollNo=" + recipeEnrollNo + ", memberId=" + memberId + ", recipeTitle=" + recipeTitle
-				+ ", recipeIntro=" + recipeIntro + ", representPicture=" + representPicture + ", recipeVideoAddress="
-				+ recipeVideoAddress + ", recipeCategory=" + recipeCategory + ", recipeInfoHowmany=" + recipeInfoHowmany
-				+ ", recipeInfoTime=" + recipeInfoTime + ", recipeDifficult=" + recipeDifficult + ", recipeProcedure="
-				+ recipeProcedure + ", recipeTip=" + recipeTip + ", recipeTag=" + recipeTag + ", recipeViewCount="
-				+ recipeViewCount + ", recipeEnrollDate=" + recipeEnrollDate + "]";
 	}
 
 

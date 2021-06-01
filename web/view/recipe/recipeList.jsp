@@ -5,6 +5,7 @@
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 	List<Product> productList=(List<Product>)request.getAttribute("productList");
 %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	section{
@@ -184,7 +185,7 @@
 		<%if(productList.size()!=0){ 
 			for(Product p:productList) {%>
 			<div class="mealkit" onclick="location.replace('<%=request.getContextPath()%>/shopping/shopping?productNo=<%=p.getProductNo() %>')">
-				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"" %>" height="200px" width="200px">
+				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"/img/recipe/no_image.png" %>" height="200px" width="200px">
 				<div class="mealkit_info">
 					<h4><%=p.getProductName() %></h4>
 					<span>가격 <%=p.getPrice() %></span><span>장바구니</span>

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.yoriessence.chef.model.vo.Profile;
+import com.yoriessence.chef.model.vo.User;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
 import com.yoriessence.recipe.model.vo.RecipeIngredient;
@@ -31,6 +33,52 @@ public class RecipeDao {
 			e.printStackTrace();
 		}
 	}
+//	
+//	public Profile userProfile(Connection conn, String memberId) {
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		Profile p=null;
+//		try {
+//			pstmt=conn.prepareStatement(prop.getProperty("userProfile"));
+//			pstmt.setString(1, memberId);
+//			rs=pstmt.executeQuery();
+//			if(rs.next()) {
+//				p=new Profile();
+//				p.setMemberId(memberId);
+//				p.setProfileName(rs.getString("profile_name"));
+//				p.setProfilePic(rs.getString("profile_pic"));
+//				p.setProfileSnsUrl1(rs.getString("profile_sns_url1"));
+//				p.setProfileSnsUrl2(rs.getString("profile_sns_url2"));
+//				p.setSelfIntro(rs.getString("self_intro"));
+//			}
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return p;
+//	}
+	
+	public String memberNickname(Connection conn, String memberId) {
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	String nickname=null;
+	try {
+		pstmt=conn.prepareStatement(prop.getProperty("memberNickname"));
+		pstmt.setString(1, memberId);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+			nickname=rs.getString("member_nickname");
+		}
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}finally {
+		close(rs);
+		close(pstmt);
+	}
+	return nickname;
+}
 	
 	public List<Recipe> selectRecipeList(Connection conn, int cPage, int numPerpage){
 		PreparedStatement pstmt=null;
@@ -56,7 +104,6 @@ public class RecipeDao {
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
-				r.setRecipeTag(rs.getString("recipe_tag"));
 				r.setMainIngredient(rs.getString("main_ingredient"));
 				list.add(r);
 			}
@@ -144,7 +191,6 @@ public class RecipeDao {
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
-				r.setRecipeTag(rs.getString("recipe_tag"));
 				r.setMainIngredient(rs.getString("main_ingredient"));
 			}
 		}catch(SQLException e) {
@@ -300,7 +346,6 @@ public class RecipeDao {
 				r.setRecipeTip(rs.getString("recipe_tip"));
 				r.setRecipeViewCount(rs.getInt("recipe_view_count"));
 				r.setRecipeEnrollDate(rs.getDate("recipe_enroll_date"));
-				r.setRecipeTag(rs.getString("recipe_tag"));
 				r.setMainIngredient(rs.getString("main_ingredient"));
 				list.add(r);
 			}
@@ -382,8 +427,7 @@ public class RecipeDao {
 			pstmt.setInt(8, r.getRecipeInfoTime());
 			pstmt.setString(9, r.getRecipeDifficult());
 			pstmt.setString(10, r.getRecipeTip());
-			pstmt.setString(11, r.getRecipeTag());
-			pstmt.setString(12, r.getMainIngredient());
+			pstmt.setString(11, r.getMainIngredient());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -424,11 +468,6 @@ public class RecipeDao {
 			pstmt.setInt(2, rp.getProcedureNo());
 			pstmt.setString(3, rp.getProcedureContent());
 			pstmt.setString(4, rp.getProcedurePicture());
-//			pstmt=conn.prepareStatement(prop.getProperty("insertProcedurePicture"));
-//			pstmt.setInt(1, fileNo);
-//			pstmt.setInt(2, recipeEnrollNo);
-//			pstmt.setString(3, fileName);
-//			System.out.println(fileNo+recipeEnrollNo+fileName);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -485,9 +524,8 @@ public class RecipeDao {
 			pstmt.setInt(6, r.getRecipeInfoTime());
 			pstmt.setString(7, r.getRecipeDifficult());
 			pstmt.setString(8, r.getRecipeTip());
-			pstmt.setString(9, r.getRecipeTag());
-			pstmt.setString(10, r.getMainIngredient());
-			pstmt.setInt(11, r.getRecipeEnrollNo());
+			pstmt.setString(9, r.getMainIngredient());
+			pstmt.setInt(10, r.getRecipeEnrollNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

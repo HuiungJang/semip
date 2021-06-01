@@ -27,7 +27,11 @@
                 <div class="userInfo">
                     <div>
                         <a href="<%=request.getContextPath()%>/getMessage.do?targetId=<%=e.getKey()%>&memberId=<%=memberId%>">
-                            <img src="<%=request.getContextPath()%>/img/icon/<%=profile.get(0).getProfilePic()%>>">
+                            <%if(profile.get(0).getProfilePic()!=null){%>
+                                <img src="<%=request.getContextPath()%>/upload/profile/<%=profile.get(0).getProfilePic()%>">
+                            <%}else{%>
+                                 <img src="<%=request.getContextPath()%>/img/icon/non_profile.png">
+                            <%}%>
                         </a>
                     </div>
                     <div class="targetInfo">
