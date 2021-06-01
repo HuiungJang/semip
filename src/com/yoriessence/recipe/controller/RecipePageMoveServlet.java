@@ -1,7 +1,9 @@
 package com.yoriessence.recipe.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -86,6 +88,14 @@ public class RecipePageMoveServlet extends HttpServlet {
 	
 		request.setAttribute("pageBar", pageBar);
 		
+		//닉네임 가져오기
+		Map<String, String> nicknameMap=new HashMap();
+		for(Recipe r:list) {
+			String nickname=new RecipeService().memberNickname(r.getMemberId());
+			nicknameMap.put(r.getMemberId(), nickname);
+		}
+
+		request.setAttribute("nicknameMap", nicknameMap);
 		request.setAttribute("recipeList", list);
 		request.getRequestDispatcher("/view/recipe/recipeSearchAjax.jsp").forward(request, response);		
 	}

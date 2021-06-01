@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp"%>
-<%@ page import="com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.shopping.vo.Product, java.util.List" %>
+<%@ page import="com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.shopping.vo.Product, java.util.List, java.util.Map" %>
 <%
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 	List<Product> productList=(List<Product>)request.getAttribute("productList");
+	Map<String, String> nicknameMap=(Map<String, String>)request.getAttribute("nicknameMap");
 %>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -218,7 +219,7 @@
 					<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
 					<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
 					<p><%=r.getRecipeTitle() %></p>
-					<p><%=r.getMemberId() %></p>
+					<p><%=nicknameMap.get(r.getMemberId()) %></p>
 					<span>좋아요 <%=r.getRecommendCount() %></span>
 					<span>댓글 <%=r.getCommentCount() %></span>
 					<span>조회수 <%=r.getRecipeViewCount() %></span>
