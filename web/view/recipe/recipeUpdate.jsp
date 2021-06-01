@@ -42,7 +42,7 @@
 
 	/* 입력창 설정 */
 	input, select, textarea{
-		background-color:rgb(235, 235, 235);
+		/* background-color:rgb(235, 235, 235); */
 		border-radius:3px;
 		border:rgb(182, 182, 182) 1px solid;
 		height:40px;
@@ -61,7 +61,7 @@
 		width:300px;
 	}	
 	textarea.procedure_content{
-		width:480px;
+		width:450px;
 	}
 	
 	/* 요리정보(인원, 시간, 난이도) */
@@ -97,6 +97,10 @@
 	/* 요리순서 */
 	.step_container{
 		display:inline-block;
+	}
+	.step * {
+		vertical-align:center;
+		
 	}
 
 	/* 등록 또는 취소 버튼 */
@@ -137,7 +141,7 @@
 				<%if(recipe.getRepresentPicture()!=null){ %>
 					<img src="<%=request.getContextPath() %>/upload/recipe/<%=recipe.getRepresentPicture() %>" id="thumbnail_preview"/>
 				<%}else{ %>
-					<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" id="thumbnail_preview"/>
+					<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" style="background-color:#DCDCDC" id="thumbnail_preview"/>
 				<%} %>
 				<input type="hidden" name="recipe_enroll_no" value="<%=recipe.getRecipeEnrollNo() %>">
 				<input type="hidden" name="member_id" id="member_id" value="testId"/>
@@ -199,7 +203,7 @@
 							<p>시간</p>
 							<select name="recipe_info_time" id="recipe_info_time">
 								<option value="5">5분 이내</option>
-								<option value="10">15분 이내</option>
+								<option value="10">10분 이내</option>
 								<option value="30">30분 이내</option>
 								<option value="60">1시간 이내</option>
 								<option value="120">2시간 이내</option>
@@ -260,8 +264,9 @@
                         	<%if(rp.getProcedurePicture()!=null) { %>
 	                        	<img src="<%=request.getContextPath() %>/upload/recipe/<%=rp.getProcedurePicture()%>" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
 	                        <%}else {%>
-	                        	<img src="<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png" name="procedure_thumbnail" width="100px" height="100px" class="step_img">
+	                        	<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" name="procedure_thumbnail" width="100px" height="100px" style="background-color:#DCDCDC" class="step_img">
 	                        <%} %>
+	                        <a style="display:none">x</a>
 	                    </div>
 	                    <%} %>
 					</div>
@@ -274,14 +279,6 @@
 					<p class="input_title">팁</p>
 					<div class="input">
 						<textarea name="recipe_tip" id="recipe_tip"><%=recipe.getRecipeTip()!=null?recipe.getRecipeTip():"" %></textarea>
-					</div>
-				</div>
-			</div>
-			<div id="tags">
-				<div class="input_container">
-					<p class="input_title">태그</p>
-					<div class="input">
-						<textarea name="recipe_tag" id="recipe_tag"><%=recipe.getRecipeTag()!=null?recipe.getRecipeTag():"" %></textarea>
 					</div>
 				</div>
 			</div>
@@ -465,7 +462,7 @@
 		
 		$("#btn_cancel").click(e=>{
 			if(confirm("변경내용은 저장되지 않습니다. 작성을 취소하시겠습니까?")){
-				location.replace("<%=request.getContextPath()%>/recipe/recipeList");
+				location.replace("<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=recipe.getRecipeEnrollNo()%>");
 			}
 			
 		});
@@ -485,17 +482,37 @@
 			fn_procedure_update();
 		});
 		
+		//요리과정 삭제버튼 보이도록 하는 이벤트 추가
+		$("div.step>*").hover(
+			function(e){
+				$(e.target).parent().find("a").css("display","inline-block");
+			},
+			function(e){
+				$(e.target).find("a").css("display","none");
+			}
+		);
+		
 		//요리과정 추가하기
 		$("#btn_add_procedure").click(e=>{
 			const div=$("div.step").first().clone(true);
 			//복사된 태그들의 값 비워주기
-			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png");
+			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/no_image.png");
 			div.find("textarea").val("");
 			//첨부파일 태그 추가하면서 이름을 1씩 증가시키고, hidden태그로 숫자 셈
 			$("div.step_container").append(div);
 			fn_procedure_update();
 		});
 
+		//요리과정 삭제하기
+		$(".step").find("a").click(e=>{
+			if($(".step").length>1){
+				$(e.target).parent().remove();
+			}else{
+				alert("요리 과정을 하나 이상 입력하세요.");
+			}
+			fn_procedure_update();
+		});
+		
  		$("#thumbnail_preview").click(e=>{
 			$(e.target).prev().click();
 		});

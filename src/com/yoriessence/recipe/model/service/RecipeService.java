@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.yoriessence.chef.model.vo.Profile;
 import com.yoriessence.recipe.model.dao.RecipeDao;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.recipe.model.vo.RecipeComment;
@@ -23,6 +24,20 @@ import com.yoriessence.shopping.vo.Product;
 public class RecipeService {
 	
 	private RecipeDao dao=new RecipeDao();
+	
+//	public Profile userProfile(String memberId) {
+//		Connection conn=getConnection();
+//		Profile p=dao.userProfile(conn, memberId);
+//		close(conn);
+//		return p;
+//	}
+	
+	public String memberNickname(String memberId) {
+		Connection conn=getConnection();
+		String nickname=dao.memberNickname(conn, memberId);
+		close(conn);
+		return nickname;
+	}
 	
 	//모든 레시피 가져오는 메소드
 	public List<Recipe> selectRecipeList(int cPage, int numPerpage){
