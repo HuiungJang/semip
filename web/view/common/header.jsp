@@ -175,7 +175,7 @@
 	            </span>
 	            <ul id="dropdown_ul">
 	        			<li style="float:left; margin-left:-40px;"><a href="<%=request.getContextPath()%>/recipe/recipeList"><img src="<%=request.getContextPath()%>/img/icon/icon_search.png"></a></li>
-	        			<li style="float:left; margin-left:27px"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
+	        			<li style="float:left; margin-left:27px;"><a href="<%=request.getContextPath()%>/shopping/cart"><img src="<%=request.getContextPath()%>/img/icon/icon_cart.png"></a></li>
 	        			<li style="float:left; margin-left:100px">
 		            	<%if(loginMember==null){ %>
 	                   	<a href="#none" class="LoginTriger"><img src="<%=request.getContextPath()%>/img/icon/icon_login.png" alt=""></a>
