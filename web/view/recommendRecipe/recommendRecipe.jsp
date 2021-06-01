@@ -45,7 +45,11 @@ let sortday2 = 1;
             $(data).each((i, v) => {
 
               val = '<div class="today_recommend_recipe">';
-              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src=' + v.representPicture + ' height="200px" width="200px">';
+              if(v.representPicture === undefined){
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px">';
+              }else{
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px">';
+              }
               val += '<div class="today_recipe_info">';
               val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a>';
               val += '<span id="today_recipe_memberId">' + v.memberId + '</span>';
@@ -104,7 +108,13 @@ let sortday2 = 1;
           }else {
             $(data).each((i, v) => {
               val = '<div class="today_recommend_recipe">';
-              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src=' + v.representPicture + ' height="200px" width="200px">';
+              if(v.representPicture === undefined){
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px">';
+
+              }else{
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px">';
+
+              }
               val += '<div class="today_recipe_info">';
               val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a>';
               val += '<span id="today_recipe_memberId">' + v.memberId + '</span>';
@@ -153,7 +163,12 @@ let sortday2 = 1;
 
             for(let i =0; i<v.periodRecipeJson.length; i++){
               val += '<div class="recipe">';
-              val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+              if(v.periodRecipeJson[i].representPicture === undefined){
+                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"></a>';
+
+              }else{
+                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="<%=request.getContextPath()%>/upload/recipe/'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+              }
               val +='<div class="recipe_info">';
               val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
               val +='<span>'+decodeURI(v.periodRecipeJson[i].memberId)+'</span><br>';
@@ -252,9 +267,9 @@ let sortday2 = 1;
             <%for(int i=0; i<periodRecipe.size(); i++){%>
                 <div class="recipe">
                     <%if(periodRecipe.get(i).getRepresentPicture() != null){%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/upload/recipe/<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
                     <%}else{%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"></a>
                     <%}%>
                     <div class="recipe_info">
                         <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>
