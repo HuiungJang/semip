@@ -22,7 +22,7 @@
 	            <td><%=n.getContent()%></td>
 	        </tr>
    		</tbody>
-        <%if(loginMember!=null&&loginMember.getUserId().equals("1677958940")){%>
+        <%if(loginMember!=null&&loginMember.getUserId().equals("ADMIN")){%>
         <tr style="height:100px;">
             <td colspan="2" style="text-align:center;">
                 <input type="button" value="수정하기" onclick="location.assign('<%=request.getContextPath()%>/notice/noticeUpdate?no=<%=n.getNumber()%>')">

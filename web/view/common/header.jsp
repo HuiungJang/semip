@@ -45,7 +45,7 @@
           val +='<div class="recipeData">';
           val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+data.bestThreeRecipe[i].recipeEnrollNum+'">';
           if(data.bestThreeRecipe[i].representPicture !== null) {
-            val += '<img src="<%=request.getContextPath()%>/upload/recipe'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
+            val += '<img src="<%=request.getContextPath()%>/upload/recipe/'+data.bestThreeRecipe[i].representPicture+'" width="250px" height="250px">';
           }else{
             val += '<img src="<%=request.getContextPath()%>/img/recipe/non_recipe_pic.png" width="250px" height="250px">';
           }
@@ -206,7 +206,7 @@
 		                <ul id="dropdown_ul2">
 		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getNickName()%>&memberId=<%=loginMember.getUserId()%>">프로필</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/member/memberupdateConn?userId=<%=loginMember.getUserId()%>">회원정보수정</a></li>
-		                    <li><a href="#">나의레시피</a></li>
+		                    <li><a href="<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=loginMember.getNickName()%>&memberId=<%=loginMember.getUserId()%>">나의레시피</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/ShoppingListEndServlet?memberId=<%=loginMember.getUserId()%>">주문정보</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/recipe/recipeForm">레시피작성</a></li>
 		                    <li><a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=loginMember.getUserId()%>">나의포인트</a></li>

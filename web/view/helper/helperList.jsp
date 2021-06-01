@@ -50,7 +50,7 @@
                     <li><a href="<%=request.getContextPath()%>/notice/noticeList">공지사항</a></li>
                     <li style="background-color:#8CC7BC;"><a href="<%=request.getContextPath()%>/helper/helperList">도움말</a></li>
                     <li><a href="<%=request.getContextPath()%>/question/questionList">1:1문의</a></li>
-                    <%if(loginMember!=null&&loginMember.getUserId().equals("1677958940")){%>
+                    <%if(loginMember!=null&&loginMember.getUserId().equals("ADMIN")){%>
                     <li><a href="<%=request.getContextPath()%>/helper/helperForm">글쓰기</a></li>
                     <%} %>
                 </ul>
