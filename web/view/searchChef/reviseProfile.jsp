@@ -69,9 +69,6 @@
         formData.append("pic",$("#upfile")[0].files[0]);
         // 파일은 배열 형식으로 가져와짐
 
-        console.log($("#upfile")[0].files[0].name);
-        console.log($("#upfile")[0].files[0]);
-
         $.ajax({
           url:'<%=request.getContextPath()%>/reviseProfile',
           data:formData,
@@ -81,7 +78,7 @@
 
           success:data=>{
             alert("수정되었습니다.");
-            location.replace("<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=chefProfile.get(0).getMemberId()%>")
+            location.replace("<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=chefProfile.get(0).getMemberNickName()%>")
           }
 
         });
@@ -93,7 +90,7 @@
 
     $("#cancel").click(e=>{
       if(confirm("프로필 수정을 취소하시겠습니까?")){
-        location.replace("<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=chefProfile.get(0).getMemberId()%>");
+        location.replace("<%=request.getContextPath()%>/searchchef.do?chefsearch=<%=chefProfile.get(0).getMemberNickName()%>");
       }else{
         return false;
       }

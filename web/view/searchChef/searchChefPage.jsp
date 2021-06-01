@@ -87,10 +87,10 @@
         <% for(int i=0; i<chefRecipe.size(); i++){%>
             <div class="recipe">
                 <%if(chefRecipe.get(i).getRepresentPicture() != null){%>
-                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/upload/recipe/<%=chefRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}else{%>
-                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
+                    <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=chefRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"></a>
 <%--                글 내용으로--%>
                 <%}%>
                 <div class="recipe_info">
@@ -322,7 +322,7 @@
            && (loginMember.getUserId().equals(chefProfile.get(0).getMemberId())
                                  || loginMember.getUserId().equals("admin"))){%>
       // 로그인했고 작성자이거나 관리자이면
-        location.replace('<%=request.getContextPath()%>/movereviseprofile?chefId=<%=chefProfile.get(0).getMemberId()%>');
+        location.replace('<%=request.getContextPath()%>/movereviseprofile?chefId=<%=chefProfile.get(0).getMemberNickName()%>');
     <%}else{%>
         alert("본인만 수정가능합니다");
     <%}%>

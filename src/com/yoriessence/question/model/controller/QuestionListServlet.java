@@ -60,7 +60,7 @@ public class QuestionListServlet extends HttpServlet {
 		String loginMemberId=loginMember.getUserId();
 		List<Question> list=null;
 		
-		if(loginMemberId.equals("1677958940")) { //나중에 admin으로 바꿀것
+		if(loginMemberId.equals("ADMIN")) { //나중에 admin으로 바꿀것
 			list=new QuestionService().questionAdminList(cPage, numPerpage);
 		}else {			
 			list=new QuestionService().questionList(cPage, numPerpage, loginMemberId);
