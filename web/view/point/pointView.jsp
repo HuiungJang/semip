@@ -16,6 +16,9 @@
 		/* border:1px solid black; */
 		overflow:hidden;
 	}
+	#point_container a{
+		cursor: pointer;
+	}
 	#point_title{
 		font-size:30px;
 	}

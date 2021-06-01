@@ -18,8 +18,8 @@
      	<div class="divStyle">
          	<h4>필수정보입력</h4>
      	</div>
-         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
          <%if(m.getSnsconn()!=null&&m.getSnsconn().equals("kakao")){ %>
+         <form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_kakoenroll_validate();">
              <!--Id-->
               <div>
               	<input type="hidden" id="snsconn" name="snsconn" value="kakao">
@@ -61,6 +61,7 @@
                  </div>
              </div>
      	<%}else{ %>
+     	<form name="memberEnrollFrm" action="<%=request.getContextPath()%>/member/memberUpdate" method="post" onsubmit="return fn_enroll_validate();">
      		<!--Id-->
              <div class="divStyle">
                  <div>
@@ -289,6 +290,48 @@
 		}
 		
 	}
+	const fn_kakaoenroll_validate=()=>{
+		const userId=$("#userId");
+		if(userId.val().length<4){
+			alert("아이디는 최소 5자리 이상이여야 합니다.");
+			userId.focus();				
+			return false;
+		}
+		const pswd1=$("#pswd1").val();
+		const pswd2=$("#pswd2").val();
+		if(pswd1==""||pswd2==""){
+			alert("비밀번호를 입력해야합니다.")
+			return false;
+		}
+		const name=$("#name").val();
+		if(name==""){
+			alert("이름을 입력해야 합니다.")
+			return false;
+		}
+		const Nick=$("#nickname").val();
+		if(Nick==""){
+			alert("닉네임을 입력해야 합니다.")
+			return false;
+		}
+		const check_email=$("#check_email").val();
+		 if(check_email==""){
+			alert("이메일 인증이 필요합니다.");
+			return false;
+		}
+		const phone=$("#phone").val();
+		if(phone==""){
+			alert("전화번호를 입력해야 합니다.")
+			return false;
+		}
+		const address=$("#mainaddress").val();
+		if(address==""){
+			alert("주소를 입력해야 합니다.")
+			return false;
+		}
+		if(document.getElementById("checkbox1").checked==false){
+			alert("개인정보 수집 및 이용양관에 동의하셔야 합니다.")
+			return false;
+		}
 </script>
 </section>
 <%@ include file="/view/common/footer.jsp"%>
