@@ -32,7 +32,6 @@
 
 	/* 입력창 설정 */
 	input, select, textarea{
-		background-color:rgb(235, 235, 235);
 		border-radius:3px;
 		border:rgb(182, 182, 182) 1px solid;
 		height:40px;
@@ -51,7 +50,7 @@
 		width:300px;
 	}	
 	textarea.procedure_content{
-		width:480px;
+		width:450px;
 	}
 	
 	/* 요리정보(인원, 시간, 난이도) */
@@ -87,6 +86,9 @@
 	/* 요리순서 */
 	.step_container{
 		display:inline-block;
+	}
+	.step *{
+		vertical-align:center;
 	}
 
 	/* 등록 또는 취소 버튼 */
@@ -124,8 +126,8 @@
 		<form action="<%=request.getContextPath() %>/recipe/recipeFormEnd" method="post" enctype="multipart/form-data" onsubmit="return fn_submit_validate();">
 			<div id="basic_info" class="info">
 				<input type="file" style="display:none" name="represent_picture" id="represent_picture"/>
-				<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" id="thumbnail_preview"/>
-				<input type="hidden" name="member_id" id="member_id" value="testId"/>
+				<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" style="background-color:#DCDCDC" id="thumbnail_preview"/>
+				<input type="hidden" name="member_id" id="member_id" value="<%=loginMember.getUserId()%>"/>
 				<div class="input_container">
 					<p class="input_title">레시피 제목</p>
 					<div class="input"><input type="text" name="recipe_title" id="recipe_title" placeholder="레시피 제목을 입력하세요." required/></div>
@@ -184,7 +186,7 @@
 							<p>시간</p>
 							<select name="recipe_info_time" id="recipe_info_time">
 								<option value="5">5분 이내</option>
-								<option value="10">15분 이내</option>
+								<option value="10">10분 이내</option>
 								<option value="30">30분 이내</option>
 								<option value="60">1시간 이내</option>
 								<option value="120">2시간 이내</option>
@@ -231,7 +233,8 @@
 							<h3>Step 1</h3>
 							<textarea name="procedure_content1" class="procedure_content"></textarea>
 							<input type="file" style="display:none" class="procedure_picture" name="procedure_picture1"/>
-							<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" name="procedure_thumbnail" width="100px" height="100px"/>
+							<img src="<%=request.getContextPath() %>/img/recipe/no_image.png" name="procedure_thumbnail" width="100px" height="100px" style="background-color:#DCDCDC"/>
+							<a style="display:none">x</a>
 						</div>
 					</div>
 				</div>
@@ -243,14 +246,6 @@
 					<p class="input_title">팁</p>
 					<div class="input">
 						<textarea name="recipe_tip" id="recipe_tip"></textarea>
-					</div>
-				</div>
-			</div>
-			<div id="tags">
-				<div class="input_container">
-					<p class="input_title">태그</p>
-					<div class="input">
-						<textarea name="recipe_tag" id="recipe_tag"></textarea>
 					</div>
 				</div>
 			</div>
@@ -421,15 +416,36 @@
 		$("textarea[name=step]").blur(e=>{
 			fn_procedure_update();
 		});
+
+		
+		//요리과정 삭제버튼 보이도록 하는 이벤트 추가
+		$("div.step>*").hover(
+			function(e){
+				$(e.target).parent().find("a").css("display","inline-block");
+			},
+			function(e){
+				$("li.ingredient_li").find("a").css("display","none");
+			}
+		);
 		
 		//요리과정 추가하기
 		$("#btn_add_procedure").click(e=>{
 			const div=$("div.step").first().clone(true);
 			//복사된 태그들의 값 비워주기
-			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/attatched_picture_empty.png");
+			div.find("img").attr("src", "<%=request.getContextPath() %>/img/recipe/no_image.png");
 			div.find("textarea").val("");
 			//첨부파일 태그 추가하면서 이름을 1씩 증가시키고, hidden태그로 숫자 셈
 			$("div.step_container").append(div);
+			fn_procedure_update();
+		});
+
+		//요리과정 삭제하기
+		$(".step").find("a").click(e=>{
+			if($(".step").length>1){
+				$(e.target).parent().remove();
+			}else{
+				alert("요리 과정을 하나 이상 입력하세요.");
+			}
 			fn_procedure_update();
 		});
 		

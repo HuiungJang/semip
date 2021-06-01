@@ -57,7 +57,6 @@ public class RecipeFormEndServlet extends HttpServlet {
 //		r.setRecipeProcedure(mr.getParameter("recipe_procedure"));
 		r.setRecipeProcedure("테스트");
 		r.setRecipeTip(mr.getParameter("recipe_tip"));
-		r.setRecipeTag(mr.getParameter("recipe_tag"));
 		r.setMainIngredient(mr.getParameter("main_ingredient"));
 		
 		int result=new RecipeService().insertRecipe(r);
