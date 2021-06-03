@@ -20,8 +20,9 @@
 %>
 
 <script>
-  const memberId = '<%=memberId%>';
-  const targetId = '<%=targetId%>';
+  function getMessage(){
+    const memberId = '<%=memberId%>';
+    const targetId = '<%=targetId%>';
 
     $.ajax({
       url: '<%=request.getContextPath()%>/getMessage.do',
@@ -31,6 +32,8 @@
         //  테스트용 아이디, 타겟아이디
       },
       success: data => {
+        $(".content *").remove();
+
         $(data.message).each((i, v) => {
           let val = '';
 
@@ -51,6 +54,11 @@
         console.log(i);
       }
     });
+  }
+
+  getMessage();
+
+  setInterval('getMessage()',3000);
 
 
 </script>
