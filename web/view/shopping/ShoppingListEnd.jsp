@@ -5,8 +5,8 @@
 %>
 <%@ include file="/view/common/header.jsp"%>
    <style>
- 		    .or>td{
-            border: 1px gray solid;
+ 		 .or>td{
+			border: 1px gray solid;
         }
         
         .fonttext{
@@ -71,7 +71,7 @@
 	             <%} %>
 	             <%} %>
 	        </table>
-	               <button type="button" onclick="senter(event);" class="fonttext">>반품/교환문의</button>
+	               <button type="button" onclick="senter(event);" class="fonttext">반품/교환문의</button>
     </div>
     
 <script>

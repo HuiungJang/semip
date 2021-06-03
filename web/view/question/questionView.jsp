@@ -48,7 +48,7 @@
 	        </tr>
 	    </tbody>
 	    <%} %>
-        <%if(loginMember!=null&&loginMember.getUserId().equals("1677958940")){%> <!-- admin으로 수정할것 -->
+        <%if(loginMember!=null&&loginMember.getUserId().equals("ADMIN")){%> <!-- admin으로 수정할것 -->
 	        <%if(qc==null){ %>
 	        <tr class="comment-form">
 	        	<td>

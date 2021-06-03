@@ -78,14 +78,9 @@ public class UserDao {
 
             while(rs.next()){
                 User u = new User();
-                u.setMemberId(rs.getString("member_id"));
+                u.setMemberId(rs.getString("memberid"));
                 u.setMemberName(rs.getString("member_name"));
-                u.setMemberEmail(rs.getString("member_email"));
                 u.setMemberNickName(rs.getString("member_nickname"));
-                u.setMemberAddress(rs.getString("member_address"));
-                u.setMemberGrade(rs.getString("member_grade"));
-                u.setMemberPhone(rs.getString("member_phone"));
-                u.setMemberPoint(rs.getInt("member_point"));
                 u.setRecommendCount(rs.getInt("recommend_count"));
 
                 result.add(u);
@@ -198,6 +193,44 @@ public class UserDao {
         return chefProfile;
     }
 
+    public List<Profile> reGetProfile(Connection conn, String chefName){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Profile> chefProfile = new ArrayList<>();
+        Profile p = null;
+        try{
+            pstmt = conn.prepareStatement(pp.getProperty("reGetProfile"));
+
+            pstmt.setString(1,chefName);
+
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                p = new Profile();
+                p.setMemberNickName(rs.getString("member_nickname"));
+                p.setMemberId(rs.getString("memberid"));
+                p.setProfileName(rs.getString("profile_name"));
+                p.setSelfIntro(rs.getString("profile_selfintro"));
+                p.setProfilePic(rs.getString("profile_pic"));
+                p.setProfileSnsUrl1(rs.getString("profile_SNS_URL_1"));
+                p.setProfileSnsUrl2(rs.getString("profile_SNS_URL_2"));
+
+                chefProfile.add(p);
+            }else{
+                chefProfile=null;
+                // 조회 결과가 없다면
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+
+        return chefProfile;
+    }
+
     public List<RecipeRecommend> chefProfile2(Connection conn, String chefName){
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -256,7 +289,7 @@ public class UserDao {
                 Recipe r = new Recipe();
                 r.setRecipeEnrollNo(rs.getInt("Recipe_enroll_no"));
                 r.setMemberId(rs.getString("member_id"));
-                r.setRecipeTitle(rs.getString("recipe_intro"));
+                r.setRecipeTitle(rs.getString("recipe_title"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
                 r.setRecipeVideoAddress(rs.getString("recipe_video_address"));
                 r.setRecipeCategory(rs.getString("recipe_category"));
@@ -767,19 +800,11 @@ public class UserDao {
             while(rs.next()) {
                 Recipe r=new Recipe();
                 r.setRecipeEnrollNo(rs.getInt("recipe_enroll_no"));
-                r.setMemberId(rs.getString("member_id"));
+                r.setMemberId(rs.getString("memberid"));
                 r.setRecipeTitle(rs.getString("recipe_title"));
-                r.setRecipeIntro(rs.getString("recipe_intro"));
                 r.setRepresentPicture(rs.getString("represent_picture"));
-                r.setRecipeVideoAddress(rs.getString("recipe_video_address"));
-                r.setRecipeCategory(rs.getString("recipe_category"));
-                r.setRecipeInfoHowmany(rs.getInt("recipe_info_howmany"));
-                r.setRecipeInfoTime(rs.getInt("recipe_info_time"));
-                r.setRecipeDifficult(rs.getString("recipe_difficult"));
-                r.setRecipeProcedure(rs.getString("recipe_procedure"));
-                r.setRecipeTip(rs.getString("recipe_tip"));
                 r.setRecipeViewCount(rs.getInt("recipe_view_count"));
-
+                r.setRecommendCount(rs.getInt("recommend_count"));
                 list.add(r);
             }
         }catch(SQLException e) {

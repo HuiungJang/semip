@@ -4,7 +4,6 @@
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 	Map<String, String> nicknameMap=(Map<String, String>)request.getAttribute("nicknameMap");
 %>
-		<div class="grid">
 			<%if(recipeList.size()!=0){ 
 				for(Recipe r:recipeList) {%>
 				<div class="recipe">
@@ -18,15 +17,7 @@
 				</div>
 			<%}
 			}else{ %>
-				<div></div><div class="no_data">검색 결과가 없습니다.</div><div></div>
+				<div></div><p>검색 결과가 없습니다.</p><div></div>
 			<%} %>
 		</div>
 		<div id="pageBar"><%=request.getAttribute("pageBar")!=null?request.getAttribute("pageBar"):"" %></div>
-		
-	<script>	
-			$("div.recipe").click(e=>{
-		const recipeEnrollNo=$(e.target).parent().find($("input[name=recipeEnrollNo]")).val();
-		console.log(recipeEnrollNo);
-		location.assign("<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo="+recipeEnrollNo);
-	});
-	</script>

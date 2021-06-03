@@ -29,7 +29,7 @@ let sortday2 = 1;
             $(".recommend_recipe_title span").text("어제의 추천메뉴");
           }else if(sortday1 !== 2 && sortday2 !== 1){
             $("#tomorrow").css("display","inline-block");
-            $(".recommend_recipe_title span").text(sortday2-1+"일 전의 추천메뉴");
+            $(".recommend_recipe_title span").text(sortday2-1+"일 전 추천메뉴");
           }
 
           let val ='';
@@ -45,10 +45,15 @@ let sortday2 = 1;
             $(data).each((i, v) => {
 
               val = '<div class="today_recommend_recipe">';
-              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src=' + v.representPicture + ' height="200px" width="200px">';
+              if(v.representPicture === undefined){
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"><br>';
+              }else{
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px"><br>';
+              }
               val += '<div class="today_recipe_info">';
-              val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a>';
-              val += '<span id="today_recipe_memberId">' + v.memberId + '</span>';
+              val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a><br>';
+              val += '<span id="today_recipe_memberId">' + v.memberId + '</span><br>';
+              val += '<span id="today_recipe_viewCount">좋아요' + v.recommendCount + '</span>';
               val += '<span id="today_recipe_viewCount">조회수' + v.recipeViewCount + '</span>';
               val += '</div>';
               val += '</div>';
@@ -90,7 +95,7 @@ let sortday2 = 1;
             $(".recommend_recipe_title span").text("어제의 추천메뉴");
           }else{
             $("#tomorrow").css("display","inline-block");
-            $(".recommend_recipe_title span").text(sortday2-1+"일 전의 추천메뉴");
+            $(".recommend_recipe_title span").text(sortday2-1+"일 전 추천메뉴");
           }
 
             let val ='';
@@ -104,10 +109,17 @@ let sortday2 = 1;
           }else {
             $(data).each((i, v) => {
               val = '<div class="today_recommend_recipe">';
-              val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src=' + v.representPicture + ' height="200px" width="200px">';
+              if(v.representPicture === undefined){
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"><br>';
+
+              }else{
+                val += '<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/'+v.representPicture+'" height="200px" width="200px"><br>';
+
+              }
               val += '<div class="today_recipe_info">';
-              val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a>';
-              val += '<span id="today_recipe_memberId">' + v.memberId + '</span>';
+              val += '<a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.recipeEnrollNo+'"><h2>' + v.recipeTitle + '</h2></a><br>';
+              val += '<span id="today_recipe_memberId">' + v.memberId + '</span><br>';
+              val += '<span id="today_recipe_viewCount">좋아요' + v.recommendCount + '</span>';
               val += '<span id="today_recipe_viewCount">조회수' + v.recipeViewCount + '</span>';
               val += '</div>';
               val += '</div>';
@@ -153,7 +165,12 @@ let sortday2 = 1;
 
             for(let i =0; i<v.periodRecipeJson.length; i++){
               val += '<div class="recipe">';
-              val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+              if(v.periodRecipeJson[i].representPicture === undefined){
+                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"></a>';
+
+              }else{
+                val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><img src="<%=request.getContextPath()%>/upload/recipe/'+v.periodRecipeJson[i].representPicture+'" height="200px" width="200px"></a>';
+              }
               val +='<div class="recipe_info">';
               val +='<a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo='+v.periodRecipeJson[i].recipeEnrollNo+'"><span>'+decodeURI(v.periodRecipeJson[i].recipeTitle)+'</span></a><br>';
               val +='<span>'+decodeURI(v.periodRecipeJson[i].memberId)+'</span><br>';
@@ -215,11 +232,11 @@ let sortday2 = 1;
     <%if(todayRecipe.size()>0){%>
         <%for(int i = 0; i<todayRecipe.size(); i++){%>
             <div class="today_recommend_recipe">
-                <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/<%=todayRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><img id="today_recipe_img" src="<%=request.getContextPath()%>/upload/recipe/<%=todayRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a><br>
                 <div class="today_recipe_info">
-                    <a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><h2><%=todayRecipe.get(i).getRecipeTitle()%></h2></a>87
-                    <span id="today_recipe_memberId"><%=todayRecipe.get(i).getMemberId()%></span>
-                    <span id="today_recipe_viewCount"><%=todayRecipe.get(i).getRecipeViewCount()%></span>
+                    <a id="today_recipe_title" href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=todayRecipe.get(i).getRecipeEnrollNo()%>"><h2><%=todayRecipe.get(i).getRecipeTitle()%></h2></a>
+                    <span id="today_recipe_memberId"><%=todayRecipe.get(i).getMemberId()%></span><br>
+                    <span id="today_recipe_viewCount">조회수 <%=todayRecipe.get(i).getRecipeViewCount()%></span>
                 </div>
             </div>
         <%}%>
@@ -252,9 +269,9 @@ let sortday2 = 1;
             <%for(int i=0; i<periodRecipe.size(); i++){%>
                 <div class="recipe">
                     <%if(periodRecipe.get(i).getRepresentPicture() != null){%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/upload/recipe/<%=periodRecipe.get(i).getRepresentPicture()%>" height="200px" width="200px"></a>
                     <%}else{%>
-                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="" height="200px" width="200px"></a>
+                        <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><img src="<%=request.getContextPath()%>/img/recipe/no_image.png" height="200px" width="200px"></a>
                     <%}%>
                     <div class="recipe_info">
                         <a href="<%=request.getContextPath()%>/recipe/recipeView?recipeEnrollNo=<%=periodRecipe.get(i).getRecipeEnrollNo()%>"><span><%=periodRecipe.get(i).getRecipeTitle()%></span></a><br>

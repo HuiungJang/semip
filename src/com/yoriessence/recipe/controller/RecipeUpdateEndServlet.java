@@ -41,7 +41,7 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		//값 받아오기
 		String path=request.getServletContext().getRealPath("/upload/recipe/");
 		int maxSize=1024*1024*10;
-		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
+		MultipartRequest mr=new MultipartRequest(request, path, maxSize, "utf-8", new MyRename());
 		
 		int recipeEnrollNo=Integer.parseInt(mr.getParameter("recipe_enroll_no"));
 		
@@ -59,7 +59,6 @@ public class RecipeUpdateEndServlet extends HttpServlet {
 		r.setRecipeDifficult(mr.getParameter("recipe_difficult"));
 		r.setRecipeProcedure("테스트");
 		r.setRecipeTip(mr.getParameter("recipe_tip"));
-		r.setRecipeTag(mr.getParameter("recipe_tag"));
 		r.setMainIngredient(mr.getParameter("main_ingredient"));
 		
 		//재료 parsing

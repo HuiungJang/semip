@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/view/common/header.jsp"%>
-<%@ page import="com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.shopping.vo.Product, java.util.List" %>
+<%@ page import="com.yoriessence.recipe.model.vo.Recipe, com.yoriessence.shopping.vo.Product, java.util.List, java.util.Map" %>
 <%
 	List<Recipe> recipeList=(List<Recipe>)request.getAttribute("recipeList");
 	List<Product> productList=(List<Product>)request.getAttribute("productList");
+	Map<String, String> nicknameMap=(Map<String, String>)request.getAttribute("nicknameMap");
 %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	section{
@@ -127,6 +129,19 @@
 		font-weight:bold;
 	}
 	
+	/* 데이터 없을 때 출력 */
+	.no_data{
+		display:flex; justify-content:center;
+		/* margin:10px; */
+	}
+	#mealkit_list .no_data{
+		margin:30px;
+	}
+	
+	img{
+		object-fit: cover;
+	}
+	
 </style>
 <section>
 <%-- <a href="<%=request.getContextPath()%>/point/pointView?memberId=<%=request.getSession().getAttribute("loginMember")%>">포인트조회</a> --%>
@@ -180,18 +195,21 @@
 		</div>
 	</form>
 	<div id="mealkit_list">
-		<%=request.getAttribute("beforeBtn") %>
-		<%if(productList.size()!=0){ 
-			for(Product p:productList) {%>
+		<%if(productList.size()!=0){ %>
+			<%=request.getAttribute("beforeBtn")%>
+			<%for(Product p:productList) {%>
 			<div class="mealkit" onclick="location.replace('<%=request.getContextPath()%>/shopping/shopping?productNo=<%=p.getProductNo() %>')">
-				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"" %>" height="200px" width="200px">
+				<img src="<%=request.getContextPath() %>/image/<%=p.getProductImage()!=null?p.getProductImage():"/img/recipe/no_image.png" %>" height="200px" width="200px">
 				<div class="mealkit_info">
 					<h4><%=p.getProductName() %></h4>
 					<span>가격 <%=p.getPrice() %></span><span>장바구니</span>
 				</div>
 			</div>
-		<%}} %>
-		<%=request.getAttribute("afterBtn") %>
+			<%} %>
+			<%=request.getAttribute("afterBtn") %>
+		<%}else{%>
+			<div></div><div class="no_data">관련 상품이 없습니다.</div><div></div>
+		<%}%>
 	</div>
 	<div id="recipe_list">
 		<div class="grid">
@@ -201,14 +219,14 @@
 					<input name="recipeEnrollNo" type="hidden" value="<%=r.getRecipeEnrollNo()%>">
 					<img class="recipe_thumbnail" src="<%=request.getContextPath() %>/<%=r.getRepresentPicture()!=null?"upload/recipe/"+r.getRepresentPicture():"/img/recipe/no_image.png" %>">
 					<p><%=r.getRecipeTitle() %></p>
-					<p><%=r.getMemberId() %></p>
+					<p><%=nicknameMap.get(r.getMemberId()) %></p>
 					<span>좋아요 <%=r.getRecommendCount() %></span>
 					<span>댓글 <%=r.getCommentCount() %></span>
 					<span>조회수 <%=r.getRecipeViewCount() %></span>
 				</div>
 			<%}
 			}else{ %>
-				<p>검색 결과가 없습니다.</p>
+				<div></div><div class="no_data">검색 결과가 없습니다.</div><div></div>
 			<%} %>
 		</div>
 		<div id="pageBar"><%=request.getAttribute("pageBar")!=null?request.getAttribute("pageBar"):"" %></div>

@@ -64,9 +64,9 @@ public class ShoppingCartService {
 		return result;
 	}
 	
-	public List<Product> Shoppingkategori(String katagori){
+	public List<Product> Shoppingkategori(int cPage, int numPerpage, String katagori){
 		Connection conn=getConnection();
-		List<Product> list=dao.Shoppingkategori(conn,katagori);
+		List<Product> list=dao.Shoppingkategori(conn,cPage,numPerpage,katagori);
 		close(conn);
 		return list;
 	}

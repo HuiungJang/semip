@@ -1,7 +1,9 @@
 package com.yoriessence.recipe.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yoriessence.chef.model.service.UserService;
+import com.yoriessence.chef.model.vo.Profile;
 import com.yoriessence.recipe.model.service.RecipeService;
 import com.yoriessence.recipe.model.vo.Recipe;
 import com.yoriessence.shopping.vo.Product;
@@ -77,8 +81,12 @@ public class RecipeListServlet extends HttpServlet {
 			pageBar+="<a onclick='pageMove("+pageNo+")'>다음</a>";
 		}
 		
-	
-		request.setAttribute("pageBar", pageBar);
+		//닉네임 가져오기
+		Map<String, String> nicknameMap=new HashMap();
+		for(Recipe r:list) {
+			String nickname=new RecipeService().memberNickname(r.getMemberId());
+			nicknameMap.put(r.getMemberId(), nickname);
+		}
 		
 		//관련제품 받아오기
 		cPage=1;
@@ -90,23 +98,26 @@ public class RecipeListServlet extends HttpServlet {
 		String afterBtn="";
 		
 		if(cPage!=1) {
-			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'>&lt;</button>";
+			beforeBtn="<button id='product_before' onclick='productPageMove("+(cPage-1)+")'><i class='fas fa-chevron-left'></i></button>";
 		}else {
-			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'>&lt;</button>";
+			beforeBtn="<button id='product_before' onclick='productPageMove("+3+")'><i class='fas fa-chevron-left'></i></button>";
 		}
 		
 		if(cPage!=3) {
-			afterBtn="<button id='product_before' onclick='productPageMove(1)'>&gt;</button>";
+			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'><i class='fas fa-chevron-right'></i></button>";
 		}else {
-			afterBtn="<button id='product_before' onclick='productPageMove("+(cPage+1)+")'>&gt;</button>";
+			afterBtn="<button id='product_before' onclick='productPageMove(1)'><i class='fas fa-chevron-right'></i></button>";
 		}
 		
 		request.setAttribute("productList", product);
 		request.setAttribute("beforeBtn", beforeBtn);
 		request.setAttribute("afterBtn", afterBtn);
-		
-		
+
+		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("recipeList", list);
+		
+		request.setAttribute("nicknameMap", nicknameMap);
+		
 		request.getRequestDispatcher("/view/recipe/recipeList.jsp").forward(request, response);
 	}
 

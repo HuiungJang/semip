@@ -174,13 +174,15 @@ public class ShoppingCartDao {
 		
 	}
 	
-	public List<Product> Shoppingkategori(Connection conn, String katagori ){
+	public List<Product> Shoppingkategori(Connection conn, int cPage, int numPerpage, String katagori ){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Product> list=new ArrayList();
 		try {
 			pstmt=conn.prepareStatement(prop.getProperty("Productkatagori"));
-			pstmt.setString(1, katagori);
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
+			pstmt.setString(3, katagori);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Product pd=new Product();
@@ -201,6 +203,7 @@ public class ShoppingCartDao {
 			close(pstmt);
 		}return list;
 	}
+	
 	
 	public int insertShoppingCart(Connection conn, ShoppingCart sc) {
 		PreparedStatement pstmt=null;
