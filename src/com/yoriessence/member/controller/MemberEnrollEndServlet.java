@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yoriessence.chef.model.service.UserService;
 import com.yoriessence.member.service.MemberService;
 import com.yoriessence.member.vo.Member;
 
@@ -46,9 +47,13 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		Member m = new Member(userId,userName,userPw,userNick,email,address,grade,point,phone,"");
 		
 		int result = new MemberService().insertMember(m);
-		
+
 		String loc="/";
 		String msg=result>0?"회원가입성공":"회원가입실패";
+
+		// 프로필 바로 생성
+		new UserService().createProfile(userId);
+
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		
