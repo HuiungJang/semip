@@ -12,16 +12,6 @@
         .fonttext{
             font-size:38px;
         }
-        .pod{
-            /* border: 1px red solid; */
-            height: 300px;
-            width:300px;
-        }
-        #check{
-            /* border: 1px red solid; */
-            width:50px;
-            height:50px;
-        }
         .chogo{
             /* border: 1px red solid; */
             height:130px;
@@ -37,11 +27,6 @@
             left: 45%;
             font-size:50px;
             width:200px;
-        }
-       
-        .gogo{
-        	margin-left:1350px;
-        	font-size:38px;
         }
         button{
         	margin-left:1450px;
@@ -80,33 +65,4 @@
 		}
 	
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <%@ include file="/view/common/footer.jsp"%>

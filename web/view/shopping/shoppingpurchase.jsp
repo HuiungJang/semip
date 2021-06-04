@@ -12,12 +12,6 @@
 		margin-left:350px;
 		margin-top:300px;
 	}
-	.shop{
-		width:100;
-		height:100;
-		margin-left:350px;
-		float: left;
-	}
 	.container{
 		display: flex;
 		font-size:38px;
@@ -49,9 +43,6 @@
     	text-align:center;
     	 position:relative;
 	    top:120px;
-    }
-    #content{
-    	width:900px;
     }
 </style>
 	<div  class="container">
