@@ -1,4 +1,4 @@
-# semip
+# YORIESSENCE
 세미프로젝트
 
 ## 설계 및 구현기간
