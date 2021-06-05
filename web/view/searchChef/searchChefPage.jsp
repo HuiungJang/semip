@@ -103,15 +103,11 @@
                     <p><a href=""><%=chefRecipe.get(i).getMemberId()%></a></p>
 <%--                    프로필로--%>
                     <span>좋아요
-
-<%--                      좋아요 로직   수정해야함--%>
-
                     <%try{%>
                         <%=recipeRecommend.get(i).getRecipeRecommendNum()%>
                     <%}catch (IndexOutOfBoundsException e){%>
                         0
                     <%}%>
-
 
                     </span>
 

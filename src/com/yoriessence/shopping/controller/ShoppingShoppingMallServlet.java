@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoriessence.shopping.service.ShoppingCartService;
 import com.yoriessence.shopping.vo.Product;
 
@@ -41,16 +42,10 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		int numPerpage=15;
-		try {
-			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
-		}catch(NumberFormatException e) {
-			numPerpage=15;
-		}
+		int numPerpage=10;
 		
 		List<Product> list=new ShoppingCartService().ProductAll(cPage,numPerpage);
-		
-		
+
 		int totalData=new ShoppingCartService().selectProductCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		System.out.println(totalData);
@@ -99,11 +94,7 @@ public class ShoppingShoppingMallServlet extends HttpServlet {
 		
 		
 		request.setAttribute("rndPro", rndPro);
-		
-		
-		
-		
-		request.setAttribute("pageBar", pageBar);
+//		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("Product", list);
 		
 		request.getRequestDispatcher("/view/shopping/shoppingmall.jsp").forward(request, response);

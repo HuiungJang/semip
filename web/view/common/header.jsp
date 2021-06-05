@@ -24,9 +24,9 @@
 <head>
     <title>요리에센스</title>
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <meta name ="google-signin-client_id" content="393793381722-emq1t5c5as3afleds82jf0u633h15l39.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+<%--    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>--%>
+<%--    <meta name ="google-signin-client_id" content="393793381722-emq1t5c5as3afleds82jf0u633h15l39.apps.googleusercontent.com">--%>
+<%--    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>--%>
     <link  type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/view/common/css/common.css" />
 </head>
 <script>
@@ -258,9 +258,9 @@
                                 <a id="kakao-login-btn"></a>
                                 <a href="http://developers.kakao.com/logout"></a>
                             </div>
-                            <div class="googlelogin">
-                                <div class="g-signin2" data-onsuccess="onSignIn" style="width:225px; height:50px;" ></div>
-                            </div>
+<%--                            <div class="googlelogin">--%>
+<%--                                <div class="g-signin2" data-onsuccess="onSignIn" style="width:225px; height:50px;" ></div>--%>
+<%--                            </div>--%>
                         </div>
                         <div class="join">
                             <a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a>
@@ -299,91 +299,91 @@
       trigger.addEventListener("click",toggleModel);
       closeButton.addEventListener("click", toggleModel);
       window.addEventListener("click", windowOnClick);
-      // 카카오 로그인
-     	Kakao.init('9821b1adf6591b5708f7ee0615e8458b');
-      Kakao.Auth.createLoginButton({
-          container: '#kakao-login-btn',
-          success: function (authObj) {
-          	Kakao.API.request({
-              	url: '/v2/user/me',
-              	success: function(res) {
-                  	var userId = res.id;
-                  	var userEmail = res.kakao_account.email;
-                  	var userName = res.properties.nickname;
-                  	
-                  	console.log(userId);
-                  	console.log(userEmail);
-                  	console.log(userName);
-                  	console.log(res.kakao_account);
-                  	
-			          	kakaologinform.kakao_id.value=userId;
-			           	kakaologinform.kakao_email.value=userEmail;
-			           	kakaologinform.kakao_name.value=userName
-			           	kakaologinform.submit();
-                   },
-                   fail: function(error) {
-                     alert(JSON.stringify(error));
-                   }
-                 });
-	           	
-          	 if(!Kakao.Auth.getAccessToken()){
-           		console.log("토큰없음");
-           		return;
-           	}else{
-           		console.log("토큰있음");
-           		console.log(Kakao.Auth.getAccessToken())
-           		return;
-           	}
-          },
-          fail: function (err) {
-              alert(JSON.stringify(err));
-          }
-      });
-      //카카오 로그아웃
-      logoutWithKakao=()=>{
-      	if(Kakao.Auth.getAccessToken()){
-      		console.log('카카오 인증 액세스 토큰이 존재합니다',Kakao.Auth.getAccessToken())
-      		Kakao.Auth.logout(()=>{
-      			consol.log('로그아웃 되었습니다',Kakao.Auth.getAccessToken());
-      			this.setState({
-      				isLogin:false
-      			})
-      		});
-      	}
-      }
-      //구글 테스트
-      function init() {
-        gapi.load('auth2', function() {
-          gapi.auth2.init();
-          options = new gapi.auth2.SigninOptionsBuilder();
-          options.setPrompt('select_account');
-          // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
-          options.setScope('email profile openid https://www.googleapis.com/auth/user.birthday.read');
-          // 인스턴스의 함수 호출 - element에 로그인 기능 추가
-          // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
-          gapi.auth2.getAuthInstance().attachClickHandler('GgCustomLogin', options, onSignIn, onSignInFailure);
-        })
-      }
-      function onSignIn(googleUser) {
-        var access_token = googleUser.getAuthResponse().access_token
-        $.ajax({
-          // people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
-          url: 'https://people.googleapis.com/v1/people/me'
-          // key에 자신의 API 키를 넣습니다.
-          , data: {personFields:'birthdays', key:'AIzaSyByMI_fY8EQyTZkJdCdRp8QlT6NDWXFr6g', 'access_token': access_token}
-          , method:'GET'
-        })
-          .done(function(e){
-            //프로필을 가져온다.
-            var profile = googleUser.getBasicProfile();
-            console.log(profile)
-          })
-          .fail(function(e){
-            console.log(e);
-          })
-      }
-      function onSignInFailure(t){
-        console.log(t);
-      }
+      // // 카카오 로그인
+     	// Kakao.init('9821b1adf6591b5708f7ee0615e8458b');
+      // Kakao.Auth.createLoginButton({
+      //     container: '#kakao-login-btn',
+      //     success: function (authObj) {
+      //     	Kakao.API.request({
+      //         	url: '/v2/user/me',
+      //         	success: function(res) {
+      //             	var userId = res.id;
+      //             	var userEmail = res.kakao_account.email;
+      //             	var userName = res.properties.nickname;
+      //
+      //             	console.log(userId);
+      //             	console.log(userEmail);
+      //             	console.log(userName);
+      //             	console.log(res.kakao_account);
+      //
+		// 	          	kakaologinform.kakao_id.value=userId;
+		// 	           	kakaologinform.kakao_email.value=userEmail;
+		// 	           	kakaologinform.kakao_name.value=userName
+		// 	           	kakaologinform.submit();
+      //              },
+      //              fail: function(error) {
+      //                alert(JSON.stringify(error));
+      //              }
+      //            });
+	  //
+      //     	 if(!Kakao.Auth.getAccessToken()){
+      //      		console.log("토큰없음");
+      //      		return;
+      //      	}else{
+      //      		console.log("토큰있음");
+      //      		console.log(Kakao.Auth.getAccessToken())
+      //      		return;
+      //      	}
+      //     },
+      //     fail: function (err) {
+      //         alert(JSON.stringify(err));
+      //     }
+      // });
+      // //카카오 로그아웃
+      // logoutWithKakao=()=>{
+      // 	if(Kakao.Auth.getAccessToken()){
+      // 		console.log('카카오 인증 액세스 토큰이 존재합니다',Kakao.Auth.getAccessToken())
+      // 		Kakao.Auth.logout(()=>{
+      // 			consol.log('로그아웃 되었습니다',Kakao.Auth.getAccessToken());
+      // 			this.setState({
+      // 				isLogin:false
+      // 			})
+      // 		});
+      // 	}
+      // }
+      // //구글 테스트
+      // function init() {
+      //   gapi.load('auth2', function() {
+      //     gapi.auth2.init();
+      //     options = new gapi.auth2.SigninOptionsBuilder();
+      //     options.setPrompt('select_account');
+      //     // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
+      //     options.setScope('email profile openid https://www.googleapis.com/auth/user.birthday.read');
+      //     // 인스턴스의 함수 호출 - element에 로그인 기능 추가
+      //     // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
+      //     gapi.auth2.getAuthInstance().attachClickHandler('GgCustomLogin', options, onSignIn, onSignInFailure);
+      //   })
+      // }
+      // function onSignIn(googleUser) {
+      //   var access_token = googleUser.getAuthResponse().access_token
+      //   $.ajax({
+      //     // people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
+      //     url: 'https://people.googleapis.com/v1/people/me'
+      //     // key에 자신의 API 키를 넣습니다.
+      //     , data: {personFields:'birthdays', key:'AIzaSyByMI_fY8EQyTZkJdCdRp8QlT6NDWXFr6g', 'access_token': access_token}
+      //     , method:'GET'
+      //   })
+      //     .done(function(e){
+      //       //프로필을 가져온다.
+      //       var profile = googleUser.getBasicProfile();
+      //       console.log(profile)
+      //     })
+      //     .fail(function(e){
+      //       console.log(e);
+      //     })
+      // }
+      // function onSignInFailure(t){
+      //   console.log(t);
+      // }
     </script>
     <%--        header 끝 section 시작--%>
