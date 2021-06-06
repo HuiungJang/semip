@@ -42,7 +42,7 @@ public class InfinityScrollServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		int numPerpage=15;
+		int numPerpage=10;
 		
 		List<Product> list=new ShoppingCartService().ProductAll(cPage,numPerpage);
 		ObjectMapper mapper = new ObjectMapper();

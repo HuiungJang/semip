@@ -57,10 +57,11 @@
 				},
 				success:data=>{
 					let getData='';
-
 					// $('.allProductContainer *').remove();
+					console.log(data);
+
 					$(data).each((i,v)=>{
-						getData += '<div class="totalProductContainer">';
+						getData = '<div class="totalProductContainer">';
 						getData += '<span><a href="<%=request.getContextPath()%>/shopping/shopping?productNo='+v.productNo+'">';
 						getData += '<input type="hidden" value="'+v.productNo+'">';
 						getData += '<img src="<%=request.getContextPath() %>/image/'+v.productImage+'" alt="" class="shop" style="width: 250px; height:250px;"></a></span>';
@@ -68,12 +69,13 @@
 						getData += '<span>가격 :'+v.price+'</span>';
 						getData += '</div>';
 
+						// console.log(getData);
 						$(".allProductContainer").append(getData);
 					});
 				}
 			});
 
-			// listCount++;
+			listCount++;
 		}
 
 
@@ -81,22 +83,20 @@
 			winTop =$(window).scrollTop();
 			onTop=$(document).height() - $(window).height() - $('.footer').height();
 
+			console.log(winTop);
+			console.log(onTop);
+
+
 			if(winTop>=onTop){
-
 				getList();
-
 			}
 		}
 
-		function init(){
-			listCall();
-		}
 
 		$(window).scroll(function(){
 			listCall();
 		});
 
-		init();
 	});
 </script>
 
