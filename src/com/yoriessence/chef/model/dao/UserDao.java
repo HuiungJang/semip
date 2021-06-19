@@ -4,6 +4,7 @@ import static com.yoriessence.common.JDBCTemplate.*;
 
 import com.yoriessence.chef.model.vo.*;
 import com.yoriessence.recipe.model.vo.Recipe;
+import org.apache.ibatis.session.SqlSession;
 
 
 import java.io.FileReader;
@@ -973,35 +974,39 @@ public class UserDao {
         return result;
     }
 
-    public List<RecipeRecommend> bestFiveChef(Connection conn){
-        PreparedStatement psmt = null;
-        ResultSet rs = null;
-        List<RecipeRecommend> result = new ArrayList<>();
-
-        try{
-            psmt=conn.prepareStatement(pp.getProperty("bestFiveChef"));
-
-            rs=psmt.executeQuery();
-
-            while (rs.next()){
-                RecipeRecommend r = new RecipeRecommend();
-
-                r.setProfilePic(rs.getString("profile_pic"));
-                r.setMemberName(rs.getString("member_name"));
-                r.setMemberNickName(rs.getString("member_nickname"));
-                r.setMemberId(rs.getString("member_id"));
-
-                result.add(r);
-
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            close(rs);
-            close(psmt);
-        }
-
-        return result;
+//    public List<RecipeRecommend> bestFiveChef(Connection conn){
+//        PreparedStatement psmt = null;
+//        ResultSet rs = null;
+//        List<RecipeRecommend> result = new ArrayList<>();
+//
+//        try{
+//            psmt=conn.prepareStatement(pp.getProperty("bestFiveChef"));
+//
+//            rs=psmt.executeQuery();
+//
+//            while (rs.next()){
+//                RecipeRecommend r = new RecipeRecommend();
+//
+//                r.setProfilePic(rs.getString("profile_pic"));
+//                r.setMemberName(rs.getString("member_name"));
+//                r.setMemberNickName(rs.getString("member_nickname"));
+//                r.setMemberId(rs.getString("member_id"));
+//
+//                result.add(r);
+//
+//            }
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }finally {
+//            close(rs);
+//            close(psmt);
+//        }
+//
+//        return result;
+//    }
+    // mybatis 전환
+    public List<RecipeRecommend> bestFiveChef(SqlSession session) {
+        return session.selectList("mainpage.bestFiveChef");
     }
 
     public List<RecipeRecommend> bestThreeRecipe(Connection conn){

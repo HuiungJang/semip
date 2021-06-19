@@ -5,8 +5,10 @@ package com.yoriessence.chef.model.service;
 import com.yoriessence.chef.model.dao.UserDao;
 import com.yoriessence.chef.model.vo.*;
 import com.yoriessence.recipe.model.vo.Recipe;
+import org.apache.ibatis.session.SqlSession;
 
 import static com.yoriessence.common.JDBCTemplate.*;
+import static com.yoriessence.common.session.SessionTemplate.getSession;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -290,15 +292,22 @@ public class UserService {
     메인페이지
 
      */
-    public List<RecipeRecommend> bestFiveChef(){
-        Connection conn = getConnection();
-        List<RecipeRecommend> bestFiveChef= dao.bestFiveChef(conn);
-        close(conn);
+//    public List<RecipeRecommend> bestFiveChef(){
+//        Connection conn = getConnection();
+//        List<RecipeRecommend> bestFiveChef= dao.bestFiveChef(conn);
+//        close(conn);
+//
+//        return bestFiveChef;
+//    }
+    // mybatis 전환
+        public List<RecipeRecommend> bestFiveChef(){
+            SqlSession session = getSession();
+            List<RecipeRecommend> bestFiveChef= dao.bestFiveChef(session);
+            session.close();
+            return  bestFiveChef;
+        }
 
-        return bestFiveChef;
-    }
-
-    public List<RecipeRecommend> bestThreeRecipe(){
+        public List<RecipeRecommend> bestThreeRecipe(){
         Connection conn = getConnection();
         List<RecipeRecommend> bestThreeRecipe= dao.bestThreeRecipe(conn);
         close(conn);
